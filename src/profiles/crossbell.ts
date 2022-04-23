@@ -23,18 +23,18 @@ class Crossbell extends Base {
         const profileId = (await this.contract.getPrimaryProfileId(identity)).data;
         if (profileId && profileId !== '0') {
             const info = (await this.contract.getProfile(profileId)).data;
-            let metadata;
+            let meta;
             if (info.uri) {
-                metadata = (await axios.get(this.main.utils.replaceIPFS(info.uri))).data;
+                meta = (await axios.get(this.main.utils.replaceIPFS(info.uri))).data;
             }
-            if (metadata?.avatars) {
-                metadata.avatars = this.main.utils.replaceIPFSs(metadata.avatars);
+            if (meta?.avatars) {
+                meta.avatars = this.main.utils.replaceIPFSs(meta.avatars);
             }
-            if (metadata?.banner) {
-                metadata.banner = this.main.utils.replaceIPFSs(metadata.banner);
+            if (meta?.banner) {
+                meta.banner = this.main.utils.replaceIPFSs(meta.banner);
             }
-            if (metadata?.connected_accounts) {
-                metadata.connected_accounts = metadata.connected_accounts.map((account: any) => {
+            if (meta?.connected_accounts) {
+                meta.connected_accounts = meta.connected_accounts.map((account: any) => {
                     const platform = account.platform.toLowerCase();
                     if (account.identity && account.platform && this.accountsMap[platform]) {
                         const acc: Required<Profile>['connected_accounts'][number] = {
@@ -57,8 +57,16 @@ class Crossbell extends Base {
                 {
                     name: info.handle,
                     source: 'Crossbell',
+
+                    metadata: {
+                        network: 'Crossbell',
+                        proof: profileId,
+
+                        handler: info.handle,
+                        uri: info.uri,
+                    },
                 },
-                metadata,
+                meta,
             );
 
             return profile;

@@ -19,7 +19,10 @@
             <div class="info">
                 <div class="avatar"><img crossorigin="anonymous" :src="profile.avatars?.[0]" /></div>
                 <div class="text">
-                    <div class="name">{{ profile.name }}</div>
+                    <div class="name">
+                        {{ profile.name
+                        }}<span class="handler" v-if="profile.metadata?.handler">{{ profile.metadata?.handler }}</span>
+                    </div>
                     <div class="bio">{{ profile.bio }}</div>
                     <div class="websites">
                         <ul>
@@ -59,13 +62,13 @@ const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata
 const identity = getCurrentInstance()?.appContext.config.globalProperties.identity;
 
 const providers = {
-    ENS: {
-        logo: 'ENS.svg',
-        site: 'https://ens.domains/',
-    },
     Crossbell: {
         logo: 'Crossbell.png',
         site: 'https://github.com/Crossbell-Box',
+    },
+    ENS: {
+        logo: 'ENS.svg',
+        site: 'https://ens.domains/',
     },
 };
 
@@ -151,6 +154,16 @@ const getAccountLink = (instance: string) => {
             font-weight: bold;
             font-size: 28px;
             margin-bottom: 5px;
+
+            .handler {
+                font-size: 14px;
+                color: #999;
+                margin-left: 10px;
+
+                &:before {
+                    content: '@';
+                }
+            }
         }
 
         .bio {
