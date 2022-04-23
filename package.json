@@ -1,8 +1,8 @@
 {
-    "name": "rss3",
+    "name": "unidata",
     "version": "0.8.19",
     "description": "",
-    "main": "dist/rss3.js",
+    "main": "dist/unidata.js",
     "type": "module",
     "files": [
         "src",
@@ -20,16 +20,19 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/NaturalSelectionLabs/RSS3-SDK.git"
+        "url": "git+https://github.com/DIYgod/Unidata.git"
     },
     "keywords": [
-        "rss3"
+        "unidata",
+        "web3",
+        "ens",
+        "crossbell"
     ],
     "author": "DIYgod",
     "bugs": {
-        "url": "https://github.com/NaturalSelectionLabs/RSS3-SDK/issues"
+        "url": "https://github.com/DIYgod/Unidata/issues"
     },
-    "homepage": "https://github.com/NaturalSelectionLabs/RSS3-SDK#readme",
+    "homepage": "https://github.com/DIYgod/Unidata#readme",
     "dependencies": {
         "axios": "0.26.1",
         "crossbell.js": "0.2.2",

@@ -10,9 +10,9 @@ export default defineConfig({
     build: {
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
-            name: 'RSS3',
+            name: 'Unidata',
             formats: ['umd'],
-            fileName: () => `rss3.js`,
+            fileName: () => `unidata.js`,
         },
     },
     define: {
