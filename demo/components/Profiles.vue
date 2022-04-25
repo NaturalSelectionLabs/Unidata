@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h3>Sources</h3>
-        <p>{{ Object.keys(providers).join(', ') }}</p>
+        <h3>Providers</h3>
+        <Providers :providers="providers" />
         <h3>Model</h3>
         <Tree :obj="profiles" />
         <h3>View</h3>
@@ -45,6 +45,7 @@
 <script setup lang="ts">
 import { ref, getCurrentInstance, onMounted } from 'vue';
 import Tree from './Tree.vue';
+import Providers from './Providers.vue';
 
 const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
 const identity = getCurrentInstance()?.appContext.config.globalProperties.identity;

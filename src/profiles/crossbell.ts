@@ -42,12 +42,12 @@ class Crossbell extends Base {
                             platform: this.accountsMap[platform].platform,
                         };
                         if (this.accountsMap[platform].url) {
-                            acc.url = this.accountsMap[platform].url?.replace('$$id', identity);
+                            acc.url = this.accountsMap[platform].url?.replace('$$id', account.identity);
                         }
                         return acc;
                     } else {
                         return {
-                            identity: identity,
+                            identity: account.identity,
                             platform: account.platform,
                         };
                     }

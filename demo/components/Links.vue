@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h3>Sources</h3>
-        <p>{{ Object.keys(providers).join(', ') }}</p>
+        <h3>Providers</h3>
+        <Providers :providers="providers" />
         <h3>Model</h3>
         <Tree :obj="links" />
         <h5>Backlinks</h5>
@@ -36,6 +36,7 @@
 <script setup lang="ts">
 import { ref, getCurrentInstance, onMounted } from 'vue';
 import Tree from './Tree.vue';
+import Providers from './Providers.vue';
 
 const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
 const identity = getCurrentInstance()?.appContext.config.globalProperties.identity;
@@ -48,12 +49,10 @@ const providers = {
 };
 
 const links = await Promise.all(Object.keys(providers).map((provider) => unidata.links.get(provider, identity)));
-console.log(links);
 
 const backlinks = await Promise.all(
     Object.keys(providers).map((provider) => unidata.links.get(provider, identity, true)),
 );
-console.log(backlinks);
 </script>
 
 <style lang="less">
