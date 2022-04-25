@@ -63,6 +63,11 @@ type Link = {
     };
 };
 
+type Links = {
+    total: number;
+    list: Link[];
+};
+
 type Item = {
     identifier: AssetInstanceURI | NoteInstanceURI;
     date_created: string;

@@ -11,8 +11,14 @@
                 show-word-limit
             />
         </div>
+        <h2>Profiles</h2>
         <Suspense>
-            <Profiles :address="address"></Profiles>
+            <Profiles />
+            <template #fallback>Loading... </template>
+        </Suspense>
+        <h2>Links</h2>
+        <Suspense>
+            <Links />
             <template #fallback> Loading... </template>
         </Suspense>
     </div>
@@ -21,6 +27,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import Profiles from './components/Profiles.vue';
+import Links from './components/Links.vue';
 
 const address = ref(localStorage.getItem('address') || '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944');
 watch(address, (address) => {
@@ -31,7 +38,7 @@ watch(address, (address) => {
 <style>
 .body {
     width: 800px;
-    margin: 20px auto;
+    margin: 20px auto 50px;
 }
 
 .input {

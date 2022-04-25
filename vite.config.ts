@@ -17,6 +17,7 @@ export default defineConfig({
     },
     define: {
         SDK_VERSION: JSON.stringify(version),
+        global: 'window',
     },
     server: {
         base: '/demo/',

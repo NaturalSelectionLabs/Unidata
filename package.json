@@ -34,9 +34,11 @@
     },
     "homepage": "https://github.com/DIYgod/Unidata#readme",
     "dependencies": {
+        "@urql/core": "2.4.4",
         "axios": "0.26.1",
         "crossbell.js": "0.2.2",
         "ethers": "5.6.4",
+        "graphql": "16.3.0",
         "isomorphic-fetch": "3.0.0"
     },
     "devDependencies": {

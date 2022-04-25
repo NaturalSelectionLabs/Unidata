@@ -1,15 +1,11 @@
 <template>
     <div>
-        <h2>Profiles</h2>
+        <h3>Sources</h3>
+        <p>{{ Object.keys(providers).join(', ') }}</p>
         <h3>Model</h3>
         <Tree :obj="profiles" />
         <h3>View</h3>
-        <el-card
-            class="profile-card"
-            v-for="profile in profiles"
-            :key="profile"
-            :style="{ backgroundColor: backgroundColor }"
-        >
+        <el-card class="profile-card" v-for="profile in profiles" :key="profile">
             <font-awesome-icon class="edit" icon="pen-to-square" />
             <div class="provider">
                 <a target="_blank" :href="providers[profile.source].site">
@@ -50,14 +46,6 @@
 import { ref, getCurrentInstance, onMounted } from 'vue';
 import Tree from './Tree.vue';
 
-let backgroundColor = ref('#fff');
-const props = defineProps({
-    address: {
-        type: String,
-        required: true,
-    },
-});
-
 const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
 const identity = getCurrentInstance()?.appContext.config.globalProperties.identity;
 
@@ -75,38 +63,12 @@ const providers = {
 const profiles = (
     await Promise.all(Object.keys(providers).map((provider) => unidata.profiles.get(provider, identity)))
 ).filter((profile) => profile);
-
-const getAccountSite = (instance: string) => {
-    return instance.split('@')[1];
-};
-const getAccountId = (instance: string) => {
-    return instance.match(/account:(.*)@/)?.[1];
-};
-const getAccountLink = (instance: string) => {
-    const site = getAccountSite(instance);
-    const id = getAccountId(instance);
-    switch (site) {
-        case 'github':
-            return `https://github.com/${id}`;
-        case 'twitter':
-            return `https://twitter.com/${id}`;
-        case 'telegram':
-            return `https://t.me/${id}`;
-        case 'discord':
-            return null;
-        case 'reddit':
-            return `https://www.reddit.com/user/${id}`;
-    }
-};
 </script>
 
 <style lang="less">
 .profile-card {
-    margin-top: 20px;
-}
-
-.profile-card {
     position: relative;
+    margin-top: 20px;
 
     .edit {
         position: absolute;
@@ -128,78 +90,78 @@ const getAccountLink = (instance: string) => {
             height: 30px;
         }
     }
-}
 
-.info {
-    display: flex;
-
-    .avatar {
-        width: 150px;
-        height: 150px;
-        margin-right: 40px;
-
-        img {
-            width: 100%;
-            border-radius: 50%;
-        }
-    }
-
-    .text {
-        flex: 1;
+    .info {
         display: flex;
-        justify-content: center;
-        flex-direction: column;
 
-        .name {
-            font-weight: bold;
-            font-size: 28px;
-            margin-bottom: 5px;
+        .avatar {
+            width: 150px;
+            height: 150px;
+            margin-right: 40px;
 
-            .handler {
-                font-size: 14px;
-                color: #999;
-                margin-left: 10px;
-
-                &:before {
-                    content: '@';
-                }
+            img {
+                width: 100%;
+                border-radius: 50%;
             }
         }
 
-        .bio {
-            font-size: 14px;
-            color: #999;
+        .text {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+
+            .name {
+                font-weight: bold;
+                font-size: 28px;
+                margin-bottom: 5px;
+
+                .handler {
+                    font-size: 14px;
+                    color: #999;
+                    margin-left: 10px;
+
+                    &:before {
+                        content: '@';
+                    }
+                }
+            }
+
+            .bio {
+                font-size: 14px;
+                color: #999;
+            }
         }
-    }
 
-    .websites {
-        margin-top: 10px;
+        .websites {
+            margin-top: 10px;
 
-        .svg-inline--fa {
-            width: 14px;
-            height: 14px;
-        }
+            .svg-inline--fa {
+                width: 14px;
+                height: 14px;
+            }
 
-        ul {
-            padding: 0;
-            list-style: none;
-            margin: 0 0 -7px 0;
-        }
+            ul {
+                padding: 0;
+                list-style: none;
+                margin: 0 0 -7px 0;
+            }
 
-        li {
-            display: inline-block;
-            margin-right: 20px;
-            background: rgba(200, 200, 200, 0.5);
-            padding: 5px 10px;
-            line-height: 16px;
-            font-size: 14px;
-            line-height: 14px;
-            border-radius: 14px;
-            margin-bottom: 7px;
+            li {
+                display: inline-block;
+                margin-right: 20px;
+                background: rgba(200, 200, 200, 0.5);
+                padding: 5px 10px;
+                line-height: 16px;
+                font-size: 14px;
+                line-height: 14px;
+                border-radius: 14px;
+                margin-bottom: 7px;
 
-            a {
-                color: #333;
-                text-decoration: none;
+                a {
+                    color: #333;
+                    text-decoration: none;
+                }
             }
         }
     }
