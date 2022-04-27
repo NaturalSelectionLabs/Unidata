@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed, watchEffect, ref } from 'vue';
+import { defineProps, watchEffect, ref, getCurrentInstance } from 'vue';
 
 const props = defineProps({
     provider: {
@@ -64,16 +64,16 @@ watchEffect(async () => {
         loading.value = true;
         links.value = {};
         backlinks.value = {};
-        (<any>window).unidata.links
-            .get(props.provider, identity.value, false, {
+        getCurrentInstance()
+            ?.appContext.config.globalProperties.unidata.links.get(props.provider, identity.value, false, {
                 limit: 5,
             })
             .then((p: any) => {
                 links.value = p;
                 loading.value = false;
             });
-        (<any>window).unidata.links
-            .get(props.provider, identity.value, true, {
+        getCurrentInstance()
+            ?.appContext.config.globalProperties.unidata.links.get(props.provider, identity.value, true, {
                 limit: 5,
             })
             .then((p: any) => {

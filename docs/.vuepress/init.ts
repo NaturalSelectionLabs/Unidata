@@ -12,8 +12,8 @@ export default ({ app }) => {
     app.component('font-awesome-icon', FontAwesomeIcon);
     app.use(ElementPlus);
 
-    (<any>window).Unidata = Unidata;
-    (<any>window).unidata = new Unidata({
+    app.config.globalProperties.Unidata = Unidata;
+    app.config.globalProperties.unidata = new Unidata({
         infuraProjectID: 'e3430df561d64784abc08a6feb2f4e50',
     });
 };

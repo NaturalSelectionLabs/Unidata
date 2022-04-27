@@ -4,7 +4,6 @@
     "description": "Unify the Web3 data 💡🧶",
     "main": "./dist/unidata.umd.js",
     "module": "./dist/unidata.es.js",
-    "type": "module",
     "files": [
         "src",
         "dist",

@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed, watchEffect, ref } from 'vue';
+import { defineProps, watchEffect, ref, getCurrentInstance } from 'vue';
 
 const props = defineProps({
     provider: {
@@ -68,10 +68,12 @@ watchEffect(async () => {
     if (identity.value) {
         loading.value = true;
         profile.value = {};
-        (<any>window).unidata.profiles.get(props.provider, identity.value).then((p: any) => {
-            profile.value = p;
-            loading.value = false;
-        });
+        getCurrentInstance()
+            ?.appContext.config.globalProperties.unidata.profiles.get(props.provider, identity.value)
+            .then((p: any) => {
+                profile.value = p;
+                loading.value = false;
+            });
     }
 });
 </script>
