@@ -11,6 +11,10 @@
                 class="input"
             />
         </div>
+        <div class="input-wrap">
+            <label>Limitation: </label>
+            5
+        </div>
         <el-card class="links-card" v-loading="loading">
             <div class="list">
                 <div class="follow follow-left">

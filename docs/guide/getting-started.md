@@ -6,7 +6,7 @@
   <CodeGroupItem title="yarn" active>
 
 ```bash
-yarn add unidata
+yarn add unidata.js
 ```
 
   </CodeGroupItem>
@@ -14,7 +14,7 @@ yarn add unidata
   <CodeGroupItem title="npm">
 
 ```bash
-npm install unidata --save
+npm install unidata.js --save
 ```
 
   </CodeGroupItem>
@@ -23,7 +23,7 @@ npm install unidata --save
 ## Initialization
 
 ```ts
-import Unidata from 'unidata';
+import Unidata from 'unidata.js';
 
 const unidata = new Unidata({
     platform?: 'Ethereum' | 'Solana';
@@ -32,8 +32,8 @@ const unidata = new Unidata({
 });
 ```
 
-| Parameter         | Default                          | Description                                  |
-| ----------------- | -------------------------------- | -------------------------------------------- |
-| `platform`        | `'Ethereum'`                     | The platform to use. Defaults to `Ethereum`. |
-| `infuraProjectID` |                                  | The PROJECT ID of the Infura to use.         |
-| `ipfsGateway`     | `'https://ipfs.infura.io/ipfs/'` | The IPFS gateway to use.                     |
+| Parameter         | Default                   | Description                                  |
+| ----------------- | ------------------------- | -------------------------------------------- |
+| `platform`        | `'Ethereum'`              | The platform to use. Defaults to `Ethereum`. |
+| `infuraProjectID` |                           | The PROJECT ID of the Infura to use.         |
+| `ipfsGateway`     | `'https://ipfs.io/ipfs/'` | The IPFS gateway to use.                     |

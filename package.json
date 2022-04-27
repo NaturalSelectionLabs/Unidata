@@ -1,6 +1,6 @@
 {
-    "name": "unidata",
-    "version": "0.0.1",
+    "name": "unidata.js",
+    "version": "0.0.0",
     "description": "Unify the Web3 data 💡🧶",
     "main": "./dist/unidata.umd.js",
     "module": "./dist/unidata.es.js",
