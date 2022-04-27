@@ -8,7 +8,15 @@ abstract class Base {
         this.main = main;
     }
 
-    abstract get(identity: string, reversed?: boolean, offset?: number): Promise<Links | null>;
+    abstract get(
+        identity: string,
+        reversed?: boolean,
+        options?: {
+            limit?: number;
+            offset?: number;
+            last?: string;
+        },
+    ): Promise<Links | null>;
 }
 
 export default Base;

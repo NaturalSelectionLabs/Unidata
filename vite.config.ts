@@ -11,8 +11,6 @@ export default defineConfig({
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
             name: 'Unidata',
-            formats: ['umd'],
-            fileName: () => `unidata.js`,
         },
     },
     define: {

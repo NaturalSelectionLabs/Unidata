@@ -1,4 +1,7 @@
-const { description } = require('../../package');
+import { description } from '../../package.json';
+import { defaultTheme } from 'vuepress';
+import { registerComponentsPlugin } from '@vuepress/plugin-register-components';
+import path from 'path';
 
 module.exports = {
     title: 'Unidata',
@@ -11,10 +14,31 @@ module.exports = {
         ['link', { rel: 'icon', href: '/images/logo.png' }],
     ],
 
-    themeConfig: {
+    plugins: [
+        registerComponentsPlugin({
+            componentsDir: path.resolve(__dirname, './components'),
+        }),
+    ],
+
+    theme: defaultTheme({
         repo: 'DIYgod/Unidata',
-        sidebarDepth: 3,
         docsDir: 'docs',
         logo: '/images/logo.png',
-    },
+        sidebarDepth: 1,
+
+        sidebar: {
+            '/guide/': [
+                {
+                    text: 'Guide',
+                    children: ['/guide/README.md', '/guide/getting-started.md'],
+                },
+                {
+                    text: 'Modules',
+                    children: ['/guide/profiles.md', '/guide/links.md', '/guide/assets.md', '/guide/notes.md'],
+                },
+            ],
+        },
+    }),
+
+    clientAppEnhanceFiles: path.resolve(__dirname, './init.ts'),
 };

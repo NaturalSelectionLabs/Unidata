@@ -8,13 +8,13 @@ actions:
       type: primary
 features:
     - title: Transparent
-      details: All logic is done on the front end.
+      details: All logic is done on the front end and open sourced.
     - title: Decentralized
       details: All data is from Web3 welcomed decentralized platforms.
     - title: Modularized
       details: Profiles, links, assets, notes are independent of each other.
     - title: Neutral
-      details: All Web3 decentralized platforms or data sources are welcomed and MIT Licensed.
+      details: All Web3 decentralized platforms or data sources are welcomed. And the source code uses MIT License.
     - title: Easy
       details: All data is prepared for you through the same specifications and simple API.
     - title: Diverse

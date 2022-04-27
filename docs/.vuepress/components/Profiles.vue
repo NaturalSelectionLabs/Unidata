@@ -1,23 +1,24 @@
 <template>
     <div>
-        <h3>Providers</h3>
-        <Providers :providers="providers" />
-        <h3>Model</h3>
-        <Tree :obj="profiles" />
-        <h3>View</h3>
-        <el-card class="profile-card" v-for="profile in profiles" :key="profile">
+        <div class="input-wrap">
+            <label>Identity: </label>
+            <el-input
+                v-model="identity"
+                placeholder="Please input ethereum address"
+                clearable
+                maxlength="42"
+                show-word-limit
+                class="input"
+            />
+        </div>
+        <el-card class="profile-card" v-loading="loading">
             <font-awesome-icon class="edit" icon="pen-to-square" />
-            <div class="provider">
-                <a target="_blank" :href="providers[profile.source].site">
-                    <img :src="`./assets/${providers[profile.source].logo}`" />
-                </a>
-            </div>
             <div class="info">
-                <div class="avatar"><img crossorigin="anonymous" :src="profile.avatars?.[0]" /></div>
+                <div class="avatar"><img :src="profile.avatars?.[0]" /></div>
                 <div class="text">
                     <div class="name">
-                        {{ profile.name
-                        }}<span class="handler" v-if="profile.metadata?.handler">{{ profile.metadata?.handler }}</span>
+                        {{ profile.name }}
+                        <span class="handler" v-if="profile.metadata?.handler">{{ profile.metadata?.handler }}</span>
                     </div>
                     <div class="bio">{{ profile.bio }}</div>
                     <div class="websites">
@@ -39,57 +40,73 @@
                 </div>
             </div>
         </el-card>
+        <h5>Data:</h5>
+        <pre>{{ JSON.stringify(profile, null, 4) }}</pre>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, getCurrentInstance, onMounted } from 'vue';
-import Tree from './Tree.vue';
-import Providers from './Providers.vue';
+import { defineProps, computed, watchEffect, ref } from 'vue';
 
-const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
-const identity = getCurrentInstance()?.appContext.config.globalProperties.identity;
-
-const providers = {
-    Crossbell: {
-        logo: 'Crossbell.png',
-        site: 'https://github.com/Crossbell-Box',
+const props = defineProps({
+    provider: {
+        type: String,
+        required: true,
     },
-    ENS: {
-        logo: 'ENS.svg',
-        site: 'https://ens.domains/',
+    defaultIdentity: {
+        type: String,
+        required: true,
     },
-};
+});
 
-const profiles = (
-    await Promise.all(Object.keys(providers).map((provider) => unidata.profiles.get(provider, identity)))
-).filter((profile) => profile);
+const identity = ref(props.defaultIdentity);
+
+const loading = ref(true);
+const profile = ref({});
+
+watchEffect(async () => {
+    if (identity.value) {
+        loading.value = true;
+        profile.value = {};
+        (<any>window).unidata.profiles.get(props.provider, identity.value).then((p: any) => {
+            profile.value = p;
+            loading.value = false;
+        });
+    }
+});
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+.input-wrap {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+
+    label {
+        margin-right: 10px;
+    }
+
+    .input {
+        width: 450px;
+    }
+}
+
+pre {
+    padding: 0;
+    font-size: 12px;
+}
+
 .profile-card {
     position: relative;
-    margin-top: 20px;
 
     .edit {
         position: absolute;
         top: 35px;
-        right: 90px;
+        right: 40px;
         cursor: pointer;
         width: 20px;
         height: 20px;
         color: #555;
-    }
-
-    .provider {
-        position: absolute;
-        top: 30px;
-        right: 40px;
-
-        img {
-            width: 30px;
-            height: 30px;
-        }
     }
 
     .info {

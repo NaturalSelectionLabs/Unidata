@@ -19,7 +19,7 @@ class Unidata {
             {},
             {
                 platform: 'Ethereum',
-                ipfsGateway: 'https://ipfs.infura.io/ipfs/',
+                ipfsGateway: 'https://ipfs.io/ipfs/',
             },
             options,
         );

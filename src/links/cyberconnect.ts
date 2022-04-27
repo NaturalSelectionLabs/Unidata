@@ -16,7 +16,15 @@ class CyberConnect extends Base {
         this.inited = true;
     }
 
-    async get(identity: string, reversed?: boolean, offset?: number) {
+    async get(
+        identity: string,
+        reversed?: boolean,
+        options?: {
+            limit?: number;
+            offset?: number;
+            last?: string;
+        },
+    ) {
         if (!this.inited) {
             await this.init();
         }
@@ -24,13 +32,13 @@ class CyberConnect extends Base {
         const result = await this.urqlClient
             .query(
                 `
-            query followingQuery($identity: String!, $after: String) {
+            query followingQuery($identity: String!, $limit: Int, $after: String) {
                 identity(
                     address: $identity
                     network: ETH
                 ) {
                     ${key}Count
-                    ${key}s(first: 50, after: $after) {
+                    ${key}s(first: $limit, after: $after) {
                         pageInfo {
                             hasNextPage
                             hasPreviousPage
@@ -44,7 +52,8 @@ class CyberConnect extends Base {
         `,
                 {
                     identity: identity,
-                    after: offset + '',
+                    after: options?.offset + '',
+                    limit: options?.limit || 10,
                 },
             )
             .toPromise();
