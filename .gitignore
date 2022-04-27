@@ -10,3 +10,4 @@ storage
 .env
 .cache
 coverage
+.temp

@@ -1,7 +1,7 @@
 {
     "name": "unidata",
     "version": "0.8.19",
-    "description": "",
+    "description": "Unify the Web3 data",
     "main": "dist/unidata.js",
     "type": "module",
     "files": [
@@ -13,7 +13,9 @@
         "prepare": "husky install",
         "dev": "vite",
         "build": "vite build",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "docs:dev": "vuepress dev docs",
+        "docs:build": "vuepress build docs"
     },
     "lint-staged": {
         "**/*": "prettier --write --ignore-unknown"
@@ -57,6 +59,7 @@
         "unplugin-auto-import": "0.7.1",
         "unplugin-vue-components": "0.19.3",
         "vite": "2.9.5",
-        "vue": "3.2.33"
+        "vue": "3.2.33",
+        "vuepress": "2.0.0-beta.39"
     }
 }
