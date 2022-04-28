@@ -13,5 +13,7 @@ export default ({ app }) => {
     app.use(ElementPlus);
 
     app.config.globalProperties.Unidata = Unidata;
-    app.config.globalProperties.unidata = new Unidata({});
+    app.config.globalProperties.unidata = new Unidata({
+        moralisWeb3APIKey: 'gqcVQSCpWGNlfs2nMM1xvW1pOmZhzHc058aNpEK8BKIp26Q39PJemBu5BJi6SZOD',
+    });
 };

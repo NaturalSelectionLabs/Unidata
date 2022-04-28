@@ -68,20 +68,44 @@ type Links = {
     list: Link[];
 };
 
-type Item = {
-    identifier: AssetInstanceURI | NoteInstanceURI;
+type Note = {
     date_created: string;
     date_updated: string;
 
     related_urls?: string[];
 
-    links: LinksURI;
-    backlinks: BacklinksURI;
-
     tags?: string[];
     authors: AccountInstanceURI[];
     title?: string;
     summary?: string;
+    attachments?: {
+        type?: string;
+        content?: string;
+        address?: URI;
+        mime_type: string;
+        size_in_bytes?: number;
+    }[];
+
+    source: AssetSource | NoteSource;
+
+    metadata?: {
+        network: Network;
+        proof: string;
+
+        [key: string]: any;
+    };
+};
+
+type Asset = {
+    date_created?: string;
+    date_updated?: string;
+
+    related_urls?: string[];
+
+    tags?: string[];
+    owners: AccountInstanceURI[];
+    name?: string;
+    description?: string;
     attachments?: {
         type?: string;
         content?: string;
