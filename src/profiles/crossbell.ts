@@ -2,6 +2,7 @@ import Main from '../index';
 import Base from './base';
 import { Contract } from 'crossbell.js';
 import axios from 'axios';
+import { ProfilesOptions } from './index';
 
 class Crossbell extends Base {
     contract: Contract;
@@ -16,11 +17,11 @@ class Crossbell extends Base {
         this.inited = true;
     }
 
-    async get(identity: string) {
+    async get(options: ProfilesOptions) {
         if (!this.inited) {
             await this.init();
         }
-        const profileId = (await this.contract.getPrimaryProfileId(identity)).data;
+        const profileId = (await this.contract.getPrimaryProfileId(options.identity)).data;
         if (profileId && profileId !== '0') {
             const info = (await this.contract.getProfile(profileId)).data;
             let meta;

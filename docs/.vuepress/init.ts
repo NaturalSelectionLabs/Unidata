@@ -13,7 +13,5 @@ export default ({ app }) => {
     app.use(ElementPlus);
 
     app.config.globalProperties.Unidata = Unidata;
-    app.config.globalProperties.unidata = new Unidata({
-        infuraProjectID: 'e3430df561d64784abc08a6feb2f4e50',
-    });
+    app.config.globalProperties.unidata = new Unidata({});
 };

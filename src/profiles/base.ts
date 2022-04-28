@@ -1,4 +1,5 @@
 import Main from '../index';
+import { ProfilesOptions } from './index';
 
 abstract class Base {
     main: Main;
@@ -39,7 +40,7 @@ abstract class Base {
         };
     }
 
-    abstract get(identity: string): Promise<Profile[] | null>;
+    abstract get(options: ProfilesOptions): Promise<Profile[] | null>;
 }
 
 export default Base;

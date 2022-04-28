@@ -43,7 +43,7 @@
 import { defineProps, watchEffect, ref, getCurrentInstance } from 'vue';
 
 const props = defineProps({
-    provider: {
+    source: {
         type: String,
         required: true,
     },
@@ -65,7 +65,9 @@ watchEffect(async () => {
         links.value = {};
         backlinks.value = {};
         getCurrentInstance()
-            ?.appContext.config.globalProperties.unidata.links.get(props.provider, identity.value, false, {
+            ?.appContext.config.globalProperties.unidata.links.get({
+                source: props.source,
+                identity: identity.value,
                 limit: 5,
             })
             .then((p: any) => {
@@ -73,7 +75,10 @@ watchEffect(async () => {
                 loading.value = false;
             });
         getCurrentInstance()
-            ?.appContext.config.globalProperties.unidata.links.get(props.provider, identity.value, true, {
+            ?.appContext.config.globalProperties.unidata.links.get({
+                source: props.source,
+                identity: identity.value,
+                reversed: true,
                 limit: 5,
             })
             .then((p: any) => {
@@ -106,17 +111,6 @@ pre {
 
 .links-card {
     position: relative;
-
-    .provider {
-        position: absolute;
-        top: 30px;
-        right: 40px;
-
-        img {
-            width: 30px;
-            height: 30px;
-        }
-    }
 
     .list {
         display: flex;

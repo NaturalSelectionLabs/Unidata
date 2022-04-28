@@ -37,30 +37,35 @@ type Profiles = {
 }[];
 ```
 
+**API:**
+
+```ts
+const profiles: Profiles = unidata.profiles.get(options: {
+    source: string;
+    identity: string;
+});
+```
+
 ## ENS
 
 [ENS](https://ens.domains/): Your web3 username, a name for all your cryptocurrency addresses, and decentralised websites.
 
-### API
-
 ```js
-const profiles: Profiles = unidata.profiles.get('ENS', identity);
+options.source = 'ENS';
 ```
 
 ### Live Demo
 
-<Profiles :provider="'ENS'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
+<Profiles :source="'ENS'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
 
 ## Crossbell
 
 [Crossbell](https://github.com/Crossbell-Box/).
 
-### API
-
 ```js
-const profiles: Profiles = unidata.profiles.get('Crossbell', identity);
+options.source = 'Crossbell';
 ```
 
 ### Live Demo
 
-<Profiles :provider="'Crossbell'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
+<Profiles :source="'Crossbell'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />

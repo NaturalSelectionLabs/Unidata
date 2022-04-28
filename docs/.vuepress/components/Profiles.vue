@@ -49,7 +49,7 @@
 import { defineProps, watchEffect, ref, getCurrentInstance } from 'vue';
 
 const props = defineProps({
-    provider: {
+    source: {
         type: String,
         required: true,
     },
@@ -69,7 +69,10 @@ watchEffect(async () => {
         loading.value = true;
         profiles.value = [{}];
         getCurrentInstance()
-            ?.appContext.config.globalProperties.unidata.profiles.get(props.provider, identity.value)
+            ?.appContext.config.globalProperties.unidata.profiles.get({
+                identity: identity.value,
+                source: props.source,
+            })
             .then((p: any) => {
                 profiles.value = p;
                 loading.value = false;

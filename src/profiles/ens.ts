@@ -1,6 +1,7 @@
 import Main from '../index';
 import Base from './base';
 import { ethers } from 'ethers';
+import { ProfilesOptions } from './index';
 
 class ENS extends Base {
     ethersProvider: ethers.providers.BaseProvider;
@@ -14,11 +15,11 @@ class ENS extends Base {
         this.inited = true;
     }
 
-    async get(identity: string) {
+    async get(options: ProfilesOptions) {
         if (!this.inited) {
             await this.init();
         }
-        const name = await this.ethersProvider.lookupAddress(identity);
+        const name = await this.ethersProvider.lookupAddress(options.identity);
         if (name) {
             const resolver = await this.ethersProvider.getResolver(name);
             if (resolver) {

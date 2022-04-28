@@ -25,6 +25,13 @@ footer: MIT Licensed
 ### As Easy as 1, 2, 3
 
 ```js
-const profiles = unidata.profiles.get('ENS', '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944');
-const links = unidata.links.get('CyberConnect', '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944');
+const profiles = unidata.profiles.get({
+    source: 'ENS',
+    identity,
+});
+
+const links = unidata.links.get({
+    source: 'CyberConnect',
+    identity,
+});
 ```

@@ -1,4 +1,5 @@
 import Main from '../index';
+import { LinksOptions } from './index';
 
 abstract class Base {
     main: Main;
@@ -8,15 +9,7 @@ abstract class Base {
         this.main = main;
     }
 
-    abstract get(
-        identity: string,
-        reversed?: boolean,
-        options?: {
-            limit?: number;
-            offset?: number;
-            last?: string;
-        },
-    ): Promise<Links | null>;
+    abstract get(options: LinksOptions): Promise<Links | null>;
 }
 
 export default Base;

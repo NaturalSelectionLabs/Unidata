@@ -24,16 +24,26 @@ type Links = {
 };
 ```
 
+**API:**
+
+```ts
+const links: Links = unidata.links.get(options: {
+    source: string;
+    identity: string;
+    reversed?: boolean;
+    offset?: number;
+    limit?: number;
+});
+```
+
 ## CyberConnect
 
 [CyberConnect](https://cyberconnect.me).
 
-### API
-
 ```js
-const links: Links = unidata.links.get('CyberConnect', identity);
+options.source = 'CyberConnect';
 ```
 
 ### Live Demo
 
-<Links :provider="'CyberConnect'" :defaultIdentity="'0x148d59faf10b52063071eddf4aaf63a395f2d41c'" />
+<Links :source="'CyberConnect'" :defaultIdentity="'0x148d59faf10b52063071eddf4aaf63a395f2d41c'" />

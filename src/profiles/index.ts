@@ -3,6 +3,11 @@ import Base from './base';
 import ENS from './ens';
 import Crossbell from './crossbell';
 
+export type ProfilesOptions = {
+    source: string;
+    identity: string;
+};
+
 class Profiles {
     map: {
         [key: string]: Base;
@@ -15,8 +20,8 @@ class Profiles {
         };
     }
 
-    async get(source: string, identity: string) {
-        return this.map[source].get(identity);
+    async get(options: ProfilesOptions) {
+        return this.map[options.source].get(options);
     }
 }
 

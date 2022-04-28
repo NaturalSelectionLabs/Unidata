@@ -1,6 +1,7 @@
 import Main from '../index';
 import Base from './base';
 import { createClient, Client } from '@urql/core';
+import { LinksOptions } from './index';
 
 class CyberConnect extends Base {
     urqlClient: Client;
@@ -16,19 +17,11 @@ class CyberConnect extends Base {
         this.inited = true;
     }
 
-    async get(
-        identity: string,
-        reversed?: boolean,
-        options?: {
-            limit?: number;
-            offset?: number;
-            last?: string;
-        },
-    ) {
+    async get(options: LinksOptions) {
         if (!this.inited) {
             await this.init();
         }
-        const key = reversed ? 'follower' : 'following';
+        const key = options.reversed ? 'follower' : 'following';
         const result = await this.urqlClient
             .query(
                 `
@@ -51,9 +44,9 @@ class CyberConnect extends Base {
             }
         `,
                 {
-                    identity: identity,
-                    after: options?.offset + '',
-                    limit: options?.limit || 10,
+                    identity: options.identity,
+                    after: options.offset + '',
+                    limit: options.limit || 10,
                 },
             )
             .toPromise();
@@ -61,8 +54,8 @@ class CyberConnect extends Base {
             total: result?.data?.identity?.[key + 'Count'] || 0,
             list:
                 result?.data?.identity?.[key + 's']?.list.map((item: any) => ({
-                    from: reversed ? item.address : identity,
-                    to: reversed ? identity : item.address,
+                    from: options.reversed ? item.address : options.identity,
+                    to: options.reversed ? options.identity : item.address,
                     type: 'follow',
                     source: 'CyberConnect',
                 })) || [],
