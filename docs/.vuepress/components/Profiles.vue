@@ -11,7 +11,7 @@
                 class="input"
             />
         </div>
-        <el-card class="profile-card" v-loading="loading">
+        <el-card class="profile-card" v-loading="loading" v-for="profile in profiles" :key="profile">
             <font-awesome-icon class="edit" icon="pen-to-square" />
             <div class="info">
                 <div class="avatar"><img :src="profile.avatars?.[0]" /></div>
@@ -41,7 +41,7 @@
             </div>
         </el-card>
         <h5>Data:</h5>
-        <pre>{{ JSON.stringify(profile, null, 4) }}</pre>
+        <pre>{{ JSON.stringify(profiles, null, 4) }}</pre>
     </div>
 </template>
 
@@ -62,16 +62,16 @@ const props = defineProps({
 const identity = ref(props.defaultIdentity);
 
 const loading = ref(true);
-const profile = ref({});
+const profiles = ref([{}]);
 
 watchEffect(async () => {
     if (identity.value) {
         loading.value = true;
-        profile.value = {};
+        profiles.value = [{}];
         getCurrentInstance()
             ?.appContext.config.globalProperties.unidata.profiles.get(props.provider, identity.value)
             .then((p: any) => {
-                profile.value = p;
+                profiles.value = p;
                 loading.value = false;
             });
     }

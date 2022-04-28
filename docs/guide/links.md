@@ -2,6 +2,28 @@
 
 Links describe the relationships between accounts, such as following relationship.
 
+**All returned links data conform to the following specification:**
+
+```ts
+type Links = {
+    total: number;
+    list: {
+        from: InstanceURI;
+        to: InstanceURI;
+        type: LinkType;
+
+        source: LinkSource;
+
+        metadata?: {
+            network: Network;
+            proof: string;
+
+            [key: string]: any;
+        };
+    }[];
+};
+```
+
 ## CyberConnect
 
 [CyberConnect](https://cyberconnect.me).

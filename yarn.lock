@@ -958,10 +958,10 @@ autoprefixer@^10.4.4:
     picocolors "^1.0.0"
     postcss-value-parser "^4.2.0"
 
-axios@0.27.1:
-  version "0.27.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.27.1.tgz#badcc8cc38cfa812320221b600776452141ea5d4"
-  integrity sha512-ePNMai55xo5GsXajb/k756AqZqpqeDaGwGcdvbZLSSELbbYwsIn2jNmGfUPEwd8j/yu4OoMstLLIVa4t0MneEA==
+axios@0.27.2:
+  version "0.27.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.27.2.tgz#207658cc8621606e586c85db4b41a750e756d972"
+  integrity sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==
   dependencies:
     follow-redirects "^1.14.9"
     form-data "^4.0.0"
@@ -1159,10 +1159,10 @@ cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-crossbell.js@0.2.7:
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/crossbell.js/-/crossbell.js-0.2.7.tgz#9275fc7c208d643ba7d813f6e68a9329400fcd87"
-  integrity sha512-0g3Mnn9x10tf+18nY8Xq/GLLiQU/7V3H4F/Mk7ykSGorSmEbMCMnK/kilM01JlYg8/9XRZY6klvG6yWxRO6o7w==
+crossbell.js@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/crossbell.js/-/crossbell.js-0.3.0.tgz#fe136f324075b6c31524133f1c68c50682d3f920"
+  integrity sha512-MvXrtziVv+1zPl2azCmjHWPnzIEA0oSf8DJzIbnBBL2VFx/blayBlRii9LldFARjBoxJvq1ffUEqi78tP10Ajw==
   dependencies:
     ethers "^5.6.3"
     ts-mixer "^6.0.1"

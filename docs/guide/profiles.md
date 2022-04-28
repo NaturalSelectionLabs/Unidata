@@ -5,7 +5,7 @@ Profiles record the basic information of accounts, including the name, avatar, b
 **All returned profile data conform to the following specification:**
 
 ```ts
-type Profile = {
+type Profiles = {
     name?: string;
     avatars?: URI[];
     bio?: string;
@@ -34,7 +34,7 @@ type Profile = {
 
         [key: string]: any;
     };
-};
+}[];
 ```
 
 ## ENS
@@ -44,7 +44,7 @@ type Profile = {
 ### API
 
 ```js
-const profile: Profile = unidata.profiles.get('ENS', identity);
+const profiles: Profiles = unidata.profiles.get('ENS', identity);
 ```
 
 ### Live Demo
@@ -58,7 +58,7 @@ const profile: Profile = unidata.profiles.get('ENS', identity);
 ### API
 
 ```js
-const profile: Profile = unidata.profiles.get('Crossbell', identity);
+const profiles: Profiles = unidata.profiles.get('Crossbell', identity);
 ```
 
 ### Live Demo

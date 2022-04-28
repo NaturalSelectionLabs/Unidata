@@ -39,7 +39,7 @@ abstract class Base {
         };
     }
 
-    abstract get(identity: string): Promise<Profile | null>;
+    abstract get(identity: string): Promise<Profile[] | null>;
 }
 
 export default Base;

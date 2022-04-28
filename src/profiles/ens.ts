@@ -72,7 +72,7 @@ class ENS extends Base {
                     profile.connected_accounts = connected_accounts;
                 }
 
-                return profile;
+                return [profile];
             } else {
                 return null;
             }
