@@ -6,15 +6,15 @@ Assets are the properties owned by accounts, such as an NFT, a game achievement,
 
 ```ts
 type Assets = {
-    date_created: string;
-    date_updated: string;
+    date_created?: string;
+    date_updated?: string;
 
     related_urls?: string[];
 
     tags?: string[];
-    authors: AccountInstanceURI[];
-    title?: string;
-    summary?: string;
+    owners: AccountInstanceURI[];
+    name?: string;
+    description?: string;
     attachments?: {
         type?: string;
         content?: string;
@@ -23,7 +23,7 @@ type Assets = {
         size_in_bytes?: number;
     }[];
 
-    source: AssetSource;
+    source: AssetSource | NoteSource;
 
     metadata?: {
         network: Network;
@@ -53,5 +53,7 @@ options.source = 'Ethereum NFT';
 ```
 
 ### Live Demo
+
+TODO
 
 <Assets :source="'Ethereum NFT'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
