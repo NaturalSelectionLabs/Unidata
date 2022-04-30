@@ -11,6 +11,32 @@
                 class="input"
             />
         </div>
+        <div class="networks" v-for="(value, network) in networks" :key="network">
+            <p>Network: {{ network }}</p>
+            <el-row class="assets" :gutter="20">
+                <el-col
+                    class="asset"
+                    :span="12"
+                    v-loading="loading"
+                    v-for="asset in assets.filter((asset) => asset.metadata?.network === network)"
+                    :key="asset"
+                >
+                    <el-card class="asset-card">
+                        <div class="asset-body">
+                            <el-image
+                                style="width: 100px; height: 100px"
+                                :src="asset.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                                :fit="'cover'"
+                            />
+                            <div class="text">
+                                <div class="name">{{ asset.name }}</div>
+                                <div class="description">{{ asset.description }}</div>
+                            </div>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </div>
         <h5>Data:</h5>
         <pre>{{ JSON.stringify(assets, null, 4) }}</pre>
     </div>
@@ -34,6 +60,9 @@ const identity = ref(props.defaultIdentity);
 
 const loading = ref(true);
 const assets = ref([{}]);
+const networks = ref<{
+    [network: string]: boolean;
+}>({});
 
 watchEffect(async () => {
     if (identity.value) {
@@ -46,8 +75,14 @@ watchEffect(async () => {
             })
             .then((p: any) => {
                 assets.value = p;
-                console.log('assets.value', assets.value);
                 loading.value = false;
+
+                p.forEach((asset: Asset) => {
+                    if (asset.metadata?.network) {
+                        networks.value[asset.metadata.network] = true;
+                    }
+                });
+                console.log('networks', networks.value, assets.value);
             });
     }
 });
@@ -73,90 +108,36 @@ pre {
     font-size: 12px;
 }
 
-.asset-card {
-    position: relative;
+.asset {
+    margin-bottom: 20px;
 
-    .edit {
-        position: absolute;
-        top: 35px;
-        right: 40px;
-        cursor: pointer;
-        width: 20px;
-        height: 20px;
-        color: #555;
-    }
-
-    .info {
+    .asset-body {
         display: flex;
-
-        .avatar {
-            width: 150px;
-            height: 150px;
-            margin-right: 40px;
-
-            img {
-                width: 100%;
-                border-radius: 50%;
-            }
-        }
 
         .text {
             flex: 1;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
+            margin-left: 10px;
 
             .name {
+                font-size: 14px;
                 font-weight: bold;
-                font-size: 28px;
-                margin-bottom: 5px;
-
-                .handler {
-                    font-size: 14px;
-                    color: #999;
-                    margin-left: 10px;
-
-                    &:before {
-                        content: '@';
-                    }
-                }
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                word-break: break-all;
+                margin-bottom: 10px;
             }
 
-            .bio {
-                font-size: 14px;
-                color: #999;
-            }
-        }
-
-        .websites {
-            margin-top: 10px;
-
-            .svg-inline--fa {
-                width: 14px;
-                height: 14px;
-            }
-
-            ul {
-                padding: 0;
-                list-style: none;
-                margin: 0 0 -7px 0;
-            }
-
-            li {
-                display: inline-block;
-                margin-right: 20px;
-                background: rgba(200, 200, 200, 0.5);
-                padding: 5px 10px;
-                line-height: 16px;
-                font-size: 14px;
-                line-height: 14px;
-                border-radius: 14px;
-                margin-bottom: 7px;
-
-                a {
-                    color: #333;
-                    text-decoration: none;
-                }
+            .description {
+                font-size: 12px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                word-break: break-word;
             }
         }
     }
