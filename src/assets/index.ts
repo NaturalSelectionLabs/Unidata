@@ -1,6 +1,7 @@
 import Main from '../index';
 import Base from './base';
-import EthereumNFT from './ethereum-nft';
+import EthereumNFTMoralis from './ethereum-nft-moralis';
+import EthereumNFTOpensea from './ethereum-nft-opensea';
 
 export type AssetsOptions = {
     source: string;
@@ -10,17 +11,32 @@ export type AssetsOptions = {
 
 class Assets {
     map: {
-        [key: string]: Base;
+        [key: string]: {
+            [key: string]: Base;
+        };
     };
 
     constructor(main: Main) {
         this.map = {
-            'Ethereum NFT': new EthereumNFT(main),
+            'Ethereum NFT': {
+                Moralis: new EthereumNFTMoralis(main),
+                OpenSea: new EthereumNFTOpensea(main),
+            },
         };
     }
 
     async get(options: AssetsOptions) {
-        return this.map[options.source].get(options);
+        switch (options.source) {
+            case 'Ethereum NFT':
+                options = Object.assign(
+                    {
+                        provider: 'Moralis',
+                    },
+                    options,
+                );
+                break;
+        }
+        return this.map[options.source][options.provider!].get(options);
     }
 }
 

@@ -86,9 +86,13 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    provider: {
+        type: String,
+    },
 });
 
 const identity = ref(props.defaultIdentity);
+const provider = ref(props.provider);
 
 const loading = ref(true);
 const assets = ref([{}]);
@@ -104,6 +108,7 @@ watchEffect(async () => {
             ?.appContext.config.globalProperties.unidata.assets.get({
                 identity: identity.value,
                 source: props.source,
+                provider: provider.value,
             })
             .then((p: any) => {
                 assets.value = p;

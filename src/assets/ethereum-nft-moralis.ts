@@ -3,20 +3,12 @@ import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
 
-class EthereumNFT extends Base {
+class EthereumNFTMoralis extends Base {
     constructor(main: Main) {
         super(main);
     }
 
     async get(options: AssetsOptions) {
-        if (!options.provider || options.provider === 'Moralis') {
-            return await this.getMoralis(options);
-        } else {
-            throw new Error('Unknown provider');
-        }
-    }
-
-    async getMoralis(options: AssetsOptions) {
         if (!this.main.options.moralisWeb3APIKey) {
             throw new Error('Moralis Web3 API key is not set');
         }
@@ -128,15 +120,15 @@ class EthereumNFT extends Base {
                                 });
                             }
 
-                            if (metadata?.external_url) {
-                                asset.attachments!.push({
-                                    type: 'external_url',
-                                    content: metadata?.external_url,
-                                    mime_type: 'text/uri-list',
-                                });
+                            this.generateRelatedUrls(asset);
+
+                            if (metadata?.external_url || metadata?.external_link) {
+                                if (!asset.related_urls) {
+                                    asset.related_urls = [];
+                                }
+                                asset.related_urls.push(metadata?.external_url || metadata?.external_link);
                             }
 
-                            this.generateRelatedUrls(asset);
                             this.generateMimeType(asset);
 
                             return asset;
@@ -153,4 +145,4 @@ class EthereumNFT extends Base {
     }
 }
 
-export default EthereumNFT;
+export default EthereumNFTMoralis;

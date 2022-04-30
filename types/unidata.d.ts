@@ -86,7 +86,7 @@ type Note = {
         size_in_bytes?: number;
     }[];
 
-    source: AssetSource | NoteSource;
+    source: NoteSource;
 
     metadata?: {
         network: Network;
@@ -114,7 +114,7 @@ type Asset = {
         size_in_bytes?: number;
     }[];
 
-    source: AssetSource | NoteSource;
+    source: AssetSource;
 
     metadata?: {
         network: Network;

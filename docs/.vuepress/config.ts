@@ -42,7 +42,11 @@ module.exports = {
                 },
                 {
                     text: 'Assets',
-                    children: ['/guide/assets/README.md', '/guide/assets/Ethereum-NFT-Moralis.md'],
+                    children: [
+                        '/guide/assets/README.md',
+                        '/guide/assets/Ethereum-NFT-Moralis.md',
+                        '/guide/assets/Ethereum-NFT-OpenSea.md',
+                    ],
                 },
                 {
                     text: 'Notes',

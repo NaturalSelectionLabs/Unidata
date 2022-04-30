@@ -24,4 +24,4 @@ const assets: Assets = unidata.assets.get(options: {
 
 ## Live Demo
 
-<Assets :source="'Ethereum NFT'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
+<Assets :source="'Ethereum NFT'" :provider="'Moralis'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
