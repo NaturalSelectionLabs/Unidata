@@ -23,10 +23,39 @@
                 >
                     <el-card class="asset-card">
                         <div class="asset-body">
+                            <video
+                                style="width: 100px; height: 100px"
+                                :src="asset.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                                :fit="'cover'"
+                                v-if="
+                                    asset.attachments
+                                        .find((attachment) => attachment.type === 'preview')
+                                        ?.mime_type?.split('/')[0] === 'video'
+                                "
+                                autoplay
+                                loop
+                                muted
+                            />
+                            <model-viewer
+                                style="width: 100px; height: 100px"
+                                :src="asset.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                                ar
+                                ar-modes="webxr scene-viewer quick-look"
+                                seamless-poster
+                                shadow-intensity="1"
+                                camera-controls
+                                enable-pan
+                                v-else-if="
+                                    asset.attachments
+                                        .find((attachment) => attachment.type === 'preview')
+                                        ?.mime_type?.split('/')[0] === 'model'
+                                "
+                            ></model-viewer>
                             <el-image
                                 style="width: 100px; height: 100px"
                                 :src="asset.attachments.find((attachment) => attachment.type === 'preview')?.address"
                                 :fit="'cover'"
+                                v-else
                             />
                             <div class="text">
                                 <div class="name">{{ asset.name }}</div>
@@ -85,10 +114,14 @@ watchEffect(async () => {
                         networks.value[asset.metadata.network] = true;
                     }
                 });
-                console.log('networks', networks.value, assets.value);
             });
     }
 });
+
+let modelScript = document.createElement('script');
+modelScript.type = 'module';
+modelScript.setAttribute('src', 'https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer.min.js');
+document.head.appendChild(modelScript);
 </script>
 
 <style lang="less" scoped>

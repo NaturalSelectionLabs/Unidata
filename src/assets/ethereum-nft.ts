@@ -98,10 +98,11 @@ class EthereumNFT extends Base {
 
                                     collection_address: item.token_address,
                                     collection_name: item.name,
+
+                                    block_number_minted: item.block_number_minted,
+                                    block_number: item.block_number,
                                 },
                             };
-
-                            this.generateRelatedUrls(asset);
 
                             if (metadata?.image || metadata?.image_url) {
                                 asset.attachments!.push({
@@ -135,6 +136,9 @@ class EthereumNFT extends Base {
                                 });
                             }
 
+                            this.generateRelatedUrls(asset);
+                            this.generateMimeType(asset);
+
                             return asset;
                         }),
                     );
@@ -145,7 +149,7 @@ class EthereumNFT extends Base {
             }),
         );
 
-        return result;
+        return result.sort((a, b) => parseInt(b.metadata?.block_number || 0) - parseInt(a.metadata?.block_number || 0));
     }
 }
 

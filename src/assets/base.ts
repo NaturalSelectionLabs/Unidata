@@ -1,5 +1,6 @@
 import Main from '../index';
 import { AssetsOptions } from './index';
+import mime from 'mime';
 
 abstract class Base {
     main: Main;
@@ -37,6 +38,17 @@ abstract class Base {
                 }
                 break;
         }
+    }
+
+    generateMimeType(asset: Asset) {
+        asset.attachments?.forEach((attachment) => {
+            if (attachment.address) {
+                const mimeType = mime.getType(attachment.address);
+                if (mimeType) {
+                    attachment.mime_type = mimeType;
+                }
+            }
+        });
     }
 }
 
