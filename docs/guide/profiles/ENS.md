@@ -1,6 +1,8 @@
 # ENS
 
-[ENS](https://ens.domains/): Your web3 username, a name for all your cryptocurrency addresses, and decentralised websites.
+[ENS](https://ens.domains/) is an Ethereum name service that supports only a limited fields and features of profile.
+
+You can initialize with `ipfsGateway` and `infuraProjectID` to get potentially faster speed.
 
 ## API
 

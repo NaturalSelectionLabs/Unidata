@@ -2,6 +2,8 @@
 
 [Crossbell](https://github.com/Crossbell-Box/).
 
+You can initialize with `ipfsGateway` to get potentially faster speed.
+
 ## API
 
 ```ts

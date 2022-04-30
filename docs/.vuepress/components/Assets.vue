@@ -31,6 +31,9 @@
                             <div class="text">
                                 <div class="name">{{ asset.name }}</div>
                                 <div class="description">{{ asset.description }}</div>
+                                <a target="_blank" :href="url" v-for="url in asset.related_urls" :key="url">
+                                    <font-awesome-icon icon="link" />
+                                </a>
                             </div>
                         </div>
                     </el-card>
@@ -138,6 +141,13 @@ pre {
                 -webkit-line-clamp: 3;
                 -webkit-box-orient: vertical;
                 word-break: break-word;
+                margin-bottom: 10px;
+            }
+
+            a {
+                margin-right: 7px;
+                color: #555;
+                font-size: 14px;
             }
         }
     }

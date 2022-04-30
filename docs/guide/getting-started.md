@@ -32,8 +32,9 @@ const unidata = new Unidata({
 });
 ```
 
-| Parameter         | Default                   | Description                                  |
-| ----------------- | ------------------------- | -------------------------------------------- |
-| `platform`        | `'Ethereum'`              | The platform to use. Defaults to `Ethereum`. |
-| `infuraProjectID` | ethers default keys       | The PROJECT ID of the Infura to use.         |
-| `ipfsGateway`     | `'https://ipfs.io/ipfs/'` | The IPFS gateway to use.                     |
+| Parameter           | Default                   | Description                                  |
+| ------------------- | ------------------------- | -------------------------------------------- |
+| `platform`          | `'Ethereum'`              | The platform to use. Defaults to `Ethereum`. |
+| `infuraProjectID`   | ethers default keys       | The PROJECT ID of the Infura to use.         |
+| `ipfsGateway`       | `'https://ipfs.io/ipfs/'` | The IPFS gateway to use.                     |
+| `moralisWeb3APIKey` |                           | Account Web3 API Key of Moralis.             |
