@@ -1,7 +1,8 @@
 import Main from '../index';
 import Base from './base';
 import EthereumNFTMoralis from './ethereum-nft-moralis';
-import EthereumNFTOpensea from './ethereum-nft-opensea';
+import EthereumNFTOpenSea from './ethereum-nft-opensea';
+import EthereumNFTPOAP from './ethereum-nft-poap';
 
 export type AssetsOptions = {
     source: string;
@@ -20,7 +21,8 @@ class Assets {
         this.map = {
             'Ethereum NFT': {
                 Moralis: new EthereumNFTMoralis(main),
-                OpenSea: new EthereumNFTOpensea(main),
+                OpenSea: new EthereumNFTOpenSea(main),
+                POAP: new EthereumNFTPOAP(main),
             },
         };
     }

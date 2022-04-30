@@ -37,6 +37,14 @@ abstract class Base {
                     ];
                 }
                 break;
+            case 'Gnosis':
+                if (asset.metadata.token_id && asset.metadata.collection_address) {
+                    asset.related_urls = [
+                        `https://blockscout.com/xdai/mainnet/token/0x22c1f6050e56d2876009903609a2cc3fef83b415/instance/${asset.metadata.token_id}/token-transfers`,
+                        `https://app.poap.xyz/token/${asset.metadata.token_id}`,
+                    ];
+                }
+                break;
         }
     }
 

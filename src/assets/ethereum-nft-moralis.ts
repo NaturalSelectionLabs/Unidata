@@ -73,6 +73,7 @@ class EthereumNFTMoralis extends Base {
                             } catch (error) {}
 
                             const asset: Asset = {
+                                tags: ['NFT'],
                                 owners: item.owner_of || options.identity,
                                 name: metadata?.name || `${item.name} #${item.token_id}`,
                                 description: metadata?.description,

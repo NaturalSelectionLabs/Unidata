@@ -18,6 +18,7 @@ class EthereumNFTOpensea extends Base {
         });
         const assets: Asset[] = res.data?.assets.map((item: any) => {
             const asset: Asset = {
+                tags: ['NFT'],
                 owners: [item.owner.address],
                 name: item.name,
                 description: item.description,
