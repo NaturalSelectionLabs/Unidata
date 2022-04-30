@@ -82,7 +82,7 @@ type Note = {
         type?: string;
         content?: string;
         address?: URI;
-        mime_type: string;
+        mime_type?: string;
         size_in_bytes?: number;
     }[];
 
@@ -110,7 +110,7 @@ type Asset = {
         type?: string;
         content?: string;
         address?: URI;
-        mime_type: string;
+        mime_type?: string;
         size_in_bytes?: number;
     }[];
 

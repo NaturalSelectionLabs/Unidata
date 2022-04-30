@@ -3,34 +3,6 @@ import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
 
-type Asset = {
-    date_created?: string;
-    date_updated?: string;
-
-    related_urls?: string[];
-
-    tags?: string[];
-    owners: AccountInstanceURI[];
-    name?: string;
-    description?: string;
-    attachments?: {
-        type?: string;
-        content?: string;
-        address?: URI;
-        mime_type?: string;
-        size_in_bytes?: number;
-    }[];
-
-    source: AssetSource | NoteSource;
-
-    metadata?: {
-        network: Network;
-        proof: string;
-
-        [key: string]: any;
-    };
-};
-
 class EthereumNFT extends Base {
     constructor(main: Main) {
         super(main);
@@ -40,7 +12,7 @@ class EthereumNFT extends Base {
         if (!options.provider || options.provider === 'Moralis') {
             return await this.getMoralis(options);
         } else {
-            return [];
+            throw new Error('Unknown provider');
         }
     }
 
@@ -87,8 +59,6 @@ class EthereumNFT extends Base {
                         } catch (error) {}
 
                         const asset: Asset = {
-                            related_urls: [], // TODO
-
                             owners: item.owner_of || options.identity,
                             name: `${item.name} #${item.token_id}`,
                             description: metadata?.description,
@@ -108,6 +78,8 @@ class EthereumNFT extends Base {
                                 collection_name: item.name,
                             },
                         };
+
+                        this.generateRelatedUrls(asset);
 
                         if (metadata?.image) {
                             asset.attachments!.push({
