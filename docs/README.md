@@ -1,6 +1,5 @@
 ---
 home: true
-title: Home
 heroImage: /images/slogon.jpg
 actions:
     - text: Get Started

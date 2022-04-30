@@ -1,7 +1,7 @@
 {
     "name": "unidata.js",
     "version": "0.0.0",
-    "description": "Unify the Web3 data 💡🧶",
+    "description": "💡 Providing equitable access to human useable Web3 data.",
     "main": "./dist/unidata.umd.js",
     "module": "./dist/unidata.es.js",
     "files": [

@@ -2,6 +2,8 @@
     <img src="https://i.imgur.com/W3q4Vte.jpg" alt="Unidata" width="400">
 </p>
 
+> 💡 Providing equitable access to human useable Web3 data.
+
 <h1 align="center">Unidata</h1>
 
 [![](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord&style=flat-square)](https://discord.gg/ggrfhdS9Fe)
