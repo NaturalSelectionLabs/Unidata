@@ -31,10 +31,14 @@ class EthereumNFT extends Base {
             fantom: 'Fantom',
         };
         const url = `https://deep-index.moralis.io/api/v2/${options.identity}/nft`;
-        const responses = await Promise.all(
+        let result: Asset[] = [];
+        let resyncIndex = 1;
+
+        await Promise.all(
             chains.map(async (chain) => {
+                let response;
                 try {
-                    const response = await axios.get(url, {
+                    const res = await axios.get(url, {
                         params: {
                             chain,
                         },
@@ -42,80 +46,105 @@ class EthereumNFT extends Base {
                             'x-api-key': this.main.options.moralisWeb3APIKey!,
                         },
                     });
-                    return response.data?.result;
+                    response = res.data?.result;
                 } catch (error) {
-                    return [];
+                    response = [];
                 }
+
+                let list = [];
+                if (response && response.length) {
+                    list = await Promise.all(
+                        response.map(async (item: any) => {
+                            let metadata;
+                            try {
+                                if (item.metadata) {
+                                    metadata = JSON.parse(item.metadata);
+                                } else if (item.token_uri) {
+                                    setTimeout(() => {
+                                        axios.get(
+                                            `https://deep-index.moralis.io/api/v2/nft/${item.token_address}/${item.token_id}/metadata/resync`,
+                                            {
+                                                params: {
+                                                    chain,
+                                                    flag: 'metadata',
+                                                    mode: 'sync',
+                                                },
+                                                headers: {
+                                                    'x-api-key': this.main.options.moralisWeb3APIKey!,
+                                                },
+                                            },
+                                        );
+                                    }, resyncIndex * 10000);
+                                    resyncIndex++;
+                                    metadata = (await axios.get(item.token_uri)).data;
+                                }
+                            } catch (error) {}
+
+                            const asset: Asset = {
+                                owners: item.owner_of || options.identity,
+                                name: metadata?.name || `${item.name} #${item.token_id}`,
+                                description: metadata?.description,
+                                attachments: [],
+
+                                source: 'Ethereum NFT',
+
+                                metadata: {
+                                    network: networkMap[chain],
+                                    proof: `${item.token_address}-${item.token_id}`,
+
+                                    token_standard: `${item.contract_type.slice(0, 3)}-${item.contract_type.slice(3)}`,
+                                    token_id: item.token_id,
+                                    token_symbol: item.symbol,
+
+                                    collection_address: item.token_address,
+                                    collection_name: item.name,
+                                },
+                            };
+
+                            this.generateRelatedUrls(asset);
+
+                            if (metadata?.image || metadata?.image_url) {
+                                asset.attachments!.push({
+                                    type: 'preview',
+                                    address: this.main.utils.replaceIPFS(metadata?.image || metadata?.image_url),
+                                });
+                            }
+
+                            if (metadata?.animation_url || metadata?.image || metadata?.image_url) {
+                                asset.attachments!.push({
+                                    type: 'object',
+                                    address: this.main.utils.replaceIPFS(
+                                        metadata?.animation_url || metadata?.image || metadata?.image_url,
+                                    ),
+                                });
+                            }
+
+                            if (metadata?.attributes) {
+                                asset.attachments!.push({
+                                    type: 'attributes',
+                                    content: JSON.stringify(metadata?.attributes),
+                                    mime_type: 'text/json',
+                                });
+                            }
+
+                            if (metadata?.external_url) {
+                                asset.attachments!.push({
+                                    type: 'external_url',
+                                    content: metadata?.external_url,
+                                    mime_type: 'text/uri-list',
+                                });
+                            }
+
+                            return asset;
+                        }),
+                    );
+                }
+                result = result.concat(list);
+
+                return chain;
             }),
         );
-        let result: Asset[] = [];
-        responses.forEach((response, index) => {
-            if (response && response.length) {
-                result = result.concat(
-                    response.map((item: any) => {
-                        let metadata;
-                        try {
-                            metadata = JSON.parse(item.metadata);
-                        } catch (error) {}
 
-                        const asset: Asset = {
-                            owners: item.owner_of || options.identity,
-                            name: `${item.name} #${item.token_id}`,
-                            description: metadata?.description,
-                            attachments: [],
-
-                            source: 'Ethereum NFT',
-
-                            metadata: {
-                                network: networkMap[chains[index]],
-                                proof: `${item.token_address}-${item.token_id}`,
-
-                                token_standard: `${item.contract_type.slice(0, 3)}-${item.contract_type.slice(3)}`,
-                                token_id: item.token_id,
-                                token_symbol: item.symbol,
-
-                                collection_address: item.token_address,
-                                collection_name: item.name,
-                            },
-                        };
-
-                        this.generateRelatedUrls(asset);
-
-                        if (metadata?.image) {
-                            asset.attachments!.push({
-                                type: 'preview',
-                                address: this.main.utils.replaceIPFS(metadata?.image),
-                            });
-                        }
-
-                        if (metadata?.animation_url || metadata?.image) {
-                            asset.attachments!.push({
-                                type: 'object',
-                                address: this.main.utils.replaceIPFS(metadata?.animation_url || metadata?.image),
-                            });
-                        }
-
-                        if (metadata?.attributes) {
-                            asset.attachments!.push({
-                                type: 'attributes',
-                                content: JSON.stringify(metadata?.attributes),
-                                mime_type: 'text/json',
-                            });
-                        }
-
-                        if (metadata?.external_url) {
-                            asset.attachments!.push({
-                                type: 'external_url',
-                                content: metadata?.external_url,
-                                mime_type: 'text/uri-list',
-                            });
-                        }
-
-                        return asset;
-                    }),
-                );
-            }
-        });
         return result;
     }
 }
