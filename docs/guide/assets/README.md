@@ -1,8 +1,20 @@
-# 💎 Assets
+# Introduction
 
 Assets are the properties owned by accounts, such as an NFT, a game achievement, a physical figure, a commodity for sale, etc.
 
-**All returned assets data conform to the following specification:**
+## API
+
+```ts
+const assets: Assets = unidata.assets.get(options: {
+    source: string;
+    identity: string;
+    provider?: string;
+});
+```
+
+## Specification
+
+All returned data conform to the following specification.
 
 ```ts
 type Assets = {
@@ -33,25 +45,3 @@ type Assets = {
     };
 }[];
 ```
-
-**API:**
-
-```ts
-const assets: Assets = unidata.assets.get(options: {
-    source: string;
-    identity: string;
-    provider?: string;
-});
-```
-
-## Ethereum NFT - Moralis Provider
-
-[Ethereum NFT](https://ethereum.org/en/nft/).
-
-```js
-options.source = 'Ethereum NFT';
-```
-
-### Live Demo
-
-<Assets :source="'Ethereum NFT'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />

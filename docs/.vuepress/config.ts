@@ -33,8 +33,20 @@ module.exports = {
                     children: ['/guide/README.md', '/guide/getting-started.md'],
                 },
                 {
-                    text: 'Modules',
-                    children: ['/guide/profiles.md', '/guide/links.md', '/guide/assets.md', '/guide/notes.md'],
+                    text: 'Profiles',
+                    children: ['/guide/profiles/README.md', '/guide/profiles/ENS.md', '/guide/profiles/Crossbell.md'],
+                },
+                {
+                    text: 'Links',
+                    children: ['/guide/links/README.md', '/guide/links/CyberConnect.md'],
+                },
+                {
+                    text: 'Assets',
+                    children: ['/guide/assets/README.md', '/guide/assets/Ethereum-NFT-Moralis.md'],
+                },
+                {
+                    text: 'Notes',
+                    children: ['/guide/notes/README.md'],
                 },
             ],
         },
