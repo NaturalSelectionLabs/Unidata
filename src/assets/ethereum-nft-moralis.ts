@@ -22,7 +22,6 @@ class EthereumNFTMoralis extends Base {
             avalanche: 'Avalanche',
             fantom: 'Fantom',
         };
-        const url = `https://deep-index.moralis.io/api/v2/${options.identity}/nft`;
         let result: Asset[] = [];
         let resyncIndex = 1;
 
@@ -30,7 +29,7 @@ class EthereumNFTMoralis extends Base {
             chains.map(async (chain) => {
                 let response;
                 try {
-                    const res = await axios.get(url, {
+                    const res = await axios.get(`https://deep-index.moralis.io/api/v2/${options.identity}/nft`, {
                         params: {
                             chain,
                         },
@@ -74,7 +73,7 @@ class EthereumNFTMoralis extends Base {
 
                             const asset: Asset = {
                                 tags: ['NFT'],
-                                owners: item.owner_of || options.identity,
+                                owners: [item.owner_of || options.identity],
                                 name: metadata?.name || `${item.name} #${item.token_id}`,
                                 description: metadata?.description,
                                 attachments: [],

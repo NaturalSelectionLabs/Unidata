@@ -6,7 +6,7 @@
                 v-model="identity"
                 placeholder="Please input ethereum address"
                 clearable
-                maxlength="42"
+                :maxlength="source === 'Solana NFT' ? 44 : 42"
                 show-word-limit
                 class="input"
             />

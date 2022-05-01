@@ -45,6 +45,11 @@ abstract class Base {
                     ];
                 }
                 break;
+            case 'Solana':
+                if (asset.metadata.token_id) {
+                    asset.related_urls = [`https://solscan.io/token/${asset.metadata.token_id}`];
+                }
+                break;
         }
     }
 
@@ -54,6 +59,11 @@ abstract class Base {
                 const mimeType = mime.getType(attachment.address);
                 if (mimeType) {
                     attachment.mime_type = mimeType;
+                } else if (new URL(attachment.address).searchParams.get('ext')) {
+                    const mimeType = mime.getType(new URL(attachment.address).searchParams.get('ext')!);
+                    if (mimeType) {
+                        attachment.mime_type = mimeType;
+                    }
                 }
             }
         });

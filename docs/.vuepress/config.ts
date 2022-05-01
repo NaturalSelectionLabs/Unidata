@@ -47,6 +47,7 @@ module.exports = {
                         '/guide/assets/Ethereum-NFT-Moralis.md',
                         '/guide/assets/Ethereum-NFT-OpenSea.md',
                         '/guide/assets/Ethereum-NFT-POAP.md',
+                        '/guide/assets/Solana-NFT-Moralis.md',
                     ],
                 },
                 {
