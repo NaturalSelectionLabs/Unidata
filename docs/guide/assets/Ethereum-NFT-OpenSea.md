@@ -1,7 +1,7 @@
 # Ethereum NFT - OpenSea
 
 ::: tip
-You can use OpenSea API for free, and you can request an API Key for more frequent requests.
+You can use OpenSea API for free (4 requests / second), and you can request an API Key for more frequent requests.
 :::
 
 [Ethereum NFT](https://ethereum.org/en/nft/) is a kind of token on Ethereum with a chaotic specification. They can be normalized through Unidata now.

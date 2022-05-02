@@ -1,7 +1,7 @@
 # Ethereum NFT - POAP
 
 ::: tip
-You can use POAP API for free.
+You can use POAP API for free (no rate limit disclosed).
 :::
 
 [Ethereum NFT](https://ethereum.org/en/nft/) is a kind of token on Ethereum with a chaotic specification. They can be normalized through Unidata now.

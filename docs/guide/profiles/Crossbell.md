@@ -1,7 +1,7 @@
 # Crossbell
 
 ::: tip
-You can use Crossbell API for free.
+You can use Crossbell API for free (no rate limit disclosed).
 :::
 
 [Crossbell](https://github.com/Crossbell-Box/).

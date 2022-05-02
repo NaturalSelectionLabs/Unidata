@@ -30,7 +30,7 @@ module.exports = {
             '/guide/': [
                 {
                     text: 'Guide',
-                    children: ['/guide/README.md', '/guide/getting-started.md'],
+                    children: ['/guide/README.md'],
                 },
                 {
                     text: 'Profiles',

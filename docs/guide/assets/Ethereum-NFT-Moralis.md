@@ -1,7 +1,7 @@
 # Ethereum NFT - Moralis
 
 ::: warning
-You can only use the Moralis API for free for testing, you need to pay for the production use.
+You can use Moralis API for free (5 requests per second per key), and you can pay for more frequent requests.
 You need to register a Moralis account to use it.
 :::
 

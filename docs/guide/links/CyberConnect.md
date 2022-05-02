@@ -1,7 +1,7 @@
 # CyberConnect
 
 ::: tip
-You can use CyberConnect API for free.
+You can use CyberConnect API for free (no rate limit disclosed).
 :::
 
 [CyberConnect](https://cyberconnect.me).

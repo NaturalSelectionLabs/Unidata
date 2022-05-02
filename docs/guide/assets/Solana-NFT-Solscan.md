@@ -1,7 +1,7 @@
 # Solana NFT - Solscan
 
 ::: tip
-You can use Solscan API for free.
+You can use Solscan API for free (150 requests / 30 seconds, 100,000 requests / day).
 :::
 
 [Solana NFT / Metaplex](https://docs.metaplex.com/) is a kind of token on Solana.

@@ -2,9 +2,29 @@
     // brand colors
     --c-brand: #fecc02 !important;
     --c-brand-light: #fecc02 !important;
-    --c-text-accent: #fecc02 !important;
+    --c-text-accent: #f08d49 !important;
     --back-to-top-color: #fecc02 !important;
     --back-to-top-color-hover: #fecc02 !important;
 
     --el-color-primary: #fecc02 !important;
+}
+
+.grid {
+    display: grid;
+    row-gap: 3rem;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    column-gap: 60px;
+    align-items: center;
+    margin: 40px 0;
+    text-align: center;
+
+    a {
+        width: 100%;
+        display: inline-block;
+    }
+
+    img {
+        vertical-align: middle;
+        max-height: 40px;
+    }
 }
