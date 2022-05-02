@@ -25,7 +25,7 @@ footer: MIT Licensed
 
 ## Supported Sources
 
-#### Profiles
+### Profiles
 
 <p class="grid">
     <span><a target="_blank" href="https://ens.domains/"><img alt="ENS" src="/images/sources/ens.svg"></a></span>
@@ -33,22 +33,22 @@ footer: MIT Licensed
     <span><a target="_blank" href="https://infura.io/"><img alt="Infura" src="/images/sources/infura.svg"></a></span>
 </p>
 
-| Source                                         | Provider                                   | Docs                                                   |
-| ---------------------------------------------- | ------------------------------------------ | ------------------------------------------------------ |
-| [ENS](https://ens.domains/)                    | [Infura](https://infura.io/)               | [profiles/ENS.md](./guide/profiles/ENS.md)             |
-| [Crossbell](https://github.com/Crossbell-Box/) | [Crossbell RPC](https://api.cybertino.io/) | [profiles/Crossbell.md](./guide/profiles/Crossbell.md) |
+| Source                                         | Provider                                   | Docs                                                  |
+| ---------------------------------------------- | ------------------------------------------ | ----------------------------------------------------- |
+| [ENS](https://ens.domains/)                    | [Infura](https://infura.io/)               | [profiles/ENS.md](/guide/profiles/ENS.md)             |
+| [Crossbell](https://github.com/Crossbell-Box/) | [Crossbell RPC](https://api.cybertino.io/) | [profiles/Crossbell.md](/guide/profiles/Crossbell.md) |
 
-#### Links
+### Links
 
 <p class="grid">
     <span><a target="_blank" href="https://cyberconnect.me/"><img alt="CyberConnect" src="/images/sources/cyberconnect.svg"></a></span>
 </p>
 
-| Source                                   | Provider                                                                    | Docs                                                   |
-| ---------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------ |
-| [CyberConnect](https://cyberconnect.me/) | [CyberConnect API](https://docs.cyberconnect.me/cyberconnect-api/overview/) | [links/CyberConnect.md](./guide/links/CyberConnect.md) |
+| Source                                   | Provider                                                                    | Docs                                                  |
+| ---------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------- |
+| [CyberConnect](https://cyberconnect.me/) | [CyberConnect API](https://docs.cyberconnect.me/cyberconnect-api/overview/) | [links/CyberConnect.md](/guide/links/CyberConnect.md) |
 
-#### Assets
+### Assets
 
 <p class="grid">
     <span><a target="_blank" href="https://ethereum.org/"><img alt="Ethereum" src="/images/sources/ethereum.png"></a></span>
@@ -63,14 +63,14 @@ footer: MIT Licensed
     <span><a target="_blank" href="https://solscan.io/"><img alt="Solscan" src="/images/sources/solscan.svg"></a></span>
 </p>
 
-| Source                                       | Provider                       | Docs                                                                     |
-| -------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------ |
-| [Ethereum NFT](https://ethereum.org/en/nft/) | [Moralis](https://moralis.io/) | [assets/Ethereum-NFT-Moralis.md](./guide/assets/Ethereum-NFT-Moralis.md) |
-| [Ethereum NFT](https://ethereum.org/en/nft/) | [OpenSea](https://opensea.io/) | [assets/Ethereum-NFT-OpenSea.md](./guide/assets/Ethereum-NFT-OpenSea.md) |
-| [Ethereum NFT](https://ethereum.org/en/nft/) | [POAP](https://poap.xyz/)      | [assets/Ethereum-NFT-POAP.md](./guide/assets/Ethereum-NFT-POAP.md)       |
-| [Solana NFT](https://solana.com/nft/)        | [Solscan](https://solscan.io/) | [assets/Solana-NFT-Solscan.md](./guide/assets/Solana-NFT-Solscan.md)     |
-| [Solana NFT](https://solana.com/nft/)        | [Moralis](https://moralis.io/) | [assets/Solana-NFT-Moralis.md](./guide/assets/Solana-NFT-Moralis.md)     |
+| Source                                       | Provider                       | Docs                                                                    |
+| -------------------------------------------- | ------------------------------ | ----------------------------------------------------------------------- |
+| [Ethereum NFT](https://ethereum.org/en/nft/) | [Moralis](https://moralis.io/) | [assets/Ethereum-NFT-Moralis.md](/guide/assets/Ethereum-NFT-Moralis.md) |
+| [Ethereum NFT](https://ethereum.org/en/nft/) | [OpenSea](https://opensea.io/) | [assets/Ethereum-NFT-OpenSea.md](/guide/assets/Ethereum-NFT-OpenSea.md) |
+| [Ethereum NFT](https://ethereum.org/en/nft/) | [POAP](https://poap.xyz/)      | [assets/Ethereum-NFT-POAP.md](/guide/assets/Ethereum-NFT-POAP.md)       |
+| [Solana NFT](https://solana.com/nft/)        | [Solscan](https://solscan.io/) | [assets/Solana-NFT-Solscan.md](/guide/assets/Solana-NFT-Solscan.md)     |
+| [Solana NFT](https://solana.com/nft/)        | [Moralis](https://moralis.io/) | [assets/Solana-NFT-Moralis.md](/guide/assets/Solana-NFT-Moralis.md)     |
 
-#### Notes
+### Notes
 
 TODO
