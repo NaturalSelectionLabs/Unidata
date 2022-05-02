@@ -8,7 +8,7 @@ You can use Infura API for free (25 requests / seconds, 10,000,000 requests / mo
 
 [ENS](https://ens.domains/) is an Ethereum name service that supports only a limited fields and features of profile.
 
-You can initialize with `ipfsGateway` and `infuraProjectID` to get potentially faster speed.
+You can initialize with `ipfsGateway` and `infuraProjectID` to get potentially faster response or higher stability.
 
 ## API
 

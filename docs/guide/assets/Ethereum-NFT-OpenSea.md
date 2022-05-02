@@ -10,7 +10,7 @@ You can use OpenSea API for free (4 requests / second), and you can request an A
 
 [OpenSea](https://opensea.io/) provides APIs to access to Ethereum NFTs, supporting Ethereum mainnet only.
 
-You can initialize with `ipfsGateway` to get potentially faster speed.
+You can initialize with `ipfsGateway` and `openseaAPIKey` to get potentially faster response or higher stability.
 
 It returns not only the NFTs on the chain, but also the fake NFTs stored in the Opensea centralized database that the user minted on the Opensea platform.
 

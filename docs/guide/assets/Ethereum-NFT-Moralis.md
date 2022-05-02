@@ -11,7 +11,7 @@ You need to register a Moralis account to use it.
 
 [Moralis](https://moralis.io/) provides APIs to easy access to Ethereum NFTs, supporting Ethereum mainnet, Polygon, Binance Smart Chain, Avalanche, Fantom.
 
-You can initialize with `ipfsGateway` to get potentially faster speed.
+You can initialize with `ipfsGateway` to get potentially faster response or higher stability.
 
 You must initialize with `moralisWeb3APIKey` to use, which will expose your Moralis api key on the front end. The steps to get the key after registration are as follows:
 

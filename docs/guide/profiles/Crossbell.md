@@ -8,7 +8,7 @@ You can use Crossbell API for free (no rate limit disclosed).
 
 [Crossbell](https://github.com/Crossbell-Box/).
 
-You can initialize with `ipfsGateway` to get potentially faster speed.
+You can initialize with `ipfsGateway` to get potentially faster response or higher stability.
 
 ## API
 

@@ -7,7 +7,7 @@ actions:
       type: primary
 features:
     - title: Transparent
-      details: All logic is done on the front end and open sourced.
+      details: All logic is transparent and open sourced.
     - title: Decentralized
       details: All data is from Web3 welcomed decentralized platforms.
     - title: Modularized

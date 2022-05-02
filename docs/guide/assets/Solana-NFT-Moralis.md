@@ -21,7 +21,7 @@ You must initialize with `moralisWeb3APIKey` to use, which will expose your Mora
 const assets: Assets = unidata.assets.get(options: {
     source: 'Solana NFT';
     identity: string;
-    provider?: 'Moralis';
+    provider: 'Moralis';
 });
 ```
 
