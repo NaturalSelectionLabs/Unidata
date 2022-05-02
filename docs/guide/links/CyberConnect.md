@@ -1,5 +1,9 @@
 # CyberConnect
 
+::: tip
+You can use CyberConnect API for free.
+:::
+
 [CyberConnect](https://cyberconnect.me).
 
 ## API

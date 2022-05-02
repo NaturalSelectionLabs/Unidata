@@ -1,5 +1,9 @@
 # ENS
 
+::: tip
+You can use Infura API for free, and you can pay for more frequent requests.
+:::
+
 [ENS](https://ens.domains/) is an Ethereum name service that supports only a limited fields and features of profile.
 
 You can initialize with `ipfsGateway` and `infuraProjectID` to get potentially faster speed.

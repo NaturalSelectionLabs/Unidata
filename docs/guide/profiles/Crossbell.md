@@ -1,5 +1,9 @@
 # Crossbell
 
+::: tip
+You can use Crossbell API for free.
+:::
+
 [Crossbell](https://github.com/Crossbell-Box/).
 
 You can initialize with `ipfsGateway` to get potentially faster speed.

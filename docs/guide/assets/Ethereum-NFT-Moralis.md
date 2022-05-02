@@ -1,5 +1,10 @@
 # Ethereum NFT - Moralis
 
+::: warning
+You can only use the Moralis API for free for testing, you need to pay for the production use.
+You need to register a Moralis account to use it.
+:::
+
 [Ethereum NFT](https://ethereum.org/en/nft/) is a kind of token on Ethereum with a chaotic specification. They can be normalized through Unidata now.
 
 [Moralis](https://moralis.io/) provides APIs to easy access to Ethereum NFTs, supporting Ethereum mainnet, Polygon, Binance Smart Chain, Avalanche, Fantom.

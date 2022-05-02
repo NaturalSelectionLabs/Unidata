@@ -1,5 +1,9 @@
 # Solana NFT - Solscan
 
+::: tip
+You can use Solscan API for free.
+:::
+
 [Solana NFT / Metaplex](https://docs.metaplex.com/) is a kind of token on Solana.
 
 ## API

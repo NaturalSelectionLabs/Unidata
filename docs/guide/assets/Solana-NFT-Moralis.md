@@ -1,5 +1,14 @@
 # Solana NFT - Moralis
 
+::: warning
+You can only use the Moralis API for free for testing, you need to pay for the production use.
+You need to register a Moralis account to use it.
+:::
+
+::: warning
+Moralis API is not available for some Solana NFTs for unknown reason.
+:::
+
 [Solana NFT / Metaplex](https://docs.metaplex.com/) is a kind of token on Solana.
 
 [Moralis](https://moralis.io/) provides APIs to easy access to Solana NFTs.
