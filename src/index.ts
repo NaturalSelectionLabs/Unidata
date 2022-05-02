@@ -8,6 +8,7 @@ type IOptions = {
     infuraProjectID?: string;
     ipfsGateway?: string;
     moralisWeb3APIKey?: string;
+    openseaAPIKey?: string;
 };
 
 class Unidata {

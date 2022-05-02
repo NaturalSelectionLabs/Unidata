@@ -15,6 +15,9 @@ class EthereumNFTOpensea extends Base {
                 owner: options.identity,
                 limit: 50,
             },
+            headers: {
+                'x-api-key': this.main.options.openseaAPIKey || '',
+            },
         });
         const assets: Asset[] = res.data?.assets.map((item: any) => {
             const asset: Asset = {
