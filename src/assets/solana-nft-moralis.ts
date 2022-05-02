@@ -55,7 +55,6 @@ class SolanaNFTMoralis extends Base {
                         token_id: item.mint,
                         token_symbol: metadata.symbol || moralisdata.symbol,
 
-                        // collection_address: metadata.collection.name,
                         collection_name: metadata.collection?.name,
                     },
                 };
@@ -83,6 +82,14 @@ class SolanaNFTMoralis extends Base {
                 }
 
                 this.generateRelatedUrls(asset);
+
+                if (metadata.external_url) {
+                    if (!asset.related_urls) {
+                        asset.related_urls = [];
+                    }
+                    asset.related_urls.push(metadata.external_url);
+                }
+
                 this.generateMimeType(asset);
 
                 return asset;

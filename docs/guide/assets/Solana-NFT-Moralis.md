@@ -4,7 +4,7 @@
 
 [Moralis](https://moralis.io/) provides APIs to easy access to Solana NFTs.
 
-You must initialize with `moralisWeb3APIKey` to use. The steps to get the key after registration are as follows:
+You must initialize with `moralisWeb3APIKey` to use, which will expose your Moralis api key on the front end. The steps to get the key after registration are as follows:
 
 ![](https://i.imgur.com/wXPAPfm.png)
 

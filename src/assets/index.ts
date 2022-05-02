@@ -3,6 +3,7 @@ import Base from './base';
 import EthereumNFTMoralis from './ethereum-nft-moralis';
 import EthereumNFTOpenSea from './ethereum-nft-opensea';
 import EthereumNFTPOAP from './ethereum-nft-poap';
+import SolanaNFTSolscan from './solana-nft-solscan';
 import SolanaNFTMoralis from './solana-nft-moralis';
 
 export type AssetsOptions = {
@@ -26,6 +27,7 @@ class Assets {
                 POAP: new EthereumNFTPOAP(main),
             },
             'Solana NFT': {
+                Solscan: new SolanaNFTSolscan(main),
                 Moralis: new SolanaNFTMoralis(main),
             },
         };
