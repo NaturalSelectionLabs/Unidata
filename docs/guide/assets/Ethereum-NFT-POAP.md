@@ -1,5 +1,7 @@
 # Ethereum NFT - POAP
 
+<Logos :names="['POAP']" />
+
 ::: tip
 You can use POAP API for free (no rate limit disclosed).
 :::

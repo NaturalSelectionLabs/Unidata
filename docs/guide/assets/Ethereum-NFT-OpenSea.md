@@ -1,5 +1,7 @@
 # Ethereum NFT - OpenSea
 
+<Logos :names="['Ethereum', 'OpenSea']" />
+
 ::: tip
 You can use OpenSea API for free (4 requests / second), and you can request an API Key for more frequent requests.
 :::

@@ -46,7 +46,7 @@ class Assets {
             case 'Solana NFT':
                 options = Object.assign(
                     {
-                        provider: 'Moralis',
+                        provider: 'Solscan',
                     },
                     options,
                 );

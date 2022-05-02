@@ -1,5 +1,7 @@
 # Solana NFT - Moralis
 
+<Logos :names="['Solana', 'Moralis']" />
+
 ::: warning
 You can use Moralis API for free (5 requests per second per key), and you can pay for more frequent requests.
 You need to register a Moralis account to use it.

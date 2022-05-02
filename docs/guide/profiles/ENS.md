@@ -1,5 +1,7 @@
 # ENS
 
+<Logos :names="['ENS', 'Infura']" />
+
 ::: tip
 You can use Infura API for free (25 requests / seconds, 10,000,000 requests / month), and you can pay for more frequent requests.
 :::

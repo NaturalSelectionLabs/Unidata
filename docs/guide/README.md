@@ -43,11 +43,7 @@ const unidata = new Unidata({
 
 ### Profiles
 
-<p class="grid">
-    <span><a target="_blank" href="https://ens.domains/"><img alt="ENS" src="/images/sources/ens.svg"></a></span>
-    <span><a target="_blank" href="">Crossbell</a></span>
-    <span><a target="_blank" href="https://infura.io/"><img alt="Infura" src="/images/sources/infura.svg"></a></span>
-</p>
+<Logos type="Profiles" />
 
 | Source                                         | Provider                                   | Docs                                                  |
 | ---------------------------------------------- | ------------------------------------------ | ----------------------------------------------------- |
@@ -56,9 +52,7 @@ const unidata = new Unidata({
 
 ### Links
 
-<p class="grid">
-    <span><a target="_blank" href="https://cyberconnect.me/"><img alt="CyberConnect" src="/images/sources/cyberconnect.svg"></a></span>
-</p>
+<Logos type="Links" />
 
 | Source                                   | Provider                                                                    | Docs                                                  |
 | ---------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------- |
@@ -66,18 +60,7 @@ const unidata = new Unidata({
 
 ### Assets
 
-<p class="grid">
-    <span><a target="_blank" href="https://ethereum.org/"><img alt="Ethereum" src="/images/sources/ethereum.png"></a></span>
-    <span><a target="_blank" href="https://polygon.technology/"><img alt="Polygon" src="/images/sources/polygon.svg"></a></span>
-    <span><a target="_blank" href="https://www.binance.org/en"><img alt="Binance Smart Chain" src="/images/sources/bsc.svg"></a></span>
-    <span><a target="_blank" href="https://arbitrum.io/"><img alt="Arbitrum" src="/images/sources/arbitrum.jpeg"></a></span>
-    <span><a target="_blank" href="https://fantom.foundation/"><img alt="Fantom" src="/images/sources/fantom.svg"></a></span>
-    <span><a target="_blank" href="https://poap.xyz/"><img alt="POAP" src="/images/sources/poap.svg"></a></span>
-    <span><a target="_blank" href="https://solana.com/"><img alt="Solana" src="/images/sources/solana.svg"></a></span>
-    <span><a target="_blank" href="https://moralis.io/"><img alt="Moralis" src="/images/sources/moralis.svg"></a></span>
-    <span><a target="_blank" href="https://opensea.io/"><img alt="OpenSea" src="/images/sources/opensea.svg"></a></span>
-    <span><a target="_blank" href="https://solscan.io/"><img alt="Solscan" src="/images/sources/solscan.svg"></a></span>
-</p>
+<Logos type="Assets" />
 
 | Source                                       | Provider                       | Docs                                                                    |
 | -------------------------------------------- | ------------------------------ | ----------------------------------------------------------------------- |
