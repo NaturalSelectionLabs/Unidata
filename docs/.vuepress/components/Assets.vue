@@ -11,63 +11,71 @@
                 class="input"
             />
         </div>
-        <div class="networks" v-for="(value, network) in networks" :key="network">
-            <p>Network: {{ network }}</p>
-            <el-row class="assets" :gutter="20">
-                <el-col
-                    class="asset"
-                    :span="12"
-                    v-loading="loading"
-                    v-for="asset in assets.filter((asset) => asset.metadata?.network === network)"
-                    :key="asset"
-                >
-                    <el-card class="asset-card">
-                        <div class="asset-body">
-                            <video
-                                style="width: 100px; height: 100px"
-                                :src="asset.attachments.find((attachment) => attachment.type === 'preview')?.address"
-                                :fit="'cover'"
-                                v-if="
-                                    asset.attachments
-                                        .find((attachment) => attachment.type === 'preview')
-                                        ?.mime_type?.split('/')[0] === 'video'
-                                "
-                                autoplay
-                                loop
-                                muted
-                            />
-                            <model-viewer
-                                style="width: 100px; height: 100px"
-                                :src="asset.attachments.find((attachment) => attachment.type === 'preview')?.address"
-                                ar
-                                ar-modes="webxr scene-viewer quick-look"
-                                seamless-poster
-                                shadow-intensity="1"
-                                camera-controls
-                                enable-pan
-                                v-else-if="
-                                    asset.attachments
-                                        .find((attachment) => attachment.type === 'preview')
-                                        ?.mime_type?.split('/')[0] === 'model'
-                                "
-                            ></model-viewer>
-                            <el-image
-                                style="width: 100px; height: 100px"
-                                :src="asset.attachments.find((attachment) => attachment.type === 'preview')?.address"
-                                :fit="'cover'"
-                                v-else
-                            />
-                            <div class="text">
-                                <div class="name">{{ asset.name }}</div>
-                                <div class="description">{{ asset.description }}</div>
-                                <a target="_blank" :href="url" v-for="url in asset.related_urls" :key="url">
-                                    <font-awesome-icon icon="link" />
-                                </a>
+        <div class="loading-wrap" v-loading="loading">
+            <div class="networks" v-for="(value, network) in networks" :key="network">
+                <p>Network: {{ network }}</p>
+                <el-row class="assets" :gutter="20">
+                    <el-col
+                        class="asset"
+                        :span="12"
+                        v-loading="loading"
+                        v-for="asset in assets.filter((asset) => asset.metadata?.network === network)"
+                        :key="asset"
+                    >
+                        <el-card class="asset-card">
+                            <div class="asset-body">
+                                <video
+                                    style="width: 100px; height: 100px"
+                                    :src="
+                                        asset.attachments.find((attachment) => attachment.type === 'preview')?.address
+                                    "
+                                    :fit="'cover'"
+                                    v-if="
+                                        asset.attachments
+                                            .find((attachment) => attachment.type === 'preview')
+                                            ?.mime_type?.split('/')[0] === 'video'
+                                    "
+                                    autoplay
+                                    loop
+                                    muted
+                                />
+                                <model-viewer
+                                    style="width: 100px; height: 100px"
+                                    :src="
+                                        asset.attachments.find((attachment) => attachment.type === 'preview')?.address
+                                    "
+                                    ar
+                                    ar-modes="webxr scene-viewer quick-look"
+                                    seamless-poster
+                                    shadow-intensity="1"
+                                    camera-controls
+                                    enable-pan
+                                    v-else-if="
+                                        asset.attachments
+                                            .find((attachment) => attachment.type === 'preview')
+                                            ?.mime_type?.split('/')[0] === 'model'
+                                    "
+                                ></model-viewer>
+                                <el-image
+                                    style="width: 100px; height: 100px"
+                                    :src="
+                                        asset.attachments.find((attachment) => attachment.type === 'preview')?.address
+                                    "
+                                    :fit="'cover'"
+                                    v-else
+                                />
+                                <div class="text">
+                                    <div class="name">{{ asset.name }}</div>
+                                    <div class="description">{{ asset.description }}</div>
+                                    <a target="_blank" :href="url" v-for="url in asset.related_urls" :key="url">
+                                        <font-awesome-icon icon="link" />
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    </el-card>
-                </el-col>
-            </el-row>
+                        </el-card>
+                    </el-col>
+                </el-row>
+            </div>
         </div>
         <h5>Data:</h5>
         <pre>{{ JSON.stringify(assets, null, 4) }}</pre>
@@ -147,6 +155,10 @@ document.head.appendChild(modelScript);
 pre {
     padding: 0;
     font-size: 12px;
+}
+
+.loading-wrap {
+    min-height: 50px;
 }
 
 .asset {
