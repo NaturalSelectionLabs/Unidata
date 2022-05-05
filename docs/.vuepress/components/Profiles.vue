@@ -11,6 +11,13 @@
                 class="input"
             />
         </div>
+        <h5>Code</h5>
+        <pre class="code"><code>{{ `const profiles: Profiles = unidata.profiles.get({
+    source: '${props.source}',
+    identity: '${identity}',${providers ? `
+    providers: ${JSON.stringify(providers)},` : ''}
+});`}}</code></pre>
+        <h5>View</h5>
         <el-card class="profile-card" v-loading="loading" v-for="profile in profiles" :key="profile">
             <font-awesome-icon class="edit" icon="pen-to-square" />
             <div class="info">
@@ -83,25 +90,6 @@ watchEffect(async () => {
 </script>
 
 <style lang="less" scoped>
-.input-wrap {
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
-
-    label {
-        margin-right: 10px;
-    }
-
-    .input {
-        width: 450px;
-    }
-}
-
-pre {
-    padding: 0;
-    font-size: 12px;
-}
-
 .profile-card {
     position: relative;
 

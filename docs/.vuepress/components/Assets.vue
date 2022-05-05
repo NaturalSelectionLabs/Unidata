@@ -11,6 +11,13 @@
                 class="input"
             />
         </div>
+        <h5>Code</h5>
+        <pre class="code"><code>{{ `const assets: Assets = unidata.assets.get({
+    source: '${props.source}',
+    identity: '${identity}',${providers ? `
+    providers: ${JSON.stringify(providers)},` : ''}
+});`}}</code></pre>
+        <h5>View</h5>
         <div class="loading-wrap" v-loading="loading">
             <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange"
                 >Check all networks</el-checkbox
@@ -70,8 +77,8 @@
                 </el-col>
             </el-row>
         </div>
-        <h5>Data:</h5>
-        <pre>{{ JSON.stringify(assets, null, 4) }}</pre>
+        <h5>Data</h5>
+        <pre class="data">{{ JSON.stringify(assets, null, 4) }}</pre>
     </div>
 </template>
 
@@ -88,7 +95,7 @@ const props = defineProps({
         required: true,
     },
     providers: {
-        type: String,
+        type: Array,
     },
 });
 
@@ -160,25 +167,6 @@ document.head.appendChild(modelScript);
 </script>
 
 <style lang="less" scoped>
-.input-wrap {
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
-
-    label {
-        margin-right: 10px;
-    }
-
-    .input {
-        width: 450px;
-    }
-}
-
-pre {
-    padding: 0;
-    font-size: 12px;
-}
-
 .loading-wrap {
     min-height: 50px;
 }

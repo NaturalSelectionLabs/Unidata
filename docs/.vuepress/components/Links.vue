@@ -15,6 +15,13 @@
             <label>Limitation: </label>
             5
         </div>
+        <h5>Code</h5>
+        <pre class="code"><code>{{ `const links: Links = unidata.links.get({
+    source: '${props.source}',
+    identity: '${identity}',${providers ? `
+    providers: ${JSON.stringify(providers)},` : ''}
+});`}}</code></pre>
+        <h5>View</h5>
         <el-card class="links-card" v-loading="loading">
             <div class="list">
                 <div class="follow follow-left">
@@ -33,7 +40,7 @@
                 </div>
             </div>
         </el-card>
-        <h5>Data:</h5>
+        <h5>Data</h5>
         <pre>{{ JSON.stringify(links, null, 4) }}</pre>
         <pre>{{ JSON.stringify(backlinks, null, 4) }}</pre>
     </div>
@@ -91,25 +98,6 @@ watchEffect(async () => {
 </script>
 
 <style lang="less" scoped>
-.input-wrap {
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
-
-    label {
-        margin-right: 10px;
-    }
-
-    .input {
-        width: 450px;
-    }
-}
-
-pre {
-    padding: 0;
-    font-size: 12px;
-}
-
 .links-card {
     position: relative;
 
