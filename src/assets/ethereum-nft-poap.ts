@@ -12,8 +12,6 @@ class EthereumNFTPOAP extends Base {
         const res = await axios.get(`https://api.poap.tech/actions/scan/${options.identity}`);
         const assets: Asset[] = res.data?.map((item: any) => {
             const asset: Asset = {
-                date_created: new Date(item.created).toISOString(),
-
                 tags: ['NFT', 'POAP'],
                 owners: [item.owner],
                 name: item.event.name,
