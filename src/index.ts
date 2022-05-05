@@ -9,6 +9,7 @@ type IOptions = {
     ipfsGateway?: string;
     moralisWeb3APIKey?: string;
     openseaAPIKey?: string;
+    alchemyAPIKey?: string;
 };
 
 class Unidata {
@@ -24,6 +25,7 @@ class Unidata {
             {
                 platform: 'Ethereum',
                 ipfsGateway: 'https://ipfs.io/ipfs/',
+                alchemyAPIKey: 'demo',
             },
             options,
         );

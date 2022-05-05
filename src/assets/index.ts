@@ -5,6 +5,7 @@ import EthereumNFTOpenSea from './ethereum-nft-opensea';
 import EthereumNFTPOAP from './ethereum-nft-poap';
 import SolanaNFTSolscan from './solana-nft-solscan';
 import SolanaNFTMoralis from './solana-nft-moralis';
+import EthereumNFTAlchemy from './ethereum-nft-alchemy';
 
 export type AssetsOptions = {
     source: string;
@@ -22,6 +23,7 @@ class Assets {
     constructor(main: Main) {
         this.map = {
             'Ethereum NFT': {
+                Alchemy: new EthereumNFTAlchemy(main),
                 Moralis: new EthereumNFTMoralis(main),
                 OpenSea: new EthereumNFTOpenSea(main),
                 POAP: new EthereumNFTPOAP(main),
@@ -38,7 +40,7 @@ class Assets {
             case 'Ethereum NFT':
                 options = Object.assign(
                     {
-                        provider: 'Moralis',
+                        provider: 'Alchemy',
                     },
                     options,
                 );
