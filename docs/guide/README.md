@@ -39,6 +39,7 @@ const unidata = new Unidata({
 | `ipfsGateway`       | `'https://ipfs.io/ipfs/'` | The IPFS gateway to use.                     |
 | `moralisWeb3APIKey` |                           | Account Web3 API Key of Moralis.             |
 | `openseaAPIKey`     |                           | API Key of OpenSea.                          |
+| `alchemyAPIKey`     | `'demo'`                  | API Key of Alchemy.                          |
 
 If you don't want to expose some api keys on the front end, or if you want to cache data for faster response and higher stability, then you can use the SDK for your Node.js project.
 

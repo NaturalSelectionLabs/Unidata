@@ -114,6 +114,12 @@ const data = [
         image: '/images/sources/solscan.svg',
         url: 'https://solscan.io/',
     },
+    {
+        name: 'Alchemy',
+        type: 'Assets',
+        image: '/images/sources/alchemy.svg',
+        url: 'https://www.alchemy.com/',
+    },
 ];
 
 let result = [];

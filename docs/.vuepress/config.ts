@@ -44,6 +44,7 @@ module.exports = {
                     text: 'Assets',
                     children: [
                         '/guide/assets/README.md',
+                        '/guide/assets/Ethereum-NFT-Alchemy.md',
                         '/guide/assets/Ethereum-NFT-Moralis.md',
                         '/guide/assets/Ethereum-NFT-OpenSea.md',
                         '/guide/assets/Ethereum-NFT-POAP.md',
