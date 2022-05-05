@@ -16,10 +16,10 @@ You can use POAP API for free (no rate limit disclosed).
 const assets: Assets = unidata.assets.get(options: {
     source: 'Ethereum NFT';
     identity: string;
-    provider: 'POAP';
+    providers: ['POAP'];
 });
 ```
 
 ## Live Demo
 
-<Assets :source="'Ethereum NFT'" :provider="'POAP'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
+<Assets :source="'Ethereum NFT'" :providers="['POAP']" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />

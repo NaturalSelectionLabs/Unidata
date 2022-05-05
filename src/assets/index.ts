@@ -1,5 +1,6 @@
 import Main from '../index';
 import Base from './base';
+import lodashArray from 'lodash-es/array';
 import EthereumNFTMoralis from './ethereum-nft-moralis';
 import EthereumNFTOpenSea from './ethereum-nft-opensea';
 import EthereumNFTPOAP from './ethereum-nft-poap';
@@ -10,7 +11,7 @@ import EthereumNFTAlchemy from './ethereum-nft-alchemy';
 export type AssetsOptions = {
     source: string;
     identity: string;
-    provider?: string;
+    providers?: string[];
 };
 
 class Assets {
@@ -36,25 +37,18 @@ class Assets {
     }
 
     async get(options: AssetsOptions) {
-        switch (options.source) {
-            case 'Ethereum NFT':
-                options = Object.assign(
-                    {
-                        provider: 'Alchemy',
-                    },
-                    options,
-                );
-                break;
-            case 'Solana NFT':
-                options = Object.assign(
-                    {
-                        provider: 'Solscan',
-                    },
-                    options,
-                );
-                break;
-        }
-        return this.map[options.source][options.provider!].get(options);
+        options = Object.assign(
+            {
+                providers: Object.keys(this.map[options.source]),
+            },
+            options,
+        );
+
+        const list = await Promise.all(
+            options.providers!.map((provider: string) => this.map[options.source][provider].get(options)),
+        );
+        const assets = Array.prototype.concat(...list);
+        return lodashArray.unionBy(assets, (item: Asset) => item.metadata?.proof);
     }
 }
 

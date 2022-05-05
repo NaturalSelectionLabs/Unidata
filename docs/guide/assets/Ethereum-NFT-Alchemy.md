@@ -16,10 +16,10 @@ You can initialize with `ipfsGateway` and `alchemyAPIKey` to get potentially fas
 const assets: Assets = unidata.assets.get(options: {
     source: 'Ethereum NFT';
     identity: string;
-    provider?: 'Alchemy';
+    providers?: ['Alchemy'];
 });
 ```
 
 ## Live Demo
 
-<Assets :source="'Ethereum NFT'" :provider="'Alchemy'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
+<Assets :source="'Ethereum NFT'" :providers="['Alchemy']" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />

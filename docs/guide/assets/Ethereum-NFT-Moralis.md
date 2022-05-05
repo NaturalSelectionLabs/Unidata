@@ -25,10 +25,10 @@ In addition to fetching data from Moralis, Unidata will automatically report mis
 const assets: Assets = unidata.assets.get(options: {
     source: 'Ethereum NFT';
     identity: string;
-    provider: 'Moralis';
+    providers: ['Moralis'];
 });
 ```
 
 ## Live Demo
 
-<Assets :source="'Ethereum NFT'" :provider="'Moralis'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
+<Assets :source="'Ethereum NFT'" :providers="['Moralis']" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
