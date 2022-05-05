@@ -64,12 +64,13 @@ const identity = ref(props.defaultIdentity);
 const loading = ref(true);
 const profiles = ref([{}]);
 
+const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
 watchEffect(async () => {
     if (identity.value) {
         loading.value = true;
         profiles.value = [{}];
-        getCurrentInstance()
-            ?.appContext.config.globalProperties.unidata.profiles.get({
+        unidata.profiles
+            .get({
                 identity: identity.value,
                 source: props.source,
             })

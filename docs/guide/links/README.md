@@ -1,4 +1,6 @@
-# Introduction
+# Overview
+
+<Logos type="Links" />
 
 Links describe the relationships between accounts, such as following relationship.
 

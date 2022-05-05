@@ -12,70 +12,63 @@
             />
         </div>
         <div class="loading-wrap" v-loading="loading">
-            <div class="networks" v-for="(value, network) in networks" :key="network">
-                <p>Network: {{ network }}</p>
-                <el-row class="assets" :gutter="20">
-                    <el-col
-                        class="asset"
-                        :span="12"
-                        v-loading="loading"
-                        v-for="asset in assets.filter((asset) => asset.metadata?.network === network)"
-                        :key="asset"
-                    >
-                        <el-card class="asset-card">
-                            <div class="asset-body">
-                                <video
-                                    style="width: 100px; height: 100px"
-                                    :src="
-                                        asset.attachments.find((attachment) => attachment.type === 'preview')?.address
-                                    "
-                                    :fit="'cover'"
-                                    v-if="
-                                        asset.attachments
-                                            .find((attachment) => attachment.type === 'preview')
-                                            ?.mime_type?.split('/')[0] === 'video'
-                                    "
-                                    autoplay
-                                    loop
-                                    muted
-                                />
-                                <model-viewer
-                                    style="width: 100px; height: 100px"
-                                    :src="
-                                        asset.attachments.find((attachment) => attachment.type === 'preview')?.address
-                                    "
-                                    ar
-                                    ar-modes="webxr scene-viewer quick-look"
-                                    seamless-poster
-                                    shadow-intensity="1"
-                                    camera-controls
-                                    enable-pan
-                                    v-else-if="
-                                        asset.attachments
-                                            .find((attachment) => attachment.type === 'preview')
-                                            ?.mime_type?.split('/')[0] === 'model'
-                                    "
-                                ></model-viewer>
-                                <el-image
-                                    style="width: 100px; height: 100px"
-                                    :src="
-                                        asset.attachments.find((attachment) => attachment.type === 'preview')?.address
-                                    "
-                                    :fit="'cover'"
-                                    v-else
-                                />
-                                <div class="text">
-                                    <div class="name">{{ asset.name }}</div>
-                                    <div class="description">{{ asset.description }}</div>
-                                    <a target="_blank" :href="url" v-for="url in asset.related_urls" :key="url">
-                                        <font-awesome-icon icon="link" />
-                                    </a>
-                                </div>
+            <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange"
+                >Check all</el-checkbox
+            >
+            <el-checkbox-group v-model="checked" @change="handleCheckedChange">
+                <el-checkbox v-for="(value, network) in networks" :key="network" :label="network">{{
+                    network
+                }}</el-checkbox>
+            </el-checkbox-group>
+            <el-row class="assets" :gutter="20">
+                <el-col class="asset" :span="8" v-loading="loading" v-for="asset in checkedAssets" :key="asset">
+                    <el-card class="asset-card">
+                        <div class="asset-body">
+                            <video
+                                style="width: 100px; height: 100px"
+                                :src="asset.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                                :fit="'cover'"
+                                v-if="
+                                    asset.attachments
+                                        .find((attachment) => attachment.type === 'preview')
+                                        ?.mime_type?.split('/')[0] === 'video'
+                                "
+                                autoplay
+                                loop
+                                muted
+                            />
+                            <model-viewer
+                                style="width: 100px; height: 100px"
+                                :src="asset.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                                ar
+                                ar-modes="webxr scene-viewer quick-look"
+                                seamless-poster
+                                shadow-intensity="1"
+                                camera-controls
+                                enable-pan
+                                v-else-if="
+                                    asset.attachments
+                                        .find((attachment) => attachment.type === 'preview')
+                                        ?.mime_type?.split('/')[0] === 'model'
+                                "
+                            ></model-viewer>
+                            <el-image
+                                style="width: 100px; height: 100px"
+                                :src="asset.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                                :fit="'cover'"
+                                v-else
+                            />
+                            <div class="text">
+                                <div class="name">{{ asset.name }}</div>
+                                <div class="description">{{ asset.description }}</div>
+                                <a target="_blank" :href="url" v-for="url in asset.related_urls" :key="url">
+                                    <font-awesome-icon icon="link" />
+                                </a>
                             </div>
-                        </el-card>
-                    </el-col>
-                </el-row>
-            </div>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
         </div>
         <h5>Data:</h5>
         <pre>{{ JSON.stringify(assets, null, 4) }}</pre>
@@ -94,31 +87,54 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    provider: {
+    providers: {
         type: String,
     },
 });
 
 const identity = ref(props.defaultIdentity);
-const provider = ref(props.provider);
+const providers = ref(props.providers);
 
 const loading = ref(true);
-const assets = ref([{}]);
+const assets = ref<Asset[]>([]);
+const checkedAssets = ref<Asset[]>([]);
 const networks = ref<{
     [network: string]: boolean;
 }>({});
 
+const checkAll = ref(true);
+const isIndeterminate = ref(false);
+const checked = ref<string[]>([]);
+
+const handleCheckAllChange = (val: boolean) => {
+    checked.value = val ? Object.keys(networks.value) : [];
+    isIndeterminate.value = false;
+};
+const handleCheckedChange = (value: string[]) => {
+    const checkedCount = value.length;
+    checkAll.value = checkedCount === Object.keys(networks.value).length;
+    isIndeterminate.value = checkedCount > 0 && checkedCount < Object.keys(networks.value).length;
+};
+
+const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
 watchEffect(async () => {
     if (identity.value) {
         loading.value = true;
-        assets.value = [{}];
-        getCurrentInstance()
-            ?.appContext.config.globalProperties.unidata.assets.get({
-                identity: identity.value,
-                source: props.source,
-                provider: provider.value,
-            })
-            .then((p: any) => {
+        assets.value = [];
+        unidata.assets
+            .get(
+                providers.value
+                    ? {
+                          identity: identity.value,
+                          source: props.source,
+                          providers: providers.value,
+                      }
+                    : {
+                          identity: identity.value,
+                          source: props.source,
+                      },
+            )
+            .then((p: Asset[]) => {
                 assets.value = p;
                 loading.value = false;
 
@@ -127,8 +143,14 @@ watchEffect(async () => {
                         networks.value[asset.metadata.network] = true;
                     }
                 });
+
+                checked.value = Object.keys(networks.value);
             });
     }
+});
+
+watchEffect(async () => {
+    checkedAssets.value = assets.value.filter((asset: Asset) => checked.value.includes(asset.metadata?.network || ''));
 });
 
 let modelScript = document.createElement('script');
@@ -159,6 +181,10 @@ pre {
 
 .loading-wrap {
     min-height: 50px;
+}
+
+.assets {
+    padding: 10px 0;
 }
 
 .asset {

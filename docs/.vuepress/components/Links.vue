@@ -59,13 +59,14 @@ const loading = ref(true);
 const links = ref({});
 const backlinks = ref({});
 
+const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
 watchEffect(async () => {
     if (identity.value) {
         loading.value = true;
         links.value = {};
         backlinks.value = {};
-        getCurrentInstance()
-            ?.appContext.config.globalProperties.unidata.links.get({
+        unidata.links
+            .get({
                 source: props.source,
                 identity: identity.value,
                 limit: 5,
@@ -74,8 +75,8 @@ watchEffect(async () => {
                 links.value = p;
                 loading.value = false;
             });
-        getCurrentInstance()
-            ?.appContext.config.globalProperties.unidata.links.get({
+        unidata.links
+            .get({
                 source: props.source,
                 identity: identity.value,
                 reversed: true,

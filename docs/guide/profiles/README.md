@@ -1,4 +1,6 @@
-# Introduction
+# Overview
+
+<Logos type="Profiles" />
 
 Profiles record the basic information of accounts, including the name, avatar, bio, connected accounts, etc.
 
