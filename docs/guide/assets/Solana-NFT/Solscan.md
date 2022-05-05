@@ -1,4 +1,4 @@
-# Solana NFT - Solscan
+# Solscan Provider
 
 <Logos :names="['Solana', 'Solscan']" />
 

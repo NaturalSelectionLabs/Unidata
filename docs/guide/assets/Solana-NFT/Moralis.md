@@ -1,4 +1,4 @@
-# Solana NFT - Moralis
+# Moralis Provider
 
 <Logos :names="['Solana', 'Moralis']" />
 

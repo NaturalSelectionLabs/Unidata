@@ -33,14 +33,6 @@ module.exports = {
                     children: ['/guide/README.md'],
                 },
                 {
-                    text: 'Profiles',
-                    children: ['/guide/profiles/README.md', '/guide/profiles/ENS.md', '/guide/profiles/Crossbell.md'],
-                },
-                {
-                    text: 'Links',
-                    children: ['/guide/links/README.md', '/guide/links/CyberConnect.md'],
-                },
-                {
                     text: 'Assets',
                     children: [
                         '/guide/assets/README.md',
@@ -65,6 +57,14 @@ module.exports = {
                             ],
                         },
                     ],
+                },
+                {
+                    text: 'Profiles',
+                    children: ['/guide/profiles/README.md', '/guide/profiles/ENS.md', '/guide/profiles/Crossbell.md'],
+                },
+                {
+                    text: 'Links',
+                    children: ['/guide/links/README.md', '/guide/links/CyberConnect.md'],
                 },
                 {
                     text: 'Notes',

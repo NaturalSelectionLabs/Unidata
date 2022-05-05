@@ -97,6 +97,18 @@ const data = [
         url: 'https://solana.com/',
     },
     {
+        name: 'Alchemy',
+        type: 'Assets',
+        image: '/images/sources/alchemy.svg',
+        url: 'https://www.alchemy.com/',
+    },
+    {
+        name: 'Solscan',
+        type: 'Assets',
+        image: '/images/sources/solscan.svg',
+        url: 'https://solscan.io/',
+    },
+    {
         name: 'Moralis',
         type: 'Assets',
         image: '/images/sources/moralis.svg',
@@ -107,18 +119,6 @@ const data = [
         type: 'Assets',
         image: '/images/sources/opensea.svg',
         url: 'https://opensea.io/',
-    },
-    {
-        name: 'Solscan',
-        type: 'Assets',
-        image: '/images/sources/solscan.svg',
-        url: 'https://solscan.io/',
-    },
-    {
-        name: 'Alchemy',
-        type: 'Assets',
-        image: '/images/sources/alchemy.svg',
-        url: 'https://www.alchemy.com/',
     },
 ];
 
