@@ -9,10 +9,6 @@ class SolanaNFTSolscan extends Base {
     }
 
     async get(options: AssetsOptions) {
-        if (!this.main.options.moralisWeb3APIKey) {
-            throw new Error('Moralis Web3 API key is not set');
-        }
-
         const list = (
             await axios.get(`https://public-api.solscan.io/account/tokens`, {
                 params: {

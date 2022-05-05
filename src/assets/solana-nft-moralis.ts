@@ -10,7 +10,7 @@ class SolanaNFTMoralis extends Base {
 
     async get(options: AssetsOptions) {
         if (!this.main.options.moralisWeb3APIKey) {
-            throw new Error('Moralis Web3 API key is not set');
+            return [];
         }
 
         const list = (
