@@ -1,12 +1,10 @@
-# Ethereum NFT - OpenSea
+# OpenSea Provider
 
 <Logos :names="['Ethereum', 'OpenSea']" />
 
 ::: tip
 You can use OpenSea API for free (4 requests / second), and you can request an API Key for more frequent requests.
 :::
-
-[Ethereum NFT](https://ethereum.org/en/nft/) is a kind of token on Ethereum with a chaotic specification. They can be normalized through Unidata now.
 
 [OpenSea](https://opensea.io/) provides APIs to access to Ethereum NFTs, supporting Ethereum mainnet only.
 

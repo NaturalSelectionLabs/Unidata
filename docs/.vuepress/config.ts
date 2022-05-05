@@ -44,12 +44,26 @@ module.exports = {
                     text: 'Assets',
                     children: [
                         '/guide/assets/README.md',
-                        '/guide/assets/Ethereum-NFT-Alchemy.md',
-                        '/guide/assets/Ethereum-NFT-Moralis.md',
-                        '/guide/assets/Ethereum-NFT-OpenSea.md',
-                        '/guide/assets/Ethereum-NFT-POAP.md',
-                        '/guide/assets/Solana-NFT-Solscan.md',
-                        '/guide/assets/Solana-NFT-Moralis.md',
+                        {
+                            text: 'Ethereum NFT',
+                            collapsible: true,
+                            children: [
+                                '/guide/assets/Ethereum-NFT/README.md',
+                                '/guide/assets/Ethereum-NFT/Alchemy.md',
+                                '/guide/assets/Ethereum-NFT/Moralis.md',
+                                '/guide/assets/Ethereum-NFT/OpenSea.md',
+                                '/guide/assets/Ethereum-NFT/POAP.md',
+                            ],
+                        },
+                        {
+                            text: 'Solana NFT',
+                            collapsible: true,
+                            children: [
+                                '/guide/assets/Solana-NFT/README.md',
+                                '/guide/assets/Solana-NFT/Solscan.md',
+                                '/guide/assets/Solana-NFT/Moralis.md',
+                            ],
+                        },
                     ],
                 },
                 {

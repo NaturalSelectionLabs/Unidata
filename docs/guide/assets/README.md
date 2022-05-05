@@ -8,8 +8,8 @@ Assets are the properties owned by accounts, such as an NFT, a game achievement,
 
 ```ts
 const assets: Assets = unidata.assets.get(options: {
-    source: 'Ethereum NFT' | 'Solana NFT';
-    providers?: ('Alchemy' | 'Moralis' | 'OpenSea' | 'POAP' | 'Solscan')[];
+    source: string;
+    providers?: string[];
     identity: string;
 });
 ```
@@ -50,7 +50,3 @@ type Assets = {
     };
 }[];
 ```
-
-## Live Demo
-
-<Assets :source="'Ethereum NFT'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />

@@ -1,4 +1,4 @@
-# Ethereum NFT - Moralis
+# Moralis Provider
 
 <Logos :names="['Ethereum', 'Polygon', 'Binance Smart Chain', 'Arbitrum', 'Fantom', 'Moralis']" />
 
@@ -6,8 +6,6 @@
 You can use Moralis API for free (5 requests per second per key), and you can pay for more frequent requests.
 You need to register a Moralis account to use it.
 :::
-
-[Ethereum NFT](https://ethereum.org/en/nft/) is a kind of token on Ethereum with a chaotic specification. They can be normalized through Unidata now.
 
 [Moralis](https://moralis.io/) provides APIs to easy access to Ethereum NFTs, supporting Ethereum mainnet, Polygon, Binance Smart Chain, Avalanche, Fantom.
 

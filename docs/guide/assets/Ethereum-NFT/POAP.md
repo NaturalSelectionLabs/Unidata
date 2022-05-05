@@ -1,12 +1,10 @@
-# Ethereum NFT - POAP
+# POAP Provider
 
 <Logos :names="['POAP']" />
 
 ::: tip
 You can use POAP API for free (no rate limit disclosed).
 :::
-
-[Ethereum NFT](https://ethereum.org/en/nft/) is a kind of token on Ethereum with a chaotic specification. They can be normalized through Unidata now.
 
 [POAP](https://poap.xyz/) is a kind of widely used semi-centralised NFTs, generally used as digital mementos, minted in celebration of life's remarkable moments.
 

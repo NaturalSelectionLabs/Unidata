@@ -13,7 +13,7 @@
         </div>
         <div class="loading-wrap" v-loading="loading">
             <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange"
-                >Check all</el-checkbox
+                >Check all networks</el-checkbox
             >
             <el-checkbox-group v-model="checked" @change="handleCheckedChange">
                 <el-checkbox v-for="(value, network) in networks" :key="network" :label="network">{{

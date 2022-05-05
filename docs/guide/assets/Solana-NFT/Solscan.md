@@ -13,10 +13,13 @@ You can use Solscan API for free (150 requests / 30 seconds, 100,000 requests / 
 ```ts
 const assets: Assets = unidata.assets.get(options: {
     source: 'Solana NFT';
-    identity: string;
     providers?: ['Solscan'];
+    identity: string;
 });
 ```
+
+-   `providers`: The providers of the data, requesting and aggregating from all supported providers by default.
+-   `identity`: The Solana address.
 
 ## Live Demo
 

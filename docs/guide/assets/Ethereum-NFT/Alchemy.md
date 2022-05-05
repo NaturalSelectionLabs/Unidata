@@ -1,12 +1,10 @@
-# Ethereum NFT - Alchemy
+# Alchemy Provider
 
 <Logos :names="['Ethereum', 'Polygon', 'Alchemy']" />
 
 ::: tip
 You can use Alchemy API for free (no rate limit disclosed).
 :::
-
-[Ethereum NFT](https://ethereum.org/en/nft/) is a kind of token on Ethereum with a chaotic specification. They can be normalized through Unidata now.
 
 You can initialize with `ipfsGateway` and `alchemyAPIKey` to get potentially faster response or higher stability.
 
