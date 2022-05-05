@@ -4,7 +4,6 @@ import Links from './links';
 import Assets from './assets';
 
 type IOptions = {
-    platform?: 'Ethereum' | 'Solana';
     infuraProjectID?: string;
     ipfsGateway?: string;
     moralisWeb3APIKey?: string;
@@ -23,7 +22,6 @@ class Unidata {
         this.options = Object.assign(
             {},
             {
-                platform: 'Ethereum',
                 ipfsGateway: 'https://ipfs.io/ipfs/',
                 alchemyAPIKey: 'demo',
             },

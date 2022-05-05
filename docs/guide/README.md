@@ -26,20 +26,18 @@ npm install unidata.js --save
 import Unidata from 'unidata.js';
 
 const unidata = new Unidata({
-    platform?: 'Ethereum' | 'Solana';
     infuraProjectID?: string;
     ipfsGateway?: string;
 });
 ```
 
-| Parameter           | Default                   | Description                                  |
-| ------------------- | ------------------------- | -------------------------------------------- |
-| `platform`          | `'Ethereum'`              | The platform to use. Defaults to `Ethereum`. |
-| `infuraProjectID`   | ethers default keys       | The PROJECT ID of the Infura to use.         |
-| `ipfsGateway`       | `'https://ipfs.io/ipfs/'` | The IPFS gateway to use.                     |
-| `moralisWeb3APIKey` |                           | Account Web3 API Key of Moralis.             |
-| `openseaAPIKey`     |                           | API Key of OpenSea.                          |
-| `alchemyAPIKey`     | `'demo'`                  | API Key of Alchemy.                          |
+| Parameter           | Default                   | Description                          |
+| ------------------- | ------------------------- | ------------------------------------ |
+| `infuraProjectID`   | ethers default keys       | The PROJECT ID of the Infura to use. |
+| `ipfsGateway`       | `'https://ipfs.io/ipfs/'` | The IPFS gateway to use.             |
+| `moralisWeb3APIKey` |                           | Account Web3 API Key of Moralis.     |
+| `openseaAPIKey`     |                           | API Key of OpenSea.                  |
+| `alchemyAPIKey`     | `'demo'`                  | API Key of Alchemy.                  |
 
 If you don't want to expose some api keys on the front end, or if you want to cache data for faster response and higher stability, then you can use the SDK for your Node.js project.
 
