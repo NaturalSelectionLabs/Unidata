@@ -20,6 +20,7 @@
     source: '${props.source}',
     identity: '${identity}',${providers ? `
     providers: ${JSON.stringify(providers)},` : ''}
+    limit: 5,
 });`}}</code></pre>
         <h5>View</h5>
         <el-card class="links-card" v-loading="loading">
@@ -41,8 +42,8 @@
             </div>
         </el-card>
         <h5>Data</h5>
-        <pre>{{ JSON.stringify(links, null, 4) }}</pre>
-        <pre>{{ JSON.stringify(backlinks, null, 4) }}</pre>
+        <pre class="data">{{ JSON.stringify(links, null, 4) }}</pre>
+        <pre class="data">{{ JSON.stringify(backlinks, null, 4) }}</pre>
     </div>
 </template>
 

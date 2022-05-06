@@ -28,6 +28,9 @@ import Unidata from 'unidata.js';
 const unidata = new Unidata({
     infuraProjectID?: string;
     ipfsGateway?: string;
+    moralisWeb3APIKey?: string;
+    openseaAPIKey?: string;
+    alchemyAPIKey?: string;
 });
 ```
 

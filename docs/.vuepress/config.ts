@@ -39,6 +39,7 @@ module.exports = {
                         {
                             text: 'Ethereum NFT',
                             collapsible: true,
+                            link: '/guide/assets/Ethereum-NFT/README.md',
                             children: [
                                 '/guide/assets/Ethereum-NFT/README.md',
                                 '/guide/assets/Ethereum-NFT/Alchemy.md',
@@ -49,6 +50,7 @@ module.exports = {
                         },
                         {
                             text: 'Solana NFT',
+                            link: '/guide/assets/Solana-NFT/README.md',
                             collapsible: true,
                             children: [
                                 '/guide/assets/Solana-NFT/README.md',

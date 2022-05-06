@@ -12,43 +12,16 @@
             />
         </div>
         <h5>Code</h5>
-        <pre class="code"><code>{{ `const profiles: Profiles = unidata.profiles.get({
+        <pre class="code"><code>{{ `const notes: Notes = unidata.notes.get({
     source: '${props.source}',
     identity: '${identity}',${providers ? `
     providers: ${JSON.stringify(providers)},` : ''}
+    limit: 5,
 });`}}</code></pre>
         <h5>View</h5>
-        <el-card class="profile-card" v-loading="loading" v-for="profile in profiles" :key="profile">
-            <font-awesome-icon class="edit" icon="pen-to-square" />
-            <div class="info">
-                <div class="avatar"><img :src="profile.avatars?.[0]" /></div>
-                <div class="text">
-                    <div class="name">
-                        {{ profile.name }}
-                        <span class="handler" v-if="profile.metadata?.handler">{{ profile.metadata?.handler }}</span>
-                    </div>
-                    <div class="bio">{{ profile.bio }}</div>
-                    <div class="websites">
-                        <ul>
-                            <li v-for="website in profile.websites" :key="website">
-                                <a target="_blank" :href="website">
-                                    <font-awesome-icon icon="link" />
-                                    {{ website.replace(/https?:\/\//, '') }}
-                                </a>
-                            </li>
-                            <li v-for="account in profile.connected_accounts" :key="account">
-                                <a target="_blank" :href="account.url">
-                                    <font-awesome-icon :icon="['fab', account.platform.toLowerCase()]" />
-                                    {{ `${account.platform}: ${account.identity}` }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </el-card>
+        <el-card class="note-card" v-loading="loading" v-for="note in notes" :key="note"> </el-card>
         <h5>Data</h5>
-        <pre class="data">{{ JSON.stringify(profiles, null, 4) }}</pre>
+        <pre class="data">{{ JSON.stringify(notes, null, 4) }}</pre>
     </div>
 </template>
 
@@ -69,20 +42,20 @@ const props = defineProps({
 const identity = ref(props.defaultIdentity);
 
 const loading = ref(true);
-const profiles = ref([{}]);
+const notes = ref([{}]);
 
 const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
 watchEffect(async () => {
     if (identity.value) {
         loading.value = true;
-        profiles.value = [{}];
-        unidata.profiles
+        notes.value = [{}];
+        unidata.notes
             .get({
                 identity: identity.value,
                 source: props.source,
             })
             .then((p: any) => {
-                profiles.value = p;
+                notes.value = p;
                 loading.value = false;
             });
     }
@@ -90,7 +63,7 @@ watchEffect(async () => {
 </script>
 
 <style lang="less" scoped>
-.profile-card {
+.note-card {
     position: relative;
 
     .edit {
