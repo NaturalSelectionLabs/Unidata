@@ -1,6 +1,6 @@
 # Ethereum NFT Activity
 
-<Logos :names="['Ethereum', 'RSS3']" />
+<Logos type="Notes" :names="['Ethereum', 'Polygon', 'Binance Smart Chain', 'Arbitrum', 'Fantom', 'Gnosis', 'POAP', 'RSS3']" />
 
 ::: tip
 You can use RSS3 API for free (no rate limit disclosed).

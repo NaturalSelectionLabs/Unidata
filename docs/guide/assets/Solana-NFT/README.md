@@ -1,6 +1,6 @@
 # Overview
 
-<Logos :names="['Solana', 'Solscan', 'Moralis']" />
+<Logos type="Assets" :names="['Solana', 'Solscan', 'Moralis']" />
 
 [Solana NFT / Metaplex](https://docs.metaplex.com/) is a kind of token on Solana.
 

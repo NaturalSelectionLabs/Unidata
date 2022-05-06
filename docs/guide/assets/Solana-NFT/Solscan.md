@@ -1,6 +1,6 @@
 # Solscan Provider
 
-<Logos :names="['Solana', 'Solscan']" />
+<Logos type="Assets" :names="['Solana', 'Solscan']" />
 
 ::: tip
 You can use Solscan API for free (150 requests / 30 seconds, 100,000 requests / day).

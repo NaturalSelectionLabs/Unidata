@@ -1,6 +1,6 @@
 # Mirror Entry
 
-<Logos :names="['Mirror', 'RSS3']" />
+<Logos type="Notes" :names="['Mirror', 'RSS3']" />
 
 ::: tip
 You can use RSS3 API for free (no rate limit disclosed).

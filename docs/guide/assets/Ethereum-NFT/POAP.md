@@ -1,6 +1,6 @@
 # POAP Provider
 
-<Logos :names="['POAP']" />
+<Logos type="Assets" :names="['Gnosis', 'POAP']" />
 
 ::: tip
 You can use POAP API for free (no rate limit disclosed).

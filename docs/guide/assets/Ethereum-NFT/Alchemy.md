@@ -1,6 +1,6 @@
 # Alchemy Provider
 
-<Logos :names="['Ethereum', 'Polygon', 'Alchemy']" />
+<Logos type="Assets" :names="['Ethereum', 'Polygon', 'Alchemy']" />
 
 ::: tip
 You can use Alchemy API for free (no rate limit disclosed).

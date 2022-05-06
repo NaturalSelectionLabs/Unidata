@@ -1,6 +1,6 @@
 # CyberConnect
 
-<Logos :names="['CyberConnect']" />
+<Logos type="Links" :names="['CyberConnect']" />
 
 ::: tip
 You can use CyberConnect API for free (no rate limit disclosed).

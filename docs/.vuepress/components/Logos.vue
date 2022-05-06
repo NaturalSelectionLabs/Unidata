@@ -85,6 +85,12 @@ const data = [
         url: 'https://fantom.foundation/',
     },
     {
+        name: 'Gnosis',
+        type: 'Assets',
+        image: '/images/sources/gnosis.svg',
+        url: 'https://www.xdaichain.com/',
+    },
+    {
         name: 'POAP',
         type: 'Assets',
         image: '/images/sources/poap.svg',
@@ -129,6 +135,48 @@ const data = [
         url: 'https://mirror.xyz/',
     },
     {
+        name: 'Ethereum',
+        type: 'Notes',
+        image: '/images/sources/ethereum.png',
+        url: 'https://ethereum.org/',
+    },
+    {
+        name: 'Polygon',
+        type: 'Notes',
+        image: '/images/sources/polygon.svg',
+        url: 'https://polygon.technology/',
+    },
+    {
+        name: 'Binance Smart Chain',
+        type: 'Notes',
+        image: '/images/sources/bsc.svg',
+        url: 'https://www.binance.org/en',
+    },
+    {
+        name: 'Arbitrum',
+        type: 'Notes',
+        image: '/images/sources/arbitrum.jpeg',
+        url: 'https://arbitrum.io/',
+    },
+    {
+        name: 'Fantom',
+        type: 'Notes',
+        image: '/images/sources/fantom.svg',
+        url: 'https://fantom.foundation/',
+    },
+    {
+        name: 'Gnosis',
+        type: 'Notes',
+        image: '/images/sources/gnosis.svg',
+        url: 'https://www.xdaichain.com/',
+    },
+    {
+        name: 'POAP',
+        type: 'Notes',
+        image: '/images/sources/poap.svg',
+        url: 'https://poap.xyz/',
+    },
+    {
         name: 'RSS3',
         type: 'Notes',
         image: '/images/sources/rss3.png',
@@ -136,13 +184,12 @@ const data = [
     },
 ];
 
-let result = [];
+let result = data;
 if (type.value) {
     result = data.filter((item): any => item.type === type.value);
-} else if (names.value) {
-    result = data.filter((item): any => names.value!.includes(item.name));
-} else {
-    result = data;
+}
+if (names.value) {
+    result = result.filter((item): any => names.value!.includes(item.name));
 }
 </script>
 

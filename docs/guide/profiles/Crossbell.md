@@ -1,6 +1,6 @@
 # Crossbell
 
-<Logos :names="['Crossbell']" />
+<Logos type="Profiles" :names="['Crossbell']" />
 
 ::: tip
 You can use Crossbell API for free (no rate limit disclosed).
