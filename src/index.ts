@@ -20,7 +20,7 @@ class Unidata {
     assets: Assets;
     notes: Notes;
 
-    constructor(options: IOptions) {
+    constructor(options?: IOptions) {
         this.options = Object.assign(
             {},
             {

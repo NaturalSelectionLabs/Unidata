@@ -7,7 +7,7 @@ Assets are the properties owned by accounts, such as an NFT, a game achievement,
 ## API
 
 ```ts
-const assets: Assets = unidata.assets.get(options: {
+const assets: Assets = await unidata.assets.get(options: {
     source: string;
     providers?: string[];
     identity: string;

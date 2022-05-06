@@ -12,7 +12,7 @@
             />
         </div>
         <h5>Code</h5>
-        <pre class="code"><code>{{ `const profiles: Profiles = unidata.profiles.get({
+        <pre class="code"><code>{{ `const profiles: Profiles = await unidata.profiles.get({
     source: '${props.source}',
     identity: '${identity}',${providers ? `
     providers: ${JSON.stringify(providers)},` : ''}

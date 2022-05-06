@@ -7,7 +7,7 @@ Profiles record the basic information of accounts, including the name, avatar, b
 ## API
 
 ```ts
-const profiles: Profiles = unidata.profiles.get(options: {
+const profiles: Profiles = await unidata.profiles.get(options: {
     source: string;
     identity: string;
 });

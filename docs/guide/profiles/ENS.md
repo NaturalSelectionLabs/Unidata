@@ -13,7 +13,7 @@ You can initialize with `ipfsGateway` and `infuraProjectID` to get potentially f
 ## API
 
 ```ts
-const profiles: Profiles = unidata.profiles.get(options: {
+const profiles: Profiles = await unidata.profiles.get(options: {
     source: 'ENS';
     identity: string;
 });

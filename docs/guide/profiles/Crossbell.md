@@ -13,7 +13,7 @@ You can initialize with `ipfsGateway` to get potentially faster response or high
 ## API
 
 ```ts
-const profiles: Profiles = unidata.profiles.get(options: {
+const profiles: Profiles = await unidata.profiles.get(options: {
     source: 'Crossbell';
     identity: string;
 });

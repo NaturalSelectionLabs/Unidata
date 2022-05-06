@@ -15,7 +15,7 @@ It returns not only the NFTs on the chain, but also the fake NFTs stored in the 
 ## API
 
 ```ts
-const assets: Assets = unidata.assets.get(options: {
+const assets: Assets = await unidata.assets.get(options: {
     source: 'Ethereum NFT';
     identity: string;
     providers: ['OpenSea'];

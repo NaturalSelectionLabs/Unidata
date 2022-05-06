@@ -30,10 +30,12 @@ module.exports = {
             '/guide/': [
                 {
                     text: 'Guide',
+                    link: '/guide/README.md',
                     children: ['/guide/README.md'],
                 },
                 {
                     text: 'Assets',
+                    link: '/guide/assets/README.md',
                     children: [
                         '/guide/assets/README.md',
                         {
@@ -62,6 +64,7 @@ module.exports = {
                 },
                 {
                     text: 'Notes',
+                    link: '/guide/notes/README.md',
                     children: [
                         '/guide/notes/README.md',
                         '/guide/notes/Mirror-Entry.md',
@@ -70,10 +73,12 @@ module.exports = {
                 },
                 {
                     text: 'Profiles',
+                    link: '/guide/profiles/README.md',
                     children: ['/guide/profiles/README.md', '/guide/profiles/ENS.md', '/guide/profiles/Crossbell.md'],
                 },
                 {
                     text: 'Links',
+                    link: '/guide/links/README.md',
                     children: ['/guide/links/README.md', '/guide/links/CyberConnect.md'],
                 },
             ],

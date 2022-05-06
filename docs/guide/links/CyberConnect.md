@@ -11,7 +11,7 @@ You can use CyberConnect API for free (no rate limit disclosed).
 ## API
 
 ```ts
-const links: Links = unidata.links.get(options: {
+const links: Links = await unidata.links.get(options: {
     source: 'CyberConnect';
     identity: string;
     reversed?: boolean;

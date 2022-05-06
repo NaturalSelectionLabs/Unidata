@@ -13,7 +13,7 @@ You can initialize with `ipfsGateway` to get potentially faster response or high
 ## API
 
 ```ts
-const notes: Notes = unidata.notes.get(options: {
+const notes: Notes = await unidata.notes.get(options: {
     source: 'Mirror Entry';
     identity: string;
     limit?: number;

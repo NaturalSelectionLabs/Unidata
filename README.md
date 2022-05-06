@@ -2,11 +2,11 @@
     <img src="https://i.imgur.com/W3q4Vte.jpg" alt="Unidata" width="400">
 </p>
 
-> 💡 Providing equitable access to human useable Web3 data.
+> 💡 Providing easy access to human friendly Web3 data.
 
 <h1 align="center">Unidata</h1>
 
-[![](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord&style=flat-square)](https://discord.gg/ggrfhdS9Fe)
+[![GitHub Org's stars](https://img.shields.io/github/stars/DIYgod/Unidata?style=social)](https://github.com/DIYgod/Unidata) [![Discord](https://img.shields.io/discord/968954680514342973?label=Discord&logo=discord&style=social)](https://discord.gg/ggrfhdS9Fe) [![Twitter Follow](https://img.shields.io/twitter/follow/Unidata_?style=social)](https://twitter.com/Unidata_)
 
 The beauty of Web3 is that everyone owns their data, but accessing and displaying own data is a difficult thing. Each application has its own data specifications and access methods, it's hard for developers to adapt to all of them one by one. That's why Unidata 💡🧶.
 

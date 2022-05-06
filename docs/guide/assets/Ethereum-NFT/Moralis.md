@@ -20,7 +20,7 @@ In addition to fetching data from Moralis, Unidata will automatically report mis
 ## API
 
 ```ts
-const assets: Assets = unidata.assets.get(options: {
+const assets: Assets = await unidata.assets.get(options: {
     source: 'Ethereum NFT';
     identity: string;
     providers: ['Moralis'];

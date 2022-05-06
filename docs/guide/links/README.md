@@ -7,7 +7,7 @@ Links describe the relationships between accounts, such as following relationshi
 ## API
 
 ```ts
-const links: Links = unidata.links.get(options: {
+const links: Links = await unidata.links.get(options: {
     source: string;
     identity: string;
     reversed?: boolean;

@@ -11,7 +11,7 @@ You can initialize with `ipfsGateway` and `alchemyAPIKey` to get potentially fas
 ## API
 
 ```ts
-const assets: Assets = unidata.assets.get(options: {
+const assets: Assets = await unidata.assets.get(options: {
     source: 'Ethereum NFT';
     identity: string;
     providers?: ['Alchemy'];

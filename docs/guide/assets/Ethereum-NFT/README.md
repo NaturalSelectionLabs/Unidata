@@ -9,7 +9,7 @@ You can initialize with `ipfsGateway` `alchemyAPIKey` `moralisWeb3APIKey` and `o
 ## API
 
 ```ts
-const assets: Assets = unidata.assets.get(options: {
+const assets: Assets = await unidata.assets.get(options: {
     source: 'Ethereum NFT';
     identity: string;
     providers?: ('Alchemy' | 'Moralis' | 'OpenSea' | 'POAP')[];

@@ -21,7 +21,20 @@ features:
 footer: MIT Licensed
 ---
 
-[![](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord&style=flat-square)](https://discord.gg/ggrfhdS9Fe) [![](https://img.shields.io/github/stars/DIYgod/Unidata?color=%2324292f&label=stars&logo=github&style=flat-square)](https://github.com/DIYgod/Unidata)
+[![GitHub Org's stars](https://img.shields.io/github/stars/DIYgod/Unidata?style=social)](https://github.com/DIYgod/Unidata) [![Discord](https://img.shields.io/discord/968954680514342973?label=Discord&logo=discord&style=social)](https://discord.gg/ggrfhdS9Fe) [![Twitter Follow](https://img.shields.io/twitter/follow/Unidata_?style=social)](https://twitter.com/Unidata_)
+
+## As Easy as 1, 2, 3
+
+```ts
+import Unidata from 'unidata.js';
+
+const unidata = new Unidata();
+
+const nfts = await unidata.assets.get({
+    source: 'Ethereum NFT',
+    identity: '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944',
+});
+```
 
 ## Supported Sources
 

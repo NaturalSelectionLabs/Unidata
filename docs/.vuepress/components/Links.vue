@@ -16,7 +16,7 @@
             5
         </div>
         <h5>Code</h5>
-        <pre class="code"><code>{{ `const links: Links = unidata.links.get({
+        <pre class="code"><code>{{ `const links: Links = await unidata.links.get({
     source: '${props.source}',
     identity: '${identity}',${providers ? `
     providers: ${JSON.stringify(providers)},` : ''}

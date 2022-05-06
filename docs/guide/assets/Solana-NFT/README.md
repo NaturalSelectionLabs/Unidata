@@ -7,7 +7,7 @@
 ## API
 
 ```ts
-const assets: Assets = unidata.assets.get(options: {
+const assets: Assets = await unidata.assets.get(options: {
     source: 'Solana NFT';
     identity: string;
     providers?: ('Solscan' | 'Moralis')[];

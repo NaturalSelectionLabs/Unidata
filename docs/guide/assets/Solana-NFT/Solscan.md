@@ -11,7 +11,7 @@ You can use Solscan API for free (150 requests / 30 seconds, 100,000 requests / 
 ## API
 
 ```ts
-const assets: Assets = unidata.assets.get(options: {
+const assets: Assets = await unidata.assets.get(options: {
     source: 'Solana NFT';
     providers?: ['Solscan'];
     identity: string;

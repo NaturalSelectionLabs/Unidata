@@ -11,7 +11,7 @@ You can use POAP API for free (no rate limit disclosed).
 ## API
 
 ```ts
-const assets: Assets = unidata.assets.get(options: {
+const assets: Assets = await unidata.assets.get(options: {
     source: 'Ethereum NFT';
     identity: string;
     providers: ['POAP'];
