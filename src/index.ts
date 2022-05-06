@@ -4,6 +4,12 @@ import Links from './links';
 import Assets from './assets';
 import Notes from './notes';
 
+console.log(
+    `${'\n'} %c Unidata v${SDK_VERSION} %c https://unidata.app ${'\n'}`,
+    'color: #fecc02; background: #030307; padding: 5px 0;',
+    'background: #fecc02; padding: 5px 0;',
+);
+
 type IOptions = {
     infuraProjectID?: string;
     ipfsGateway?: string;

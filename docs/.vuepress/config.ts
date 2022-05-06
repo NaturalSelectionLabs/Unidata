@@ -2,8 +2,14 @@ import { description } from '../../package.json';
 import { defaultTheme } from 'vuepress';
 import { registerComponentsPlugin } from '@vuepress/plugin-register-components';
 import path from 'path';
+import { viteBundler } from '@vuepress/bundler-vite';
+import { defineUserConfig } from '@vuepress/cli';
+import viteConfig from '../../vite.config';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import AutoImport from 'unplugin-auto-import/vite';
+import Components from 'unplugin-vue-components/vite';
 
-module.exports = {
+export default defineUserConfig({
     title: 'Unidata',
     description: description,
 
@@ -86,4 +92,18 @@ module.exports = {
     }),
 
     clientAppEnhanceFiles: path.resolve(__dirname, './init.ts'),
-};
+
+    bundler: viteBundler({
+        viteOptions: {
+            define: viteConfig.define,
+            plugins: [
+                AutoImport({
+                    resolvers: [ElementPlusResolver()],
+                }),
+                Components({
+                    resolvers: [ElementPlusResolver()],
+                }),
+            ],
+        },
+    }),
+});
