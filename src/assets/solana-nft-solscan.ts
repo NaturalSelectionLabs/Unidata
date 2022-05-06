@@ -87,7 +87,10 @@ class SolanaNFTSolscan extends Base {
             )
         ).filter((asset) => asset);
 
-        return assets;
+        return {
+            total: assets.length,
+            list: assets,
+        };
     }
 }
 

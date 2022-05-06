@@ -10,7 +10,7 @@ abstract class Base {
         this.main = main;
     }
 
-    abstract get(options: AssetsOptions): Promise<Asset[] | null>;
+    abstract get(options: AssetsOptions): Promise<Assets>;
 
     generateRelatedUrls(asset: Asset) {
         switch (asset.metadata?.network) {

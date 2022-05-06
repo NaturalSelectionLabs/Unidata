@@ -10,7 +10,10 @@ class SolanaNFTMoralis extends Base {
 
     async get(options: AssetsOptions) {
         if (!this.main.options.moralisWeb3APIKey) {
-            return [];
+            return {
+                total: 0,
+                list: [],
+            };
         }
 
         const list = (
@@ -96,7 +99,10 @@ class SolanaNFTMoralis extends Base {
             }),
         );
 
-        return assets;
+        return {
+            total: assets.length,
+            list: assets,
+        };
     }
 }
 

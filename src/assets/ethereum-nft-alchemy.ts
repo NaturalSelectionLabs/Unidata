@@ -95,7 +95,10 @@ class EthereumNFTAlchemy extends Base {
             }),
         );
 
-        return result;
+        return {
+            total: result.length,
+            list: result,
+        };
     }
 }
 

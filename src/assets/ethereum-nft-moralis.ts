@@ -10,7 +10,10 @@ class EthereumNFTMoralis extends Base {
 
     async get(options: AssetsOptions) {
         if (!this.main.options.moralisWeb3APIKey) {
-            return [];
+            return {
+                total: 0,
+                list: [],
+            };
         }
         const chains = ['eth', 'polygon', 'bsc', 'avalanche', 'fantom'];
         const networkMap: {
@@ -141,7 +144,14 @@ class EthereumNFTMoralis extends Base {
             }),
         );
 
-        return result.sort((a, b) => parseInt(b.metadata?.block_number || 0) - parseInt(a.metadata?.block_number || 0));
+        result = result.sort(
+            (a, b) => parseInt(b.metadata?.block_number || 0) - parseInt(a.metadata?.block_number || 0),
+        );
+
+        return {
+            total: result.length,
+            list: result,
+        };
     }
 }
 

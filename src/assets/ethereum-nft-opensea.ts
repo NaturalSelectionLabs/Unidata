@@ -81,7 +81,10 @@ class EthereumNFTOpensea extends Base {
             return asset;
         });
 
-        return assets;
+        return {
+            total: assets.length,
+            list: assets,
+        };
     }
 }
 

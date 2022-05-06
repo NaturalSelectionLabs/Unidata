@@ -40,7 +40,7 @@ abstract class Base {
         };
     }
 
-    abstract get(options: ProfilesOptions): Promise<Profile[] | null>;
+    abstract get(options: ProfilesOptions): Promise<Profiles>;
 }
 
 export default Base;

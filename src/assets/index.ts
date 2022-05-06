@@ -45,10 +45,18 @@ class Assets {
         );
 
         const list = await Promise.all(
-            options.providers!.map((provider: string) => this.map[options.source][provider].get(options)),
+            options.providers!.map(async (provider: string) => {
+                const result = await this.map[options.source][provider].get(options);
+                return result.list;
+            }),
         );
-        const assets = Array.prototype.concat(...list);
-        return lodashArray.unionBy(assets, (item: Asset) => item.metadata?.proof);
+        let assets = Array.prototype.concat(...list);
+        assets = lodashArray.unionBy(assets, (item: Asset) => item.metadata?.proof);
+
+        return {
+            total: assets.length,
+            list: assets,
+        };
     }
 }
 

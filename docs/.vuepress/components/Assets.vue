@@ -20,12 +20,14 @@
         <h5>View</h5>
         <div class="loading-wrap" v-loading="loading">
             <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange"
-                >Check all networks</el-checkbox
+                >Check all networks ({{ assets.total }})</el-checkbox
             >
             <el-checkbox-group v-model="checked" @change="handleCheckedChange">
-                <el-checkbox v-for="(value, network) in networks" :key="network" :label="network">{{
-                    network
-                }}</el-checkbox>
+                <el-checkbox v-for="(value, network) in networks" :key="network" :label="network"
+                    >{{ network }} ({{
+                        assets.list.filter((asset) => asset.metadata.network === network).length
+                    }})</el-checkbox
+                >
             </el-checkbox-group>
             <el-row class="assets" :gutter="20">
                 <el-col class="asset" :span="8" v-loading="loading" v-for="asset in checkedAssets" :key="asset">
@@ -103,7 +105,10 @@ const identity = ref(props.defaultIdentity);
 const providers = ref(props.providers);
 
 const loading = ref(true);
-const assets = ref<Asset[]>([]);
+const assets = ref<Assets>({
+    total: 0,
+    list: [],
+});
 const checkedAssets = ref<Asset[]>([]);
 const networks = ref<{
     [network: string]: boolean;
@@ -127,7 +132,10 @@ const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata
 watchEffect(async () => {
     if (identity.value) {
         loading.value = true;
-        assets.value = [];
+        assets.value = {
+            total: 0,
+            list: [],
+        };
         unidata.assets
             .get(
                 providers.value
@@ -141,11 +149,11 @@ watchEffect(async () => {
                           source: props.source,
                       },
             )
-            .then((p: Asset[]) => {
+            .then((p: Assets) => {
                 assets.value = p;
                 loading.value = false;
 
-                p.forEach((asset: Asset) => {
+                p.list.forEach((asset: Asset) => {
                     if (asset.metadata?.network) {
                         networks.value[asset.metadata.network] = true;
                     }
@@ -157,7 +165,9 @@ watchEffect(async () => {
 });
 
 watchEffect(async () => {
-    checkedAssets.value = assets.value.filter((asset: Asset) => checked.value.includes(asset.metadata?.network || ''));
+    checkedAssets.value = assets.value.list.filter((asset: Asset) =>
+        checked.value.includes(asset.metadata?.network || ''),
+    );
 });
 
 let modelScript = document.createElement('script');

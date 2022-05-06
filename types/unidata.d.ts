@@ -48,6 +48,11 @@ type Profile = {
     };
 };
 
+type Profiles = {
+    total: number;
+    list: Profile[];
+};
+
 type Link = {
     from: InstanceURI;
     to: InstanceURI;
@@ -127,4 +132,9 @@ type Asset = {
 
         [key: string]: any;
     };
+};
+
+type Assets = {
+    total: number;
+    list: Asset[];
 };

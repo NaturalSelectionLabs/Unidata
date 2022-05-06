@@ -70,9 +70,15 @@ class Crossbell extends Base {
                 meta,
             );
 
-            return [profile];
+            return {
+                total: 1,
+                list: [profile],
+            };
         } else {
-            return null;
+            return {
+                total: 0,
+                list: [],
+            };
         }
     }
 }

@@ -18,7 +18,7 @@
     providers: ${JSON.stringify(providers)},` : ''}
 });`}}</code></pre>
         <h5>View</h5>
-        <el-card class="profile-card" v-loading="loading" v-for="profile in profiles" :key="profile">
+        <el-card class="profile-card" v-loading="loading" v-for="profile in profiles.list" :key="profile">
             <font-awesome-icon class="edit" icon="pen-to-square" />
             <div class="info">
                 <div class="avatar"><img :src="profile.avatars?.[0]" /></div>
@@ -69,19 +69,25 @@ const props = defineProps({
 const identity = ref(props.defaultIdentity);
 
 const loading = ref(true);
-const profiles = ref([{}]);
+const profiles = ref<Profiles>({
+    total: 0,
+    list: [],
+});
 
 const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
 watchEffect(async () => {
     if (identity.value) {
         loading.value = true;
-        profiles.value = [{}];
+        profiles.value = {
+            total: 0,
+            list: [],
+        };
         unidata.profiles
             .get({
                 identity: identity.value,
                 source: props.source,
             })
-            .then((p: any) => {
+            .then((p: Profiles) => {
                 profiles.value = p;
                 loading.value = false;
             });
