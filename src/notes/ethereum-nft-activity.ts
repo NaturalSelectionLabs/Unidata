@@ -3,7 +3,7 @@ import Base from './base';
 import { NotesOptions } from './index';
 import axios from 'axios';
 
-class MirrorEntry extends Base {
+class EthereumNFTActivity extends Base {
     constructor(main: Main) {
         super(main);
     }
@@ -12,7 +12,7 @@ class MirrorEntry extends Base {
         const response = (
             await axios.get(`https://pregod.rss3.dev/v0.4.0/account:${options.identity}@ethereum/notes`, {
                 params: {
-                    item_sources: 'Mirror Entry',
+                    item_sources: 'Ethereum NFT',
                     limit: options.limit,
                 },
             })
@@ -50,4 +50,4 @@ class MirrorEntry extends Base {
     }
 }
 
-export default MirrorEntry;
+export default EthereumNFTActivity;

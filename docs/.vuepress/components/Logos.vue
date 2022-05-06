@@ -120,6 +120,20 @@ const data = [
         image: '/images/sources/opensea.svg',
         url: 'https://opensea.io/',
     },
+
+    // Notes
+    {
+        name: 'Mirror',
+        type: 'Notes',
+        image: '/images/sources/mirror.svg',
+        url: 'https://mirror.xyz/',
+    },
+    {
+        name: 'RSS3',
+        type: 'Notes',
+        image: '/images/sources/rss3.png',
+        url: 'https://rss3.io/',
+    },
 ];
 
 let result = [];

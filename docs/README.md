@@ -25,14 +25,6 @@ footer: MIT Licensed
 
 ## Supported Sources
 
-### Profiles
-
-<Logos type="Profiles" />
-
-### Links
-
-<Logos type="Links" />
-
 ### Assets
 
 <Logos type="Assets" />
@@ -40,3 +32,11 @@ footer: MIT Licensed
 ### Notes
 
 <Logos type="Notes" />
+
+### Profiles
+
+<Logos type="Profiles" />
+
+### Links
+
+<Logos type="Links" />

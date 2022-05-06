@@ -46,14 +46,6 @@ If you don't want to expose some api keys on the front end, or if you want to ca
 
 ## Supported Sources
 
-### Profiles
-
-<Logos type="Profiles" />
-
-### Links
-
-<Logos type="Links" />
-
 ### Assets
 
 <Logos type="Assets" />
@@ -61,3 +53,11 @@ If you don't want to expose some api keys on the front end, or if you want to ca
 ### Notes
 
 <Logos type="Notes" />
+
+### Profiles
+
+<Logos type="Profiles" />
+
+### Links
+
+<Logos type="Links" />

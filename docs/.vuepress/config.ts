@@ -61,16 +61,20 @@ module.exports = {
                     ],
                 },
                 {
+                    text: 'Notes',
+                    children: [
+                        '/guide/notes/README.md',
+                        '/guide/notes/Mirror-Entry.md',
+                        '/guide/notes/Ethereum-NFT-Activity.md',
+                    ],
+                },
+                {
                     text: 'Profiles',
                     children: ['/guide/profiles/README.md', '/guide/profiles/ENS.md', '/guide/profiles/Crossbell.md'],
                 },
                 {
                     text: 'Links',
                     children: ['/guide/links/README.md', '/guide/links/CyberConnect.md'],
-                },
-                {
-                    text: 'Notes',
-                    children: ['/guide/notes/README.md', '/guide/notes/Mirror-Entry.md'],
                 },
             ],
         },

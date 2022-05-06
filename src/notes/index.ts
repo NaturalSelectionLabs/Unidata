@@ -1,6 +1,7 @@
 import Main from '../index';
 import Base from './base';
 import MirrorEntry from './mirror-entry';
+import EthereumNFTActivity from './ethereum-nft-activity';
 
 export type NotesOptions = {
     source: string;
@@ -16,6 +17,7 @@ class Notes {
     constructor(main: Main) {
         this.map = {
             'Mirror Entry': new MirrorEntry(main),
+            'Ethereum NFT Activity': new EthereumNFTActivity(main),
         };
     }
 

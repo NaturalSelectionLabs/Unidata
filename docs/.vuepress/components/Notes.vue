@@ -22,21 +22,69 @@
         <el-card class="note-card" v-loading="loading">
             <div class="note-content" v-for="note in notesFiltered" :key="note">
                 <h2 class="note-title">
+                    <span v-if="note.source === 'Ethereum NFT'">{{
+                        note.metadata.from === identity ? 'Lost an NFT: ' : 'Got an NFT: '
+                    }}</span>
+                    <span>{{ note.title }}</span>
                     <a target="_blank" :href="url" v-for="url in note.related_urls" :key="url">
                         <font-awesome-icon icon="link" />
                     </a>
-                    {{ note.title }}
                 </h2>
+                <div class="note-date">
+                    <strong>Created:</strong> {{ new Date(note.date_created).toDateString() }}
+                    <strong>Updated:</strong> {{ new Date(note.date_updated).toDateString() }}
+                </div>
                 <div
                     class="note-body"
                     v-if="
-                        note.attachments.filter((attachment) => attachment.type === 'body')[0].mime_type ===
+                        note.attachments.filter((attachment) => attachment.type === 'body')[0]?.mime_type ===
                         'text/markdown'
                     "
-                    v-html="md.render(note.attachments.filter((attachment) => attachment.type === 'body')[0].content)"
+                    v-html="md.render(note.attachments.filter((attachment) => attachment.type === 'body')[0]?.content)"
                 ></div>
                 <div class="note-body" v-else>
-                    {{ note.attachments.filter((attachment) => attachment.type === 'body')[0].content }}
+                    {{
+                        note.attachments.filter((attachment) => attachment.type === 'body')[0]?.content || note.summary
+                    }}
+                </div>
+                <div
+                    class="note-media"
+                    v-if="note.attachments.filter((attachment) => attachment.type === 'preview')[0]"
+                >
+                    <video
+                        style="width: 100px; height: 100px"
+                        :src="note.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                        :fit="'cover'"
+                        v-if="
+                            note.attachments
+                                .find((attachment) => attachment.type === 'preview')
+                                ?.mime_type?.split('/')[0] === 'video'
+                        "
+                        autoplay
+                        loop
+                        muted
+                    />
+                    <model-viewer
+                        style="width: 100px; height: 100px"
+                        :src="note.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                        ar
+                        ar-modes="webxr scene-viewer quick-look"
+                        seamless-poster
+                        shadow-intensity="1"
+                        camera-controls
+                        enable-pan
+                        v-else-if="
+                            note.attachments
+                                .find((attachment) => attachment.type === 'preview')
+                                ?.mime_type?.split('/')[0] === 'model'
+                        "
+                    ></model-viewer>
+                    <el-image
+                        style="width: 100px; height: 100px"
+                        :src="note.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                        :fit="'cover'"
+                        v-else
+                    />
                 </div>
             </div>
         </el-card>
@@ -111,11 +159,30 @@ watchEffect(async () => {
     .note-title {
         margin-bottom: 10px;
         border: none;
+
+        a {
+            font-size: 14px;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+
+        span {
+            vertical-align: middle;
+        }
     }
 
     .note-body {
         font-size: 12px;
         color: #555;
+    }
+
+    .note-date {
+        font-size: 12px;
+        margin: 5px 0;
+    }
+
+    .note-media * {
+        margin: 10px 0;
     }
 }
 </style>

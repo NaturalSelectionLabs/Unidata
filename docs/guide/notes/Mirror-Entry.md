@@ -11,7 +11,7 @@ You can use RSS3 API for free (no rate limit disclosed).
 ## API
 
 ```ts
-const profiles: Profiles = unidata.profiles.get(options: {
+const notes: Notes = unidata.notes.get(options: {
     source: 'Mirror Entry';
     identity: string;
     limit?: number;
