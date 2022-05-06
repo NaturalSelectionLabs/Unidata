@@ -5,9 +5,6 @@ import path from 'path';
 import { viteBundler } from '@vuepress/bundler-vite';
 import { defineUserConfig } from '@vuepress/cli';
 import viteConfig from '../../vite.config';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
-import AutoImport from 'unplugin-auto-import/vite';
-import Components from 'unplugin-vue-components/vite';
 
 export default defineUserConfig({
     title: 'Unidata',
@@ -96,14 +93,6 @@ export default defineUserConfig({
     bundler: viteBundler({
         viteOptions: {
             define: viteConfig.define,
-            plugins: [
-                AutoImport({
-                    resolvers: [ElementPlusResolver()],
-                }),
-                Components({
-                    resolvers: [ElementPlusResolver()],
-                }),
-            ],
         },
     }),
 });

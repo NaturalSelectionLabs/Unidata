@@ -1,6 +1,6 @@
 import Main from '../index';
 import Base from './base';
-import lodashArray from 'lodash-es/array';
+import unionBy from 'lodash/unionBy';
 import EthereumNFTMoralis from './ethereum-nft-moralis';
 import EthereumNFTOpenSea from './ethereum-nft-opensea';
 import EthereumNFTPOAP from './ethereum-nft-poap';
@@ -51,7 +51,7 @@ class Assets {
             }),
         );
         let assets = Array.prototype.concat(...list);
-        assets = lodashArray.unionBy(assets, (item: Asset) => item.metadata?.proof);
+        assets = unionBy(assets, (item: Asset) => item.metadata?.proof);
 
         return {
             total: assets.length,
