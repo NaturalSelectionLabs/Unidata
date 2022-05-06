@@ -6,6 +6,10 @@
 You can use RSS3 API for free (no rate limit disclosed).
 :::
 
+[Ethereum NFT](https://ethereum.org/en/nft/) is a kind of token on Ethereum with a chaotic specification. They can be normalized through Unidata now.
+
+You can initialize with `ipfsGateway` to get potentially faster response or higher stability.
+
 ## API
 
 ```ts

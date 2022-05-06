@@ -8,6 +8,8 @@ You can use RSS3 API for free (no rate limit disclosed).
 
 [Mirror](https://mirror.xyz/) Entry is a writing platform made by Mirror.
 
+You can initialize with `ipfsGateway` to get potentially faster response or higher stability.
+
 ## API
 
 ```ts
