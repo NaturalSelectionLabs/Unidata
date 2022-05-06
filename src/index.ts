@@ -2,6 +2,7 @@ import Utils from './utils';
 import Profiles from './profiles';
 import Links from './links';
 import Assets from './assets';
+import Notes from './notes';
 
 type IOptions = {
     infuraProjectID?: string;
@@ -17,6 +18,7 @@ class Unidata {
     profiles: Profiles;
     links: Links;
     assets: Assets;
+    notes: Notes;
 
     constructor(options: IOptions) {
         this.options = Object.assign(
@@ -33,6 +35,7 @@ class Unidata {
         this.profiles = new Profiles(this);
         this.links = new Links(this);
         this.assets = new Assets(this);
+        this.notes = new Notes(this);
     }
 }
 

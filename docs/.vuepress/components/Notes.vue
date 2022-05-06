@@ -16,10 +16,30 @@
     source: '${props.source}',
     identity: '${identity}',${providers ? `
     providers: ${JSON.stringify(providers)},` : ''}
-    limit: 5,
+    limit: 10,
 });`}}</code></pre>
         <h5>View</h5>
-        <el-card class="note-card" v-loading="loading" v-for="note in notes" :key="note"> </el-card>
+        <el-card class="note-card" v-loading="loading">
+            <div class="note-content" v-for="note in notesFiltered" :key="note">
+                <h2 class="note-title">
+                    <a target="_blank" :href="url" v-for="url in note.related_urls" :key="url">
+                        <font-awesome-icon icon="link" />
+                    </a>
+                    {{ note.title }}
+                </h2>
+                <div
+                    class="note-body"
+                    v-if="
+                        note.attachments.filter((attachment) => attachment.type === 'body')[0].mime_type ===
+                        'text/markdown'
+                    "
+                    v-html="md.render(note.attachments.filter((attachment) => attachment.type === 'body')[0].content)"
+                ></div>
+                <div class="note-body" v-else>
+                    {{ note.attachments.filter((attachment) => attachment.type === 'body')[0].content }}
+                </div>
+            </div>
+        </el-card>
         <h5>Data</h5>
         <pre class="data">{{ JSON.stringify(notes, null, 4) }}</pre>
     </div>
@@ -27,6 +47,9 @@
 
 <script setup lang="ts">
 import { defineProps, watchEffect, ref, getCurrentInstance } from 'vue';
+import MarkdownIt from 'markdown-it';
+
+const md = new MarkdownIt();
 
 const props = defineProps({
     source: {
@@ -42,20 +65,34 @@ const props = defineProps({
 const identity = ref(props.defaultIdentity);
 
 const loading = ref(true);
-const notes = ref([{}]);
+const notes = ref<Notes>({} as Notes);
+const notesFiltered = ref<Note[]>([]);
 
 const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
 watchEffect(async () => {
     if (identity.value) {
         loading.value = true;
-        notes.value = [{}];
+        notes.value = {} as Notes;
         unidata.notes
             .get({
                 identity: identity.value,
                 source: props.source,
+                limit: 10,
             })
             .then((p: any) => {
                 notes.value = p;
+
+                const titleMap: {
+                    [key: string]: boolean;
+                } = {};
+                notesFiltered.value = notes.value.list.filter((note) => {
+                    if (titleMap[note.title || '']) {
+                        return false;
+                    } else {
+                        titleMap[note.title || ''] = true;
+                        return true;
+                    }
+                });
                 loading.value = false;
             });
     }
@@ -66,89 +103,19 @@ watchEffect(async () => {
 .note-card {
     position: relative;
 
-    .edit {
-        position: absolute;
-        top: 35px;
-        right: 40px;
-        cursor: pointer;
-        width: 20px;
-        height: 20px;
-        color: #555;
+    .note-content {
+        border-bottom: 2px solid #eee;
+        padding: 20px 10px;
     }
 
-    .info {
-        display: flex;
+    .note-title {
+        margin-bottom: 10px;
+        border: none;
+    }
 
-        .avatar {
-            width: 150px;
-            height: 150px;
-            margin-right: 40px;
-
-            img {
-                width: 100%;
-                border-radius: 50%;
-            }
-        }
-
-        .text {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-
-            .name {
-                font-weight: bold;
-                font-size: 28px;
-                margin-bottom: 5px;
-
-                .handler {
-                    font-size: 14px;
-                    color: #999;
-                    margin-left: 10px;
-
-                    &:before {
-                        content: '@';
-                    }
-                }
-            }
-
-            .bio {
-                font-size: 14px;
-                color: #999;
-            }
-        }
-
-        .websites {
-            margin-top: 10px;
-
-            .svg-inline--fa {
-                width: 14px;
-                height: 14px;
-            }
-
-            ul {
-                padding: 0;
-                list-style: none;
-                margin: 0 0 -7px 0;
-            }
-
-            li {
-                display: inline-block;
-                margin-right: 20px;
-                background: rgba(200, 200, 200, 0.5);
-                padding: 5px 10px;
-                line-height: 16px;
-                font-size: 14px;
-                line-height: 14px;
-                border-radius: 14px;
-                margin-bottom: 7px;
-
-                a {
-                    color: #333;
-                    text-decoration: none;
-                }
-            }
-        }
+    .note-body {
+        font-size: 12px;
+        color: #555;
     }
 }
 </style>

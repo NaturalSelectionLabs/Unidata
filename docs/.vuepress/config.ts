@@ -70,7 +70,7 @@ module.exports = {
                 },
                 {
                     text: 'Notes',
-                    children: ['/guide/notes/README.md'],
+                    children: ['/guide/notes/README.md', '/guide/notes/Mirror-Entry.md'],
                 },
             ],
         },

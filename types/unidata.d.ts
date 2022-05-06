@@ -96,6 +96,11 @@ type Note = {
     };
 };
 
+type Notes = {
+    total: number;
+    list: Note[];
+};
+
 type Asset = {
     date_created?: string;
     date_updated?: string;
