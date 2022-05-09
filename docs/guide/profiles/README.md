@@ -27,14 +27,6 @@ type Profiles = {
         websites?: URI[];
         banners?: URI[];
 
-        attachments?: {
-            type?: string;
-            content?: string;
-            address?: URI;
-            mime_type: string;
-            size_in_bytes?: number;
-        }[];
-
         connected_accounts?: {
             identity: string;
             platform: string;
