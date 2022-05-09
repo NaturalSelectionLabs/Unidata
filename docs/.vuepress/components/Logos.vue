@@ -35,7 +35,7 @@ const data = [
     {
         name: 'Crossbell',
         type: 'Profiles',
-        image: '',
+        image: '/images/sources/crossbell.svg',
         url: 'https://github.com/Crossbell-Box/',
     },
     {
@@ -217,6 +217,7 @@ if (names.value) {
     img {
         vertical-align: middle;
         max-height: 40px;
+        width: 100%;
     }
 }
 </style>
