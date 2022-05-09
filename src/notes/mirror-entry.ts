@@ -32,6 +32,11 @@ class MirrorEntry extends Base {
                     };
                 });
 
+                item.summary = {
+                    content: item.summary,
+                    mime_type: 'text/markdown',
+                };
+
                 if (!item.attachments) {
                     item.attachments = [];
                 }
@@ -41,6 +46,18 @@ class MirrorEntry extends Base {
                     }
                     return attachment;
                 });
+
+                const body = item.attachments?.find((attachment: any) => attachment.type === 'body');
+                if (body) {
+                    item.body = body;
+                    item.attachments = item.attachments.filter((attachment: any) => attachment.type !== 'body');
+                    if (!item.attachments.length) {
+                        delete item.attachments;
+                    }
+                    delete item.body.type;
+                } else {
+                    item.body = item.summary;
+                }
 
                 return item;
             }),

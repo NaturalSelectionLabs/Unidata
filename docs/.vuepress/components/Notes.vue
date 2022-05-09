@@ -22,9 +22,6 @@
         <el-card class="note-card" v-loading="loading">
             <div class="note-content" v-for="note in notesFiltered" :key="note">
                 <h2 class="note-title">
-                    <span v-if="note.source === 'Ethereum NFT'">{{
-                        note.metadata.from === identity ? 'Lost an NFT: ' : 'Got an NFT: '
-                    }}</span>
                     <span>{{ note.title }}</span>
                     <a target="_blank" :href="url" v-for="url in note.related_urls" :key="url">
                         <font-awesome-icon icon="link" />
@@ -36,55 +33,40 @@
                 </div>
                 <div
                     class="note-body"
-                    v-if="
-                        note.attachments.filter((attachment) => attachment.type === 'body')[0]?.mime_type ===
-                        'text/markdown'
-                    "
-                    v-html="md.render(note.attachments.filter((attachment) => attachment.type === 'body')[0]?.content)"
+                    v-if="note.body?.mime_type === 'text/markdown'"
+                    v-html="md.render(note.body?.content)"
                 ></div>
                 <div class="note-body" v-else>
-                    {{
-                        note.attachments.filter((attachment) => attachment.type === 'body')[0]?.content || note.summary
-                    }}
+                    {{ note.body?.content || note.summary?.content }}
                 </div>
-                <div
-                    class="note-media"
-                    v-if="note.attachments.filter((attachment) => attachment.type === 'preview')[0]"
-                >
+                <div class="note-media" v-for="attachment in note.attachments" :key="attachment">
                     <video
                         style="width: 100px; height: 100px"
-                        :src="note.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                        :src="attachment?.address"
                         :fit="'cover'"
-                        v-if="
-                            note.attachments
-                                .find((attachment) => attachment.type === 'preview')
-                                ?.mime_type?.split('/')[0] === 'video'
-                        "
+                        v-if="attachment.mime_type?.split('/')[0] === 'video'"
                         autoplay
                         loop
                         muted
                     />
                     <model-viewer
                         style="width: 100px; height: 100px"
-                        :src="note.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                        :src="attachment?.address"
                         ar
                         ar-modes="webxr scene-viewer quick-look"
                         seamless-poster
                         shadow-intensity="1"
                         camera-controls
                         enable-pan
-                        v-else-if="
-                            note.attachments
-                                .find((attachment) => attachment.type === 'preview')
-                                ?.mime_type?.split('/')[0] === 'model'
-                        "
+                        v-else-if="attachment.mime_type?.split('/')[0] === 'model'"
                     ></model-viewer>
-                    <el-image
+                    <span
                         style="width: 100px; height: 100px"
-                        :src="note.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                        :src="attachment?.address"
                         :fit="'cover'"
-                        v-else
-                    />
+                        v-else-if="attachment.mime_type?.split('/')[0] === 'text'"
+                    ></span>
+                    <el-image style="width: 100px; height: 100px" :src="attachment?.address" :fit="'cover'" v-else />
                 </div>
             </div>
         </el-card>

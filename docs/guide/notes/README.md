@@ -33,8 +33,15 @@ type Notes = {
         authors: AccountInstanceURI[];
         title?: string;
         summary?: string;
-        attachments?: {
-            type?: string;
+
+        previews?: {
+            content?: string;
+            address?: URI;
+            mime_type?: string;
+            size_in_bytes?: number;
+        }[];
+
+        items?: {
             content?: string;
             address?: URI;
             mime_type?: string;
