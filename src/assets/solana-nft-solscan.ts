@@ -45,6 +45,8 @@ class SolanaNFTSolscan extends Base {
                             token_symbol: data.onchainMetadata?.data.symbol,
 
                             collection_name: data.metadata?.data.collection.name,
+
+                            providers: ['Solscan'],
                         },
                     };
 

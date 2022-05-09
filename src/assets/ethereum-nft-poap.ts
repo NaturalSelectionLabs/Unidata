@@ -2,6 +2,7 @@ import Main from '../index';
 import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
+import { utils } from 'ethers/lib';
 
 class EthereumNFTPOAP extends Base {
     constructor(main: Main) {
@@ -13,7 +14,7 @@ class EthereumNFTPOAP extends Base {
         const assets: Asset[] = res.data?.map((item: any) => {
             const asset: Asset = {
                 tags: ['NFT', 'POAP'],
-                owners: [item.owner],
+                owners: [utils.getAddress(item.owner)],
                 name: item.event.name,
                 description: item.event.description,
 
@@ -78,6 +79,8 @@ class EthereumNFTPOAP extends Base {
 
                     collection_address: '0x22C1f6050E56d2876009903609a2cC3fEf83B415',
                     collection_name: 'POAP',
+
+                    providers: ['POAP'],
                 },
             };
 

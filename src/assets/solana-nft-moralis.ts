@@ -58,6 +58,8 @@ class SolanaNFTMoralis extends Base {
                         token_symbol: metadata.symbol || moralisdata.symbol,
 
                         collection_name: metadata.collection?.name,
+
+                        providers: ['Moralis'],
                     },
                 };
 

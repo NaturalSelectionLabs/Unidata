@@ -20,15 +20,29 @@
         <h5>View</h5>
         <div class="loading-wrap" v-loading="loading">
             <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange"
-                >Check all networks ({{ assets.total }})</el-checkbox
+                >Check all networks and providers ({{ assets.total }})</el-checkbox
             >
-            <el-checkbox-group v-model="checked" @change="handleCheckedChange">
-                <el-checkbox v-for="(value, network) in networks" :key="network" :label="network"
-                    >{{ network }} ({{
-                        assets.list.filter((asset) => asset.metadata.network === network).length
-                    }})</el-checkbox
-                >
-            </el-checkbox-group>
+            <div>
+                <div class="check-type">Networks:</div>
+                <el-checkbox-group v-model="networkChecked" @change="handleCheckedChange">
+                    <el-checkbox v-for="(value, network) in networks" :key="network" :label="network"
+                        >{{ network }} ({{
+                            assets.list.filter((asset) => asset.metadata.network === network).length
+                        }})</el-checkbox
+                    >
+                </el-checkbox-group>
+            </div>
+            <div>
+                <div class="check-type">Providers:</div>
+                <el-checkbox-group v-model="providerChecked" @change="handleCheckedChange">
+                    <el-checkbox v-for="(value, provider) in mproviders" :key="provider" :label="provider"
+                        >{{ provider }} ({{
+                            assets.list.filter((asset) => asset.metadata.providers.find((pro) => pro === provider))
+                                .length
+                        }})</el-checkbox
+                    >
+                </el-checkbox-group>
+            </div>
             <el-row class="assets" :gutter="20">
                 <el-col class="asset" :span="8" v-loading="loading" v-for="asset in checkedAssets" :key="asset">
                     <el-card class="asset-card">
@@ -105,13 +119,18 @@ const checkedAssets = ref<Asset[]>([]);
 const networks = ref<{
     [network: string]: boolean;
 }>({});
+const mproviders = ref<{
+    [provider: string]: boolean;
+}>({});
 
 const checkAll = ref(true);
 const isIndeterminate = ref(false);
-const checked = ref<string[]>([]);
+const networkChecked = ref<string[]>([]);
+const providerChecked = ref<string[]>([]);
 
 const handleCheckAllChange = (val: boolean) => {
-    checked.value = val ? Object.keys(networks.value) : [];
+    networkChecked.value = val ? Object.keys(networks.value) : [];
+    providerChecked.value = val ? Object.keys(mproviders.value) : [];
     isIndeterminate.value = false;
 };
 const handleCheckedChange = (value: string[]) => {
@@ -149,16 +168,24 @@ watchEffect(async () => {
                     if (asset.metadata?.network) {
                         networks.value[asset.metadata.network] = true;
                     }
+                    if (asset.metadata?.providers) {
+                        asset.metadata.providers.forEach((provider: string) => {
+                            mproviders.value[provider] = true;
+                        });
+                    }
                 });
 
-                checked.value = Object.keys(networks.value);
+                networkChecked.value = Object.keys(networks.value);
+                providerChecked.value = Object.keys(mproviders.value);
             });
     }
 });
 
 watchEffect(async () => {
-    checkedAssets.value = assets.value.list.filter((asset: Asset) =>
-        checked.value.includes(asset.metadata?.network || ''),
+    checkedAssets.value = assets.value.list.filter(
+        (asset: Asset) =>
+            networkChecked.value.includes(asset.metadata?.network || '') &&
+            providerChecked.value.find((provider: string) => asset.metadata?.providers?.includes(provider)),
     );
 });
 
@@ -171,6 +198,11 @@ document.head.appendChild(modelScript);
 <style lang="less" scoped>
 .loading-wrap {
     min-height: 50px;
+
+    .check-type {
+        font-size: 14px;
+        margin: 5px 0;
+    }
 }
 
 .assets {

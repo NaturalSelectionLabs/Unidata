@@ -1,6 +1,6 @@
 import Main from '../index';
 import Base from './base';
-import unionBy from 'lodash/unionBy';
+import { mergeWith, keyBy, values, uniqWith, isEqual } from 'lodash';
 import EthereumNFTMoralis from './ethereum-nft-moralis';
 import EthereumNFTOpenSea from './ethereum-nft-opensea';
 import EthereumNFTPOAP from './ethereum-nft-poap';
@@ -54,8 +54,20 @@ class Assets {
                 return result.list;
             }),
         );
-        let assets = Array.prototype.concat(...list);
-        assets = unionBy(assets, (item: Asset) => item.metadata?.proof);
+
+        let merged = keyBy(list[0], (item) => item.metadata?.proof);
+        for (let i = 1; i < list.length; i++) {
+            merged = mergeWith(
+                merged,
+                keyBy(list[i], (item) => item.metadata?.proof),
+                (a, b) => {
+                    if (Array.isArray(a)) {
+                        return uniqWith(a.concat(b), isEqual);
+                    }
+                },
+            );
+        }
+        const assets = values(merged);
 
         return {
             total: assets.length,

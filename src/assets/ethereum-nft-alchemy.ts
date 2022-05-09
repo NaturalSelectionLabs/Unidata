@@ -3,6 +3,7 @@ import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
 import { BigNumber } from 'ethers';
+import { utils } from 'ethers/lib';
 
 class EthereumNFTAlchemy extends Base {
     constructor(main: Main) {
@@ -30,7 +31,7 @@ class EthereumNFTAlchemy extends Base {
                     const tokenId = BigNumber.from(item.id.tokenId).toString();
                     const asset: Asset = {
                         tags: ['NFT'],
-                        owners: [options.identity],
+                        owners: [utils.getAddress(options.identity)],
                         name: item.title,
                         description: item.description,
 
@@ -47,6 +48,8 @@ class EthereumNFTAlchemy extends Base {
                             token_id: tokenId,
 
                             collection_address: item.contract.address,
+
+                            providers: ['Alchemy'],
                         },
                     };
 

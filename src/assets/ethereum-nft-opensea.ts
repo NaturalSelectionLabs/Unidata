@@ -2,6 +2,7 @@ import Main from '../index';
 import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
+import { utils } from 'ethers/lib';
 
 class EthereumNFTOpensea extends Base {
     constructor(main: Main) {
@@ -22,7 +23,7 @@ class EthereumNFTOpensea extends Base {
         const assets: Asset[] = res.data?.assets.map((item: any) => {
             const asset: Asset = {
                 tags: ['NFT'],
-                owners: [item.owner.address],
+                owners: [utils.getAddress(item.owner.address)],
                 name: item.name,
                 description: item.description,
 
@@ -41,6 +42,8 @@ class EthereumNFTOpensea extends Base {
 
                     collection_address: item.asset_contract.address,
                     collection_name: item.asset_contract.name,
+
+                    providers: ['OpenSea'],
                 },
             };
 

@@ -147,6 +147,7 @@ type Asset = {
     metadata?: {
         network: Network;
         proof: string;
+        providers: string[];
 
         [key: string]: any;
     };

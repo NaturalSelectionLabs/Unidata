@@ -2,6 +2,7 @@ import Main from '../index';
 import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
+import { utils } from 'ethers/lib';
 
 class EthereumNFTMoralis extends Base {
     constructor(main: Main) {
@@ -76,7 +77,7 @@ class EthereumNFTMoralis extends Base {
 
                             const asset: Asset = {
                                 tags: ['NFT'],
-                                owners: [item.owner_of || options.identity],
+                                owners: [utils.getAddress(item.owner_of || options.identity)],
                                 name: metadata?.name || `${item.name} #${item.token_id}`,
                                 description: metadata?.description,
 
@@ -95,6 +96,8 @@ class EthereumNFTMoralis extends Base {
 
                                     block_number_minted: item.block_number_minted,
                                     block_number: item.block_number,
+
+                                    providers: ['Moralis'],
                                 },
                             };
 

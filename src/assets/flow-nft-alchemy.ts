@@ -36,6 +36,8 @@ class FlowNFTAlchemy extends Base {
 
                     collection_address: item.contract.address,
                     collection_name: item.contract.name,
+
+                    providers: ['Alchemy'],
                 },
             };
 
