@@ -32,7 +32,8 @@ class GitcoinContribution extends Base {
                     };
                 });
 
-                item.title = 'Contributed to ' + (item.title || '');
+                item.title =
+                    `Contributed ${item.metadata.value_amount}${item.metadata.value_symbol} to ` + (item.title || '');
                 item.summary = {
                     content: item.summary,
                     mime_type: 'text/plain',

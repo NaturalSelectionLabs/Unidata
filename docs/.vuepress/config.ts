@@ -69,6 +69,7 @@ export default defineUserConfig({
                             collapsible: true,
                             children: ['/guide/assets/Flow-NFT/README.md', '/guide/assets/Flow-NFT/Alchemy.md'],
                         },
+                        '/guide/assets/Gitcoin-Contribution.md',
                     ],
                 },
                 {

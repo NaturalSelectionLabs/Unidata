@@ -8,6 +8,7 @@ import SolanaNFTSolscan from './solana-nft-solscan';
 import SolanaNFTMoralis from './solana-nft-moralis';
 import EthereumNFTAlchemy from './ethereum-nft-alchemy';
 import FlowNFTAlchemy from './flow-nft-alchemy';
+import GitcoinContribution from './gitcoin-contribution';
 
 export type AssetsOptions = {
     source: string;
@@ -36,6 +37,9 @@ class Assets {
             },
             'Flow NFT': {
                 FlowNFTAlchemy: new FlowNFTAlchemy(main),
+            },
+            'Gitcoin Contribution': {
+                RSS3: new GitcoinContribution(main),
             },
         };
     }

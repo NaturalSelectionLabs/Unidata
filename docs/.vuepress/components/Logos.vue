@@ -109,6 +109,12 @@ const data = [
         url: 'https://www.onflow.org/',
     },
     {
+        name: 'Gitcoin',
+        type: 'Assets',
+        image: '/images/sources/gitcoin.svg',
+        url: 'https://gitcoin.co/',
+    },
+    {
         name: 'Alchemy',
         type: 'Assets',
         image: '/images/sources/alchemy.svg',
@@ -131,6 +137,12 @@ const data = [
         type: 'Assets',
         image: '/images/sources/opensea.svg',
         url: 'https://opensea.io/',
+    },
+    {
+        name: 'RSS3',
+        type: 'Assets',
+        image: '/images/sources/rss3.png',
+        url: 'https://rss3.io/',
     },
 
     // Notes
@@ -181,6 +193,12 @@ const data = [
         type: 'Notes',
         image: '/images/sources/poap.svg',
         url: 'https://poap.xyz/',
+    },
+    {
+        name: 'Gitcoin',
+        type: 'Notes',
+        image: '/images/sources/gitcoin.svg',
+        url: 'https://gitcoin.co/',
     },
     {
         name: 'RSS3',

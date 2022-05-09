@@ -1,6 +1,6 @@
 # Gitcoin Contribution
 
-<Logos type="Notes" :names="['Gitcoin', 'RSS3']" />
+<Logos type="Assets" :names="['Gitcoin', 'RSS3']" />
 
 ::: tip
 You can use RSS3 API for free (no rate limit disclosed).
@@ -11,13 +11,15 @@ You can use RSS3 API for free (no rate limit disclosed).
 ## API
 
 ```ts
-const notes: Notes = await unidata.notes.get(options: {
+const assets: Assets = await unidata.assets.get(options: {
     source: 'Gitcoin Contribution';
     identity: string;
-    limit?: number;
 });
 ```
 
+-   `providers`: The providers of the data, requesting and aggregating from all supported providers by default.
+-   `identity`: The Solana address.
+
 ## Live Demo
 
-<Notes :source="'Gitcoin Contribution'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
+<Assets :source="'Gitcoin Contribution'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
