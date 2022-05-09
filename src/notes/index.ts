@@ -2,6 +2,7 @@ import Main from '../index';
 import Base from './base';
 import MirrorEntry from './mirror-entry';
 import EthereumNFTActivity from './ethereum-nft-activity';
+import GitcoinContribution from './gitcoin-contribution';
 
 export type NotesOptions = {
     source: string;
@@ -18,6 +19,7 @@ class Notes {
         this.map = {
             'Mirror Entry': new MirrorEntry(main),
             'Ethereum NFT Activity': new EthereumNFTActivity(main),
+            'Gitcoin Contribution': new GitcoinContribution(main),
         };
     }
 

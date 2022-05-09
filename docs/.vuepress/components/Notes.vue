@@ -31,14 +31,6 @@
                     <strong>Created:</strong> {{ new Date(note.date_created).toDateString() }}
                     <strong>Updated:</strong> {{ new Date(note.date_updated).toDateString() }}
                 </div>
-                <div
-                    class="note-body"
-                    v-if="note.body?.mime_type === 'text/markdown'"
-                    v-html="md.render(note.body?.content)"
-                ></div>
-                <div class="note-body" v-else>
-                    {{ note.body?.content || note.summary?.content }}
-                </div>
                 <div class="note-media" v-for="attachment in note.attachments" :key="attachment">
                     <video
                         style="width: 100px; height: 100px"
@@ -67,6 +59,14 @@
                         v-else-if="attachment.mime_type?.split('/')[0] === 'text'"
                     ></span>
                     <el-image style="width: 100px; height: 100px" :src="attachment?.address" :fit="'cover'" v-else />
+                </div>
+                <div
+                    class="note-body"
+                    v-if="note.body?.mime_type === 'text/markdown'"
+                    v-html="md.render(note.body?.content)"
+                ></div>
+                <div class="note-body" v-else>
+                    {{ note.body?.content || note.summary?.content }}
                 </div>
             </div>
         </el-card>
@@ -156,6 +156,7 @@ watchEffect(async () => {
     .note-body {
         font-size: 12px;
         color: #555;
+        line-height: 1.7;
     }
 
     .note-date {

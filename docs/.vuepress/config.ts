@@ -78,6 +78,7 @@ export default defineUserConfig({
                         '/guide/notes/README.md',
                         '/guide/notes/Mirror-Entry.md',
                         '/guide/notes/Ethereum-NFT-Activity.md',
+                        '/guide/notes/Gitcoin-Contribution.md',
                     ],
                 },
                 {
