@@ -34,15 +34,27 @@ type Assets = {
         owners: AccountInstanceURI[];
         name?: string;
         description?: string;
-        attachments?: {
-            type?: string;
+
+        previews?: {
             content?: string;
             address?: URI;
-            mime_type: string;
+            mime_type?: string;
             size_in_bytes?: number;
         }[];
 
-        source: AssetSource | NoteSource;
+        items?: {
+            content?: string;
+            address?: URI;
+            mime_type?: string;
+            size_in_bytes?: number;
+        }[];
+
+        attributes?: {
+            content?: string;
+            mime_type?: string;
+        }[];
+
+        source: AssetSource;
 
         metadata?: {
             network: Network;

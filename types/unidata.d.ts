@@ -24,14 +24,6 @@ type Profile = {
     websites?: URI[];
     banners?: URI[];
 
-    attachments?: {
-        type?: string;
-        content?: string;
-        address?: URI;
-        mime_type: string;
-        size_in_bytes?: number;
-    }[];
-
     connected_accounts?: {
         identity: string;
         platform: string;
@@ -83,8 +75,15 @@ type Note = {
     authors: AccountInstanceURI[];
     title?: string;
     summary?: string;
-    attachments?: {
-        type?: string;
+
+    previews?: {
+        content?: string;
+        address?: URI;
+        mime_type?: string;
+        size_in_bytes?: number;
+    }[];
+
+    items?: {
         content?: string;
         address?: URI;
         mime_type?: string;
@@ -116,12 +115,24 @@ type Asset = {
     owners: AccountInstanceURI[];
     name?: string;
     description?: string;
-    attachments?: {
-        type?: string;
+
+    previews?: {
         content?: string;
         address?: URI;
         mime_type?: string;
         size_in_bytes?: number;
+    }[];
+
+    items?: {
+        content?: string;
+        address?: URI;
+        mime_type?: string;
+        size_in_bytes?: number;
+    }[];
+
+    attributes?: {
+        key: string;
+        value: string;
     }[];
 
     source: AssetSource;

@@ -79,7 +79,6 @@ class EthereumNFTMoralis extends Base {
                                 owners: [item.owner_of || options.identity],
                                 name: metadata?.name || `${item.name} #${item.token_id}`,
                                 description: metadata?.description,
-                                attachments: [],
 
                                 source: 'Ethereum NFT',
 
@@ -99,28 +98,31 @@ class EthereumNFTMoralis extends Base {
                                 },
                             };
 
-                            if (metadata?.image || metadata?.image_url) {
-                                asset.attachments!.push({
-                                    type: 'preview',
-                                    address: this.main.utils.replaceIPFS(metadata?.image || metadata?.image_url),
-                                });
+                            const preview = metadata?.image || metadata?.image_url;
+                            if (preview) {
+                                asset.previews = [
+                                    {
+                                        address: this.main.utils.replaceIPFS(preview),
+                                        mime_type: this.generateMimeType(preview),
+                                    },
+                                ];
                             }
 
-                            if (metadata?.animation_url || metadata?.image || metadata?.image_url) {
-                                asset.attachments!.push({
-                                    type: 'object',
-                                    address: this.main.utils.replaceIPFS(
-                                        metadata?.animation_url || metadata?.image || metadata?.image_url,
-                                    ),
-                                });
+                            const infoItem = metadata?.animation_url || metadata?.image || metadata?.image_url;
+                            if (infoItem) {
+                                asset.items = [
+                                    {
+                                        address: this.main.utils.replaceIPFS(infoItem),
+                                        mime_type: this.generateMimeType(infoItem),
+                                    },
+                                ];
                             }
 
                             if (metadata?.attributes) {
-                                asset.attachments!.push({
-                                    type: 'attributes',
-                                    content: JSON.stringify(metadata?.attributes),
-                                    mime_type: 'text/json',
-                                });
+                                const attributes = this.generateAttributes(metadata?.attributes);
+                                if (attributes) {
+                                    asset.attributes = attributes;
+                                }
                             }
 
                             this.generateRelatedUrls(asset);
@@ -131,8 +133,6 @@ class EthereumNFTMoralis extends Base {
                                 }
                                 asset.related_urls.push(metadata?.external_url || metadata?.external_link);
                             }
-
-                            this.generateMimeType(asset);
 
                             return asset;
                         }),

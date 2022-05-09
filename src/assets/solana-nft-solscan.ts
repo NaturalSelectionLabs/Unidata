@@ -33,7 +33,6 @@ class SolanaNFTSolscan extends Base {
                         owners: [options.identity],
                         name: data.metadata?.data.name || data.onchainMetadata?.data.name,
                         description: data.metadata?.data.description,
-                        attachments: [],
 
                         source: 'Solana NFT',
 
@@ -50,25 +49,29 @@ class SolanaNFTSolscan extends Base {
                     };
 
                     if (data.metadata?.data.image) {
-                        asset.attachments!.push({
-                            type: 'preview',
-                            address: data.metadata?.data.image,
-                        });
+                        asset.previews = [
+                            {
+                                address: this.main.utils.replaceIPFS(data.metadata?.data.image),
+                                mime_type: this.generateMimeType(data.metadata?.data.image),
+                            },
+                        ];
                     }
 
-                    if (data.metadata?.data.animation_url || data.metadata?.data.image) {
-                        asset.attachments!.push({
-                            type: 'object',
-                            address: data.metadata?.data.animation_url || data.metadata?.data.image,
-                        });
+                    const infoItem = data.metadata?.data.animation_url || data.metadata?.data.image;
+                    if (infoItem) {
+                        asset.items = [
+                            {
+                                address: this.main.utils.replaceIPFS(infoItem),
+                                mime_type: this.generateMimeType(infoItem),
+                            },
+                        ];
                     }
 
                     if (data.metadata?.data.attributes) {
-                        asset.attachments!.push({
-                            type: 'attributes',
-                            content: JSON.stringify(data.metadata?.data.attributes),
-                            mime_type: 'text/json',
-                        });
+                        const attributes = this.generateAttributes(data.metadata?.data.attributes);
+                        if (attributes) {
+                            asset.attributes = attributes;
+                        }
                     }
 
                     this.generateRelatedUrls(asset);
@@ -79,8 +82,6 @@ class SolanaNFTSolscan extends Base {
                         }
                         asset.related_urls.push(data.metadata?.data.external_url);
                     }
-
-                    this.generateMimeType(asset);
 
                     return asset;
                 }),

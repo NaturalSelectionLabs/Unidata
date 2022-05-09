@@ -53,20 +53,33 @@ abstract class Base {
         }
     }
 
-    generateMimeType(asset: Asset) {
-        asset.attachments?.forEach((attachment) => {
-            if (attachment.address) {
-                const mimeType = mime.getType(attachment.address);
-                if (mimeType) {
-                    attachment.mime_type = mimeType;
-                } else if (new URL(attachment.address).searchParams.get('ext')) {
-                    const mimeType = mime.getType(new URL(attachment.address).searchParams.get('ext')!);
-                    if (mimeType) {
-                        attachment.mime_type = mimeType;
-                    }
-                }
+    generateMimeType(address: string) {
+        const mimeType = mime.getType(address);
+        if (mimeType) {
+            return mimeType;
+        } else if (new URL(address).searchParams.get('ext')) {
+            const mimeType = mime.getType(new URL(address).searchParams.get('ext')!);
+            if (mimeType) {
+                return mimeType;
             }
-        });
+        }
+    }
+
+    generateAttributes(attributes: any): Asset['attributes'] | undefined {
+        if (Array.isArray(attributes)) {
+            return attributes
+                .map((attribute: any) => {
+                    if (attribute.trait_type && attribute.value) {
+                        return {
+                            key: attribute.trait_type,
+                            value: attribute.value,
+                        };
+                    } else {
+                        return null;
+                    }
+                })
+                .filter((attribute: any) => attribute) as Asset['attributes'];
+        }
     }
 }
 

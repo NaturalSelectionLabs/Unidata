@@ -33,7 +33,6 @@ class EthereumNFTAlchemy extends Base {
                         owners: [options.identity],
                         name: item.title,
                         description: item.description,
-                        attachments: [],
 
                         source: 'Ethereum NFT',
 
@@ -51,28 +50,31 @@ class EthereumNFTAlchemy extends Base {
                         },
                     };
 
-                    if (item.metadata.image || item.metadata.image_url) {
-                        asset.attachments!.push({
-                            type: 'preview',
-                            address: this.main.utils.replaceIPFS(item.metadata.image || item.metadata.image_url),
-                        });
+                    const preview = item.metadata.image || item.metadata.image_url;
+                    if (preview) {
+                        asset.previews = [
+                            {
+                                address: this.main.utils.replaceIPFS(preview),
+                                mime_type: this.generateMimeType(preview),
+                            },
+                        ];
                     }
 
-                    if (item.metadata.animation_url || item.metadata.image || item.metadata.image_url) {
-                        asset.attachments!.push({
-                            type: 'object',
-                            address: this.main.utils.replaceIPFS(
-                                item.metadata.animation_url || item.metadata.image || item.metadata.image_url,
-                            ),
-                        });
+                    const infoItem = item.metadata.animation_url || item.metadata.image || item.metadata.image_url;
+                    if (infoItem) {
+                        asset.items = [
+                            {
+                                address: this.main.utils.replaceIPFS(infoItem),
+                                mime_type: this.generateMimeType(infoItem),
+                            },
+                        ];
                     }
 
                     if (item.metadata.attributes) {
-                        asset.attachments!.push({
-                            type: 'attributes',
-                            content: JSON.stringify(item.metadata.attributes),
-                            mime_type: 'text/json',
-                        });
+                        const attributes = this.generateAttributes(item.metadata.attributes);
+                        if (attributes) {
+                            asset.attributes = attributes;
+                        }
                     }
 
                     this.generateRelatedUrls(asset);
@@ -83,8 +85,6 @@ class EthereumNFTAlchemy extends Base {
                         }
                         asset.related_urls.push(item.metadata.external_url || item.metadata.external_link);
                     }
-
-                    this.generateMimeType(asset);
 
                     return asset;
                 });

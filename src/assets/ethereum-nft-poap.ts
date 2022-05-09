@@ -16,54 +16,53 @@ class EthereumNFTPOAP extends Base {
                 owners: [item.owner],
                 name: item.event.name,
                 description: item.event.description,
-                attachments: [
+
+                previews: [
                     {
-                        type: 'preview',
                         address: item.event.image_url,
                         mime_type: 'image/png',
                     },
+                ],
+
+                items: [
                     {
-                        type: 'object',
                         address: item.event.image_url,
                         mime_type: 'image/png',
                     },
+                ],
+
+                attributes: [
                     {
-                        type: 'attributes',
-                        content: JSON.stringify([
-                            {
-                                trait_type: 'country',
-                                value: item.event.country,
-                            },
-                            {
-                                trait_type: 'city',
-                                value: item.event.city,
-                            },
-                            {
-                                trait_type: 'year',
-                                value: item.event.year,
-                            },
-                            {
-                                trait_type: 'start_date',
-                                value: item.event.start_date,
-                            },
-                            {
-                                trait_type: 'end_date',
-                                value: item.event.end_date,
-                            },
-                            {
-                                trait_type: 'expiry_date',
-                                value: item.event.expiry_date,
-                            },
-                            {
-                                trait_type: 'supply',
-                                value: item.event.supply,
-                            },
-                            {
-                                trait_type: 'event_url',
-                                value: item.event.event_url,
-                            },
-                        ]),
-                        mime_type: 'text/json',
+                        key: 'country',
+                        value: item.event.country,
+                    },
+                    {
+                        key: 'city',
+                        value: item.event.city,
+                    },
+                    {
+                        key: 'year',
+                        value: item.event.year,
+                    },
+                    {
+                        key: 'start_date',
+                        value: item.event.start_date,
+                    },
+                    {
+                        key: 'end_date',
+                        value: item.event.end_date,
+                    },
+                    {
+                        key: 'expiry_date',
+                        value: item.event.expiry_date,
+                    },
+                    {
+                        key: 'supply',
+                        value: item.event.supply,
+                    },
+                    {
+                        key: 'event_url',
+                        value: item.event.event_url,
                     },
                 ],
 

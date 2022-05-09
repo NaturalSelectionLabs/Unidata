@@ -46,7 +46,6 @@ class SolanaNFTMoralis extends Base {
                     owners: [options.identity],
                     name: metadata.name || moralisdata.name,
                     description: metadata.description,
-                    attachments: [],
 
                     source: 'Solana NFT',
 
@@ -63,25 +62,29 @@ class SolanaNFTMoralis extends Base {
                 };
 
                 if (metadata.image) {
-                    asset.attachments!.push({
-                        type: 'preview',
-                        address: metadata.image,
-                    });
+                    asset.previews = [
+                        {
+                            address: this.main.utils.replaceIPFS(metadata.image),
+                            mime_type: this.generateMimeType(metadata.image),
+                        },
+                    ];
                 }
 
-                if (metadata.animation_url || metadata.image) {
-                    asset.attachments!.push({
-                        type: 'object',
-                        address: metadata.animation_url || metadata.image,
-                    });
+                const infoItem = metadata.animation_url || metadata.image;
+                if (infoItem) {
+                    asset.items = [
+                        {
+                            address: this.main.utils.replaceIPFS(infoItem),
+                            mime_type: this.generateMimeType(infoItem),
+                        },
+                    ];
                 }
 
                 if (metadata.attributes) {
-                    asset.attachments!.push({
-                        type: 'attributes',
-                        content: JSON.stringify(metadata.attributes),
-                        mime_type: 'text/json',
-                    });
+                    const attributes = this.generateAttributes(metadata.attributes);
+                    if (attributes) {
+                        asset.attributes = attributes;
+                    }
                 }
 
                 this.generateRelatedUrls(asset);
@@ -92,8 +95,6 @@ class SolanaNFTMoralis extends Base {
                     }
                     asset.related_urls.push(metadata.external_url);
                 }
-
-                this.generateMimeType(asset);
 
                 return asset;
             }),

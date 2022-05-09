@@ -25,7 +25,6 @@ class EthereumNFTOpensea extends Base {
                 owners: [item.owner.address],
                 name: item.name,
                 description: item.description,
-                attachments: [],
 
                 source: 'Ethereum NFT',
 
@@ -46,25 +45,28 @@ class EthereumNFTOpensea extends Base {
             };
 
             if (item.image_original_url) {
-                asset.attachments!.push({
-                    type: 'preview',
-                    address: this.main.utils.replaceIPFS(item.image_original_url),
-                });
+                asset.previews = [
+                    {
+                        address: this.main.utils.replaceIPFS(item.image_original_url),
+                        mime_type: this.generateMimeType(item.image_original_url),
+                    },
+                ];
             }
 
             if (item.animation_original_url) {
-                asset.attachments!.push({
-                    type: 'object',
-                    address: this.main.utils.replaceIPFS(item.animation_original_url),
-                });
+                asset.items = [
+                    {
+                        address: this.main.utils.replaceIPFS(item.animation_original_url),
+                        mime_type: this.generateMimeType(item.animation_original_url),
+                    },
+                ];
             }
 
             if (item.traits) {
-                asset.attachments!.push({
-                    type: 'attributes',
-                    content: JSON.stringify(item.traits),
-                    mime_type: 'text/json',
-                });
+                const attributes = this.generateAttributes(item.traits);
+                if (attributes) {
+                    asset.attributes = attributes;
+                }
             }
 
             this.generateRelatedUrls(asset);
@@ -75,8 +77,6 @@ class EthereumNFTOpensea extends Base {
                 }
                 asset.related_urls.push(item.external_link);
             }
-
-            this.generateMimeType(asset);
 
             return asset;
         });

@@ -35,35 +35,27 @@
                         <div class="asset-body">
                             <video
                                 style="width: 100px; height: 100px"
-                                :src="asset.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                                :src="asset.previews?.[0]?.address"
                                 :fit="'cover'"
-                                v-if="
-                                    asset.attachments
-                                        .find((attachment) => attachment.type === 'preview')
-                                        ?.mime_type?.split('/')[0] === 'video'
-                                "
+                                v-if="asset.previews?.[0]?.mime_type?.split('/')[0] === 'video'"
                                 autoplay
                                 loop
                                 muted
                             />
                             <model-viewer
                                 style="width: 100px; height: 100px"
-                                :src="asset.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                                :src="asset.previews?.[0]?.address"
                                 ar
                                 ar-modes="webxr scene-viewer quick-look"
                                 seamless-poster
                                 shadow-intensity="1"
                                 camera-controls
                                 enable-pan
-                                v-else-if="
-                                    asset.attachments
-                                        .find((attachment) => attachment.type === 'preview')
-                                        ?.mime_type?.split('/')[0] === 'model'
-                                "
+                                v-else-if="asset.previews?.[0]?.mime_type?.split('/')[0] === 'model'"
                             ></model-viewer>
                             <el-image
                                 style="width: 100px; height: 100px"
-                                :src="asset.attachments.find((attachment) => attachment.type === 'preview')?.address"
+                                :src="asset.previews?.[0]?.address"
                                 :fit="'cover'"
                                 v-else
                             />
