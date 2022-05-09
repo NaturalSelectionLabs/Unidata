@@ -63,6 +63,12 @@ export default defineUserConfig({
                                 '/guide/assets/Solana-NFT/Moralis.md',
                             ],
                         },
+                        {
+                            text: 'Flow NFT',
+                            link: '/guide/assets/Flow-NFT/README.md',
+                            collapsible: true,
+                            children: ['/guide/assets/Flow-NFT/README.md', '/guide/assets/Flow-NFT/Alchemy.md'],
+                        },
                     ],
                 },
                 {

@@ -7,6 +7,7 @@ import EthereumNFTPOAP from './ethereum-nft-poap';
 import SolanaNFTSolscan from './solana-nft-solscan';
 import SolanaNFTMoralis from './solana-nft-moralis';
 import EthereumNFTAlchemy from './ethereum-nft-alchemy';
+import FlowNFTAlchemy from './flow-nft-alchemy';
 
 export type AssetsOptions = {
     source: string;
@@ -32,6 +33,9 @@ class Assets {
             'Solana NFT': {
                 Solscan: new SolanaNFTSolscan(main),
                 Moralis: new SolanaNFTMoralis(main),
+            },
+            'Flow NFT': {
+                FlowNFTAlchemy: new FlowNFTAlchemy(main),
             },
         };
     }

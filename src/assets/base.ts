@@ -54,6 +54,7 @@ abstract class Base {
     }
 
     generateMimeType(address: string) {
+        address = this.main.utils.replaceIPFS(address);
         const mimeType = mime.getType(address);
         if (mimeType) {
             return mimeType;
@@ -69,9 +70,9 @@ abstract class Base {
         if (Array.isArray(attributes)) {
             return attributes
                 .map((attribute: any) => {
-                    if (attribute.trait_type && attribute.value) {
+                    if ((attribute.trait_type || attribute.name) && attribute.value) {
                         return {
-                            key: attribute.trait_type,
+                            key: attribute.trait_type || attribute.name,
                             value: attribute.value,
                         };
                     } else {

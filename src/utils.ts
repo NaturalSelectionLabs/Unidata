@@ -8,11 +8,14 @@ class Utils {
     }
 
     replaceIPFS(url: string) {
+        if (/^[a-zA-Z0-9]{46}$/.test(url)) {
+            url = 'ipfs://' + url;
+        }
         return url.replace('ipfs://', this.main.options.ipfsGateway!);
     }
 
     replaceIPFSs(urls: string[]) {
-        return urls.map((url: string) => url.replace('ipfs://', this.main.options.ipfsGateway!));
+        return urls.map((url: string) => this.replaceIPFS(url));
     }
 }
 

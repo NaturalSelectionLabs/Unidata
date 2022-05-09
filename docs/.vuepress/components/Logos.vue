@@ -103,6 +103,12 @@ const data = [
         url: 'https://solana.com/',
     },
     {
+        name: 'Flow',
+        type: 'Assets',
+        image: '/images/sources/flow.svg',
+        url: 'https://www.onflow.org/',
+    },
+    {
         name: 'Alchemy',
         type: 'Assets',
         image: '/images/sources/alchemy.svg',
