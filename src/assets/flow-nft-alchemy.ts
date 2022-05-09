@@ -57,11 +57,11 @@ class FlowNFTAlchemy extends Base {
 
             this.generateRelatedUrls(asset);
 
-            if (item.metadata.external_url || item.metadata.external_link) {
+            if (item.externalDomainViewUrl) {
                 if (!asset.related_urls) {
                     asset.related_urls = [];
                 }
-                asset.related_urls.push(item.metadata.external_url || item.metadata.external_link);
+                asset.related_urls.push(item.externalDomainViewUrl);
             }
 
             return asset;
