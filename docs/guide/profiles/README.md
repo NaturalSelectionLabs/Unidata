@@ -25,7 +25,7 @@ type Profiles = {
         avatars?: URI[];
         bio?: string;
         websites?: URI[];
-        banner?: URI[];
+        banners?: URI[];
 
         attachments?: {
             type?: string;

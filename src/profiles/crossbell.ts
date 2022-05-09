@@ -31,8 +31,8 @@ class Crossbell extends Base {
             if (meta?.avatars) {
                 meta.avatars = this.main.utils.replaceIPFSs(meta.avatars);
             }
-            if (meta?.banner) {
-                meta.banner = this.main.utils.replaceIPFSs(meta.banner);
+            if (meta?.banners) {
+                meta.banners = this.main.utils.replaceIPFSs(meta.banners);
             }
             if (meta?.connected_accounts) {
                 meta.connected_accounts = meta.connected_accounts.map((account: any) => {
