@@ -13,8 +13,13 @@ const notes: Notes = await unidata.notes.get(options: {
     source: string;
     identity: string;
     limit?: number;
+    pagination_id?: any;
 });
 ```
+
+-   `identity`: Ethereum address, Solana address, Flow address, etc.
+-   `limit`: The maximum number of list items to return.
+-   `pagination_id`: The pagination id returned from the previous page's results. Since providers use different pagination schemes, its type is uncertain.
 
 ## Specification
 
@@ -23,6 +28,8 @@ All returned data conform to the following specification.
 ```ts
 type Notes = {
     total: number;
+    pagination_id?: any;
+
     list: {
         date_created: string;
         date_updated: string;

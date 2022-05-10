@@ -42,6 +42,7 @@ type Profile = {
 
 type Profiles = {
     total: number;
+    pagination_id?: any;
     list: Profile[];
 };
 
@@ -62,6 +63,7 @@ type Link = {
 
 type Links = {
     total: number;
+    pagination_id?: any;
     list: Link[];
 };
 
@@ -109,6 +111,7 @@ type Note = {
 
 type Notes = {
     total: number;
+    pagination_id?: any;
     list: Note[];
 };
 
@@ -155,5 +158,6 @@ type Asset = {
 
 type Assets = {
     total: number;
+    pagination_id?: any;
     list: Asset[];
 };

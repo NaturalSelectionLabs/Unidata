@@ -11,11 +11,13 @@ const assets: Assets = await unidata.assets.get(options: {
     source: string;
     providers?: string[];
     identity: string;
+    pagination_id?: any;
 });
 ```
 
 -   `providers`: The providers of the data, requesting and aggregating from all supported providers by default.
--   `identity`: The Ethereum or Solana address.
+-   `identity`: Ethereum address, Solana address, Flow address, etc.
+-   `pagination_id`: The pagination id returned from the previous page's results. Since providers use different pagination schemes, its type is uncertain.
 
 ## Specification
 
@@ -24,6 +26,8 @@ All returned data conform to the following specification.
 ```ts
 type Assets = {
     total: number;
+    pagination_id?: any;
+
     list: {
         date_created?: string;
         date_updated?: string;
