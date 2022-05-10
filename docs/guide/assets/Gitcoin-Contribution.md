@@ -1,6 +1,6 @@
 # Gitcoin Contribution
 
-<Logos type="Assets" :names="['Gitcoin', 'RSS3']" />
+<Logos type="Assets" :names="['Gitcoin', 'Ethereum', 'Polygon', 'RSS3']" />
 
 ::: tip
 You can use RSS3 API for free (no rate limit disclosed).
