@@ -58,11 +58,6 @@ abstract class Base {
         const mimeType = mime.getType(address);
         if (mimeType) {
             return mimeType;
-        } else if (new URL(address).searchParams.get('ext')) {
-            const mimeType = mime.getType(new URL(address).searchParams.get('ext')!);
-            if (mimeType) {
-                return mimeType;
-            }
         }
     }
 

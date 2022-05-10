@@ -24,6 +24,7 @@ const assets: Assets = await unidata.assets.get(options: {
     source: 'Ethereum NFT';
     identity: string;
     providers: ['Moralis'];
+    pagination_id?: string[];
 });
 ```
 

@@ -98,8 +98,10 @@ class EthereumNFTAlchemy extends Base {
 
                 result = result.concat(assets);
 
-                pagination_id[index] = res.data?.pageKey;
-                total += res.data?.totalCount || 0;
+                if (assets.length < res.data?.totalCount) {
+                    pagination_id[index] = res.data?.pageKey;
+                }
+                total += res.data?.totalCount || assets.length;
 
                 return network;
             }),
@@ -107,7 +109,7 @@ class EthereumNFTAlchemy extends Base {
 
         return {
             total: total,
-            ...((pagination_id[0] || pagination_id[1]) && { pagination_id: pagination_id }),
+            ...(pagination_id.find((id) => id) && { pagination_id: pagination_id }),
             list: result,
         };
     }

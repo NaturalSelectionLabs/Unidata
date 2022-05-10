@@ -29,27 +29,28 @@ class EthereumNFTMoralis extends Base {
         let result: Asset[] = [];
         let resyncIndex = 1;
 
+        const pagination_id: string[] = [];
+        let total = 0;
+
         await Promise.all(
-            chains.map(async (chain) => {
-                let response;
+            chains.map(async (chain, index) => {
+                let res: any = {};
                 try {
-                    const res = await axios.get(`https://deep-index.moralis.io/api/v2/${options.identity}/nft`, {
+                    res = await axios.get(`https://deep-index.moralis.io/api/v2/${options.identity}/nft`, {
                         params: {
                             chain,
+                            cursor: options.pagination_id?.[index],
                         },
                         headers: {
                             'x-api-key': this.main.options.moralisWeb3APIKey!,
                         },
                     });
-                    response = res.data?.result;
-                } catch (error) {
-                    response = [];
-                }
+                } catch (error) {}
 
                 let list = [];
-                if (response && response.length) {
+                if (res.data?.result && res.data?.result.length) {
                     list = await Promise.all(
-                        response.map(async (item: any) => {
+                        res.data?.result.map(async (item: any) => {
                             let metadata;
                             try {
                                 if (item.metadata) {
@@ -143,6 +144,11 @@ class EthereumNFTMoralis extends Base {
                 }
                 result = result.concat(list);
 
+                if (list.length < res.data?.total) {
+                    pagination_id[index] = res.data?.cursor;
+                }
+                total += res.data?.total || list.length;
+
                 return chain;
             }),
         );
@@ -152,7 +158,8 @@ class EthereumNFTMoralis extends Base {
         );
 
         return {
-            total: result.length,
+            total: total,
+            ...(pagination_id.find((id) => id) && { pagination_id: pagination_id }),
             list: result,
         };
     }
