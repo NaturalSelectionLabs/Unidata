@@ -14,6 +14,7 @@ export type AssetsOptions = {
     source: string;
     identity: string;
     providers?: string[];
+    pagination_id?: any;
 };
 
 class Assets {
@@ -52,31 +53,36 @@ class Assets {
             options,
         );
 
-        const list = await Promise.all(
-            options.providers!.map(async (provider: string) => {
-                const result = await this.map[options.source][provider].get(options);
-                return result.list;
-            }),
-        );
-
-        let merged = keyBy(list[0], (item) => item.metadata?.proof);
-        for (let i = 1; i < list.length; i++) {
-            merged = mergeWith(
-                merged,
-                keyBy(list[i], (item) => item.metadata?.proof),
-                (a, b) => {
-                    if (Array.isArray(a)) {
-                        return uniqWith(a.concat(b), isEqual);
-                    }
-                },
+        if (options.providers!.length > 1) {
+            const list = await Promise.all(
+                options.providers!.map(async (provider: string) => {
+                    const result = await this.map[options.source][provider].get(options);
+                    return result;
+                }),
             );
-        }
-        const assets = values(merged);
 
-        return {
-            total: assets.length,
-            list: assets,
-        };
+            let merged = keyBy(list[0].list, (item) => item.metadata?.proof);
+            for (let i = 1; i < list.length; i++) {
+                merged = mergeWith(
+                    merged,
+                    keyBy(list[i].list, (item) => item.metadata?.proof),
+                    (a, b) => {
+                        if (Array.isArray(a)) {
+                            return uniqWith(a.concat(b), isEqual);
+                        }
+                    },
+                );
+            }
+            const assets = values(merged);
+
+            return {
+                total: assets.length,
+                pagination_id: list.map((item) => item.pagination_id),
+                list: assets,
+            };
+        } else {
+            return await this.map[options.source][options.providers![0]].get(options);
+        }
     }
 }
 

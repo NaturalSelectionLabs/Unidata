@@ -15,6 +15,7 @@ const assets: Assets = await unidata.assets.get(options: {
     source: 'Ethereum NFT';
     identity: string;
     providers?: ['Alchemy'];
+    pagination_id?: string[];
 });
 ```
 
