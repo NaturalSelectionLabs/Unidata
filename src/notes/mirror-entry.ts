@@ -14,12 +14,17 @@ class MirrorEntry extends Base {
                 params: {
                     item_sources: 'Mirror Entry',
                     limit: options.limit,
+                    last_identifier: options.cursor,
                 },
             })
         ).data;
 
         const result: Notes = {
             total: response.total,
+            ...(new URL(response.identifier_next).searchParams.get('last_identifier') && {
+                cursor: new URL(response.identifier_next).searchParams.get('last_identifier'),
+            }),
+
             list: response.list.map((item: any) => {
                 delete item.identifier;
                 delete item.links;

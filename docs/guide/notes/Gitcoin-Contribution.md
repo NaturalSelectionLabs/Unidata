@@ -15,6 +15,7 @@ const notes: Notes = await unidata.notes.get(options: {
     source: 'Gitcoin Contribution';
     identity: string;
     limit?: number;
+    cursor?: string;
 });
 ```
 

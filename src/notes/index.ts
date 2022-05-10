@@ -8,6 +8,7 @@ export type NotesOptions = {
     source: string;
     identity: string;
     limit?: number;
+    cursor?: any;
 };
 
 class Notes {

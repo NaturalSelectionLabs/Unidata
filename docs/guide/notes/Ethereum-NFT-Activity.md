@@ -17,6 +17,7 @@ const notes: Notes = await unidata.notes.get(options: {
     source: 'Ethereum NFT Activity';
     identity: string;
     limit?: number;
+    cursor?: string;
 });
 ```
 

@@ -17,6 +17,7 @@ const notes: Notes = await unidata.notes.get(options: {
     source: 'Mirror Entry';
     identity: string;
     limit?: number;
+    cursor?: string;
 });
 ```
 
