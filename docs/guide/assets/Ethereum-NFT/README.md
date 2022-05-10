@@ -14,7 +14,7 @@ const assets: Assets = await unidata.assets.get(options: {
     identity: string;
     providers?: ('Alchemy' | 'Moralis' | 'OpenSea' | 'POAP')[];
     limit?: number;
-    pagination_id?: any;
+    cursor?: any;
 });
 ```
 

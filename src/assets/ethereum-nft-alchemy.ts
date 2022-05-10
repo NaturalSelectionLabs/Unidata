@@ -20,7 +20,7 @@ class EthereumNFTAlchemy extends Base {
             Polygon: 'https://polygon-mainnet.g.alchemy.com/v2/',
         };
 
-        const pagination_id: string[] = [];
+        const cursor: string[] = [];
         let total = 0;
 
         await Promise.all(
@@ -28,7 +28,7 @@ class EthereumNFTAlchemy extends Base {
                 const res = await axios.get(`${networkMap[network]}${this.main.options.alchemyAPIKey}/getNFTs/`, {
                     params: {
                         owner: options.identity,
-                        pageKey: options.pagination_id?.[index],
+                        pageKey: options.cursor?.[index],
                     },
                 });
                 const assets: Asset[] = res.data?.ownedNfts.map((item: any) => {
@@ -99,7 +99,7 @@ class EthereumNFTAlchemy extends Base {
                 result = result.concat(assets);
 
                 if (assets.length < res.data?.totalCount) {
-                    pagination_id[index] = res.data?.pageKey;
+                    cursor[index] = res.data?.pageKey;
                 }
                 total += res.data?.totalCount || assets.length;
 
@@ -109,7 +109,7 @@ class EthereumNFTAlchemy extends Base {
 
         return {
             total: total,
-            ...(pagination_id.find((id) => id) && { pagination_id: pagination_id }),
+            ...(cursor.find((id) => id) && { cursor: cursor }),
             list: result,
         };
     }

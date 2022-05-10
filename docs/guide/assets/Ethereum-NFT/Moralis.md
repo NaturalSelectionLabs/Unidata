@@ -25,7 +25,7 @@ const assets: Assets = await unidata.assets.get(options: {
     identity: string;
     providers: ['Moralis'];
     limit?: number;
-    pagination_id?: string[];
+    cursor?: string[];
 });
 ```
 

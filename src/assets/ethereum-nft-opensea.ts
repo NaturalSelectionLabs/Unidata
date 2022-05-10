@@ -15,7 +15,7 @@ class EthereumNFTOpensea extends Base {
                 format: 'json',
                 owner: options.identity,
                 limit: options.limit || 50,
-                next: options.pagination_id,
+                next: options.cursor,
             },
             headers: {
                 'x-api-key': this.main.options.openseaAPIKey || '',
@@ -87,7 +87,7 @@ class EthereumNFTOpensea extends Base {
 
         return {
             total: assets.length,
-            ...(res.data?.next && { pagination_id: res.data?.next }),
+            ...(res.data?.next && { cursor: res.data?.next }),
             list: assets,
         };
     }

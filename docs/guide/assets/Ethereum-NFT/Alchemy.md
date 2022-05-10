@@ -16,7 +16,7 @@ const assets: Assets = await unidata.assets.get(options: {
     identity: string;
     providers?: ['Alchemy'];
     limit?: number;
-    pagination_id?: string[];
+    cursor?: string[];
 });
 ```
 

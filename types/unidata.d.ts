@@ -62,7 +62,7 @@ type Link = {
 
 type Links = {
     total: number;
-    pagination_id?: any;
+    cursor?: any;
     list: Link[];
 };
 
@@ -110,7 +110,7 @@ type Note = {
 
 type Notes = {
     total: number;
-    pagination_id?: any;
+    cursor?: any;
     list: Note[];
 };
 
@@ -157,6 +157,6 @@ type Asset = {
 
 type Assets = {
     total: number;
-    pagination_id?: any;
+    cursor?: any;
     list: Asset[];
 };

@@ -29,7 +29,7 @@ class EthereumNFTMoralis extends Base {
         let result: Asset[] = [];
         let resyncIndex = 1;
 
-        const pagination_id: string[] = [];
+        const cursor: string[] = [];
         let total = 0;
 
         await Promise.all(
@@ -39,7 +39,7 @@ class EthereumNFTMoralis extends Base {
                     res = await axios.get(`https://deep-index.moralis.io/api/v2/${options.identity}/nft`, {
                         params: {
                             chain,
-                            cursor: options.pagination_id?.[index],
+                            cursor: options.cursor?.[index],
                             limit: options.limit,
                         },
                         headers: {
@@ -146,7 +146,7 @@ class EthereumNFTMoralis extends Base {
                 result = result.concat(list);
 
                 if (list.length < res.data?.total) {
-                    pagination_id[index] = res.data?.cursor;
+                    cursor[index] = res.data?.cursor;
                 }
                 total += res.data?.total || list.length;
 
@@ -160,7 +160,7 @@ class EthereumNFTMoralis extends Base {
 
         return {
             total: total,
-            ...(pagination_id.find((id) => id) && { pagination_id: pagination_id }),
+            ...(cursor.find((id) => id) && { cursor: cursor }),
             list: result,
         };
     }

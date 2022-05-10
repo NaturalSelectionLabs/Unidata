@@ -15,7 +15,7 @@ export type AssetsOptions = {
     identity: string;
     providers?: string[];
     limit?: number;
-    pagination_id?: any;
+    cursor?: any;
 };
 
 class Assets {
@@ -78,7 +78,7 @@ class Assets {
 
             return {
                 total: assets.length,
-                pagination_id: list.map((item) => item.pagination_id),
+                cursor: list.map((item) => item.cursor),
                 list: assets,
             };
         } else {
