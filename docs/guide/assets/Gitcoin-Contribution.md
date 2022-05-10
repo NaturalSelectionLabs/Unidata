@@ -17,9 +17,6 @@ const assets: Assets = await unidata.assets.get(options: {
 });
 ```
 
--   `providers`: The providers of the data, requesting and aggregating from all supported providers by default.
--   `identity`: The Solana address.
-
 ## Live Demo
 
 <Assets :source="'Gitcoin Contribution'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />

@@ -14,9 +14,6 @@ const assets: Assets = await unidata.assets.get(options: {
 });
 ```
 
--   `providers`: The providers of the data, requesting and aggregating from all supported providers by default.
--   `identity`: The Solana address.
-
 ## Live Demo
 
 <Assets :source="'Solana NFT'" :defaultIdentity="'EoCqmJ6xNQmZKYsic9PSgxxQzqZREjmhNFnkNqxoc8pp'" />

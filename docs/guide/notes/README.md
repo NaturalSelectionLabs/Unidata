@@ -18,7 +18,7 @@ const notes: Notes = await unidata.notes.get(options: {
 ```
 
 -   `identity`: Ethereum address, Solana address, Flow address, etc.
--   `limit`: The maximum number of list items to return.
+-   `limit`: The number of assets to return. Since providers use different pagination schemes, it cannot guarantee that the quantities are always accurate.
 -   `pagination_id`: The pagination id returned from the previous page's results. Since providers use different pagination schemes, its type is uncertain.
 
 ## Specification

@@ -13,11 +13,10 @@ const assets: Assets = await unidata.assets.get(options: {
     source: 'Ethereum NFT';
     identity: string;
     providers?: ('Alchemy' | 'Moralis' | 'OpenSea' | 'POAP')[];
+    limit?: number;
+    pagination_id?: any;
 });
 ```
-
--   `providers`: The providers of the data, requesting and aggregating from all supported providers by default.
--   `identity`: The Ethereum address.
 
 ## Live Demo
 

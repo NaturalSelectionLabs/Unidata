@@ -14,9 +14,6 @@ const assets: Assets = await unidata.assets.get(options: {
 });
 ```
 
--   `providers`: The providers of the data, requesting and aggregating from all supported providers by default.
--   `identity`: The Flow address.
-
 ## Live Demo
 
 <Assets :source="'Flow NFT'" :defaultIdentity="'0xff2da663c7033313'" />

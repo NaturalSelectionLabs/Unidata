@@ -42,7 +42,6 @@ type Profile = {
 
 type Profiles = {
     total: number;
-    pagination_id?: any;
     list: Profile[];
 };
 
