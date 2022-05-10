@@ -56,8 +56,12 @@ class Assets {
 
         if (options.providers!.length > 1) {
             const list = await Promise.all(
-                options.providers!.map(async (provider: string) => {
-                    const result = await this.map[options.source][provider].get(options);
+                options.providers!.map(async (provider: string, index) => {
+                    const result = await this.map[options.source][provider].get(
+                        Object.assign(options, {
+                            cursor: options.cursor?.[index],
+                        }),
+                    );
                     return result;
                 }),
             );
