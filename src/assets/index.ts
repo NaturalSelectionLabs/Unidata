@@ -14,6 +14,7 @@ export type AssetsOptions = {
     source: string;
     identity: string;
     providers?: string[];
+    limit?: number;
     pagination_id?: any;
 };
 

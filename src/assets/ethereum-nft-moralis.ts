@@ -40,6 +40,7 @@ class EthereumNFTMoralis extends Base {
                         params: {
                             chain,
                             cursor: options.pagination_id?.[index],
+                            limit: options.limit,
                         },
                         headers: {
                             'x-api-key': this.main.options.moralisWeb3APIKey!,
