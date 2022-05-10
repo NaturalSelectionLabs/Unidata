@@ -8,6 +8,10 @@
 
 [![GitHub Org's stars](https://img.shields.io/github/stars/DIYgod/Unidata?style=social)](https://github.com/DIYgod/Unidata) [![Discord](https://img.shields.io/discord/968954680514342973?label=Discord&logo=discord&style=social)](https://discord.gg/ggrfhdS9Fe) [![Twitter Follow](https://img.shields.io/twitter/follow/Unidata_?style=social)](https://twitter.com/Unidata_)
 
+[![](https://img.shields.io/github/v/release/NaturalSelectionLabs/Unidata?include_prereleases&style=flat-square)](https://github.com/NaturalSelectionLabs/Unidata/releases) [![](https://img.shields.io/npm/v/unidata.js.svg?style=flat-square)](https://www.npmjs.com/package/unidata.js) [![](https://img.shields.io/npm/dt/unidata.js.svg?style=flat-square)](https://www.npmjs.com/package/unidata.js) [![](https://img.shields.io/badge/license-MIT-brightgreen?style=flat-square)](https://www.npmjs.com/package/unidata.js)
+
+[Docs](https://unidata.app/)
+
 The beauty of Web3 is that everyone owns their data, but accessing and displaying own data is a difficult thing. Each application has its own data specifications and access methods, it's hard for developers to adapt to all of them one by one. That's why Unidata 💡🧶.
 
 Unidata gets data from a variety of platforms and data sources, converts it to the same and easy-to-use specifications, and gives developers a unified API to access it. Web3 development has never been so easy.
