@@ -15,6 +15,8 @@ const assets: Assets = await unidata.assets.get(options: {
     source: 'Flow NFT';
     identity: string;
     providers?: ['Alchemy'];
+    limit?: number;
+    cursor?: string;
 });
 ```
 

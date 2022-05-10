@@ -15,6 +15,8 @@ class FlowNFTAlchemy extends Base {
             {
                 params: {
                     owner: options.identity,
+                    limit: options.limit,
+                    offset: options.cursor,
                 },
             },
         );
@@ -71,6 +73,9 @@ class FlowNFTAlchemy extends Base {
 
         return {
             total: res.data.nftCount,
+            ...((options.cursor || 0) + assets.length < res.data.nftCount && {
+                cursor: (options.cursor || 0) + assets.length,
+            }),
             list: assets,
         };
     }
