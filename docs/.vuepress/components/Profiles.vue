@@ -20,7 +20,9 @@
         <h5>View</h5>
         <div class="loading-wrap" v-loading="loading">
             <el-card class="profile-card" v-for="profile in profiles.list" :key="profile">
-                <font-awesome-icon class="edit" icon="pen-to-square" />
+                <div class="banner">
+                    <img :src="profile.banners?.[0]" />
+                </div>
                 <div class="info">
                     <div class="avatar"><img :src="profile.avatars?.[0]" /></div>
                     <div class="text">
@@ -107,18 +109,26 @@ watchEffect(async () => {
 .profile-card {
     position: relative;
 
-    .edit {
+    .banner {
         position: absolute;
-        top: 35px;
-        right: 40px;
-        cursor: pointer;
-        width: 20px;
-        height: 20px;
-        color: #555;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
     }
 
     .info {
         display: flex;
+        z-index: 2;
+        position: relative;
+        background: rgba(255, 255, 255, 0.7);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(5px);
+        border-radius: 35px;
+        padding: 20px 10px;
 
         .avatar {
             width: 150px;
