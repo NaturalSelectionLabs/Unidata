@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, watchEffect, ref, getCurrentInstance } from 'vue';
+import { watchEffect, ref, getCurrentInstance } from 'vue';
 
 const props = defineProps({
     source: {
