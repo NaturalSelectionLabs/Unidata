@@ -45,7 +45,7 @@ class CyberConnect extends Base {
         `,
                 {
                     identity: options.identity,
-                    after: options.offset + '',
+                    after: options.cursor + '',
                     limit: options.limit || 10,
                 },
             )

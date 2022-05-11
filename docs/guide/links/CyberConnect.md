@@ -15,7 +15,7 @@ const links: Links = await unidata.links.get(options: {
     source: 'CyberConnect';
     identity: string;
     reversed?: boolean;
-    offset?: number;
+    cursor?: number;
     limit?: number;
 });
 ```
