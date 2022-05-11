@@ -18,35 +18,39 @@
     providers: ${JSON.stringify(providers)},` : ''}
 });`}}</code></pre>
         <h5>View</h5>
-        <el-card class="profile-card" v-loading="loading" v-for="profile in profiles.list" :key="profile">
-            <font-awesome-icon class="edit" icon="pen-to-square" />
-            <div class="info">
-                <div class="avatar"><img :src="profile.avatars?.[0]" /></div>
-                <div class="text">
-                    <div class="name">
-                        {{ profile.name }}
-                        <span class="handler" v-if="profile.metadata?.handler">{{ profile.metadata?.handler }}</span>
-                    </div>
-                    <div class="bio">{{ profile.bio }}</div>
-                    <div class="websites">
-                        <ul>
-                            <li v-for="website in profile.websites" :key="website">
-                                <a target="_blank" :href="website">
-                                    <font-awesome-icon icon="link" />
-                                    {{ website.replace(/https?:\/\//, '') }}
-                                </a>
-                            </li>
-                            <li v-for="account in profile.connected_accounts" :key="account">
-                                <a target="_blank" :href="account.url">
-                                    <font-awesome-icon :icon="['fab', account.platform.toLowerCase()]" />
-                                    {{ `${account.platform}: ${account.identity}` }}
-                                </a>
-                            </li>
-                        </ul>
+        <div class="loading-wrap" v-loading="loading">
+            <el-card class="profile-card" v-for="profile in profiles.list" :key="profile">
+                <font-awesome-icon class="edit" icon="pen-to-square" />
+                <div class="info">
+                    <div class="avatar"><img :src="profile.avatars?.[0]" /></div>
+                    <div class="text">
+                        <div class="name">
+                            {{ profile.name }}
+                            <span class="handler" v-if="profile.metadata?.handler">{{
+                                profile.metadata?.handler
+                            }}</span>
+                        </div>
+                        <div class="bio">{{ profile.bio }}</div>
+                        <div class="websites">
+                            <ul>
+                                <li v-for="website in profile.websites" :key="website">
+                                    <a target="_blank" :href="website">
+                                        <font-awesome-icon icon="link" />
+                                        {{ website.replace(/https?:\/\//, '') }}
+                                    </a>
+                                </li>
+                                <li v-for="account in profile.connected_accounts" :key="account">
+                                    <a target="_blank" :href="account.url">
+                                        <font-awesome-icon :icon="['fab', account.platform.toLowerCase()]" />
+                                        {{ `${account.platform}: ${account.identity}` }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </el-card>
+            </el-card>
+        </div>
         <h5>Data</h5>
         <pre class="data">{{ JSON.stringify(profiles, null, 4) }}</pre>
     </div>
@@ -96,6 +100,10 @@ watchEffect(async () => {
 </script>
 
 <style lang="less" scoped>
+.loading-wrap {
+    min-height: 150px;
+}
+
 .profile-card {
     position: relative;
 
