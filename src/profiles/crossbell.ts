@@ -1,11 +1,9 @@
 import Main from '../index';
 import Base from './base';
-import { Contract } from 'crossbell.js';
 import { ProfilesOptions } from './index';
 import { Indexer } from 'crossbell.js';
 
 class Crossbell extends Base {
-    contract: Contract;
     indexer: Indexer;
 
     constructor(main: Main) {

@@ -47,6 +47,12 @@ const data = [
 
     // Links
     {
+        name: 'Crossbell',
+        type: 'Links',
+        image: '/images/sources/crossbell.svg',
+        url: 'https://github.com/Crossbell-Box/',
+    },
+    {
         name: 'CyberConnect',
         type: 'Links',
         image: '/images/sources/cyberconnect.svg',

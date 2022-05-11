@@ -14,6 +14,7 @@ You can use CyberConnect API for free (no rate limit disclosed).
 const links: Links = await unidata.links.get(options: {
     source: 'CyberConnect';
     identity: string;
+    type?: 'follow';
     reversed?: boolean;
     cursor?: number;
     limit?: number;

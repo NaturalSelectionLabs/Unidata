@@ -46,6 +46,8 @@ type Profiles = {
 };
 
 type Link = {
+    date_created?: string;
+
     from: InstanceURI;
     to: InstanceURI;
     type: LinkType;

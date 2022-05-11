@@ -10,6 +10,7 @@ Links describe the relationships between accounts, such as following relationshi
 const links: Links = await unidata.links.get(options: {
     source: string;
     identity: string;
+    type?: string;
     reversed?: boolean;
     limit?: number;
     cursor?: any;
@@ -17,6 +18,7 @@ const links: Links = await unidata.links.get(options: {
 ```
 
 -   `identity`: Ethereum address, Solana address, Flow address, etc.
+-   `type`: The type of links, follow, like, comment, etc.
 -   `reversed`: If true, returns the reversed links that point to the current identity.
 -   `limit`: The number of assets to return. Since providers use different pagination schemes, it cannot guarantee that the quantities are always accurate.
 -   `cursor`: The pagination cursor returned from the previous page's results. Since providers use different pagination schemes, its type is uncertain.

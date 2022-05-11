@@ -11,16 +11,12 @@
                 class="input"
             />
         </div>
-        <div class="input-wrap">
-            <label>Limitation: </label>
-            5
-        </div>
         <h5>Code</h5>
         <pre class="code"><code>{{ `const links: Links = await unidata.links.get({
     source: '${props.source}',
     identity: '${identity}',${providers ? `
     providers: ${JSON.stringify(providers)},` : ''}
-    limit: 5,
+    limit: 20,
 });`}}</code></pre>
         <h5>View</h5>
         <el-card class="links-card" v-loading="loading">
@@ -77,7 +73,7 @@ watchEffect(async () => {
             .get({
                 source: props.source,
                 identity: identity.value,
-                limit: 5,
+                limit: 20,
             })
             .then((p: any) => {
                 links.value = p;
@@ -88,7 +84,7 @@ watchEffect(async () => {
                 source: props.source,
                 identity: identity.value,
                 reversed: true,
-                limit: 5,
+                limit: 20,
             })
             .then((p: any) => {
                 backlinks.value = p;
