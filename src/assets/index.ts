@@ -79,10 +79,11 @@ class Assets {
                 );
             }
             const assets = values(merged);
+            const cursor = list.map((item) => item.cursor);
 
             return {
                 total: assets.length,
-                cursor: list.map((item) => item.cursor),
+                ...(cursor.find((id) => id) && { cursor: cursor }),
                 list: assets,
             };
         } else {
