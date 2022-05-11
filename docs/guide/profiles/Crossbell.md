@@ -16,6 +16,8 @@ You can initialize with `ipfsGateway` to get potentially faster response or high
 const profiles: Profiles = await unidata.profiles.get(options: {
     source: 'Crossbell';
     identity: string;
+    limit?: number;
+    cursor?: string;
 });
 ```
 

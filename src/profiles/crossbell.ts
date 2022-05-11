@@ -13,8 +13,6 @@ class Crossbell extends Base {
     }
 
     private async init() {
-        this.contract = new Contract();
-        await this.contract.connect();
         this.indexer = new Indexer();
         this.inited = true;
     }
@@ -23,7 +21,10 @@ class Crossbell extends Base {
         if (!this.inited) {
             await this.init();
         }
-        const res = await this.indexer.getProfiles(options.identity);
+        const res = await this.indexer.getProfiles(options.identity, {
+            lastIdentifier: options.cursor,
+            limit: options.limit,
+        });
 
         const list = res.list.map((item: any) => {
             const profile: Profile = Object.assign(
@@ -56,7 +57,7 @@ class Crossbell extends Base {
 
         return {
             total: res.total,
-            ...(list.length < res.total && { cursor: list[list.length - 1].metadata?.token_id }),
+            ...(options.limit && list.length >= options.limit && { cursor: list[list.length - 1].metadata?.token_id }),
 
             list,
         };
