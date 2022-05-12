@@ -1,17 +1,19 @@
 import Main from '../index';
 import Base from './base';
+import { Contract } from 'crossbell.js';
+import axios from 'axios';
 import { ProfilesOptions } from './index';
-import { Indexer } from 'crossbell.js';
 
 class Crossbell extends Base {
-    indexer: Indexer;
+    contract: Contract;
 
     constructor(main: Main) {
         super(main);
     }
 
     private async init() {
-        this.indexer = new Indexer();
+        this.contract = new Contract();
+        await this.contract.connect();
         this.inited = true;
     }
 
@@ -19,46 +21,65 @@ class Crossbell extends Base {
         if (!this.inited) {
             await this.init();
         }
-        const res = await this.indexer.getProfiles(options.identity, {
-            lastIdentifier: options.cursor,
-            limit: options.limit,
-        });
-
-        const list = res.list.map((item: any) => {
+        const profileId = (await this.contract.getPrimaryProfileId(options.identity)).data;
+        if (profileId && profileId !== '0') {
+            const info = (await this.contract.getProfile(profileId)).data;
+            let meta;
+            if (info.uri) {
+                meta = (await axios.get(this.main.utils.replaceIPFS(info.uri))).data;
+            }
+            if (meta?.avatars) {
+                meta.avatars = this.main.utils.replaceIPFSs(meta.avatars);
+            }
+            if (meta?.banners) {
+                meta.banners = this.main.utils.replaceIPFSs(meta.banners);
+            }
+            if (meta?.connected_accounts) {
+                meta.connected_accounts = meta.connected_accounts.map((account: any) => {
+                    const platform = account.platform.toLowerCase();
+                    if (account.identity && account.platform && this.accountsMap[platform]) {
+                        const acc: Required<Profile>['connected_accounts'][number] = {
+                            identity: account.identity,
+                            platform: this.accountsMap[platform].platform,
+                        };
+                        if (this.accountsMap[platform].url) {
+                            acc.url = this.accountsMap[platform].url?.replace('$$id', account.identity);
+                        }
+                        return acc;
+                    } else {
+                        return {
+                            identity: account.identity,
+                            platform: account.platform,
+                        };
+                    }
+                });
+            }
             const profile: Profile = Object.assign(
                 {
-                    name: item.handle,
+                    name: info.handle,
                     source: 'Crossbell',
 
                     metadata: {
                         network: 'Crossbell',
-                        proof: item.transaction_hash,
+                        proof: profileId,
 
-                        handler: item.handle,
-                        primary: item.primary,
-                        token_id: item.token_id,
-                        block_number: item.block_number,
+                        handler: info.handle,
+                        uri: info.uri,
                     },
                 },
-                {
-                    ...(item.metadata?.name && { name: item.metadata.name }),
-                    ...(item.metadata?.bio && { bio: item.metadata.bio }),
-                    ...(item.metadata?.banners && { banners: this.main.utils.replaceIPFSs(item.metadata.banners) }),
-                    ...(item.metadata?.avatars && { avatars: this.main.utils.replaceIPFSs(item.metadata.avatars) }),
-                    ...(item.metadata?.websites && { websites: item.metadata.websites }),
-                    ...(item.metadata?.connected_accounts && { connected_accounts: item.metadata.connected_accounts }),
-                },
+                meta,
             );
 
-            return profile;
-        });
-
-        return {
-            total: res.total,
-            ...(options.limit && list.length >= options.limit && { cursor: list[list.length - 1].metadata?.token_id }),
-
-            list,
-        };
+            return {
+                total: 1,
+                list: [profile],
+            };
+        } else {
+            return {
+                total: 0,
+                list: [],
+            };
+        }
     }
 }
 
