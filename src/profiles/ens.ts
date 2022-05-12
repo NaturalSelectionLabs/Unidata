@@ -45,6 +45,11 @@ class ENS extends Base {
                     ...(info[9] && { banners: [this.main.utils.replaceIPFS(info[9])] }),
                     ...(info[1] && { bio: info[1] }),
                     ...(info[2] && { websites: info[2].split('/n') }),
+
+                    metadata: {
+                        network: 'Ethereum',
+                        proof: username,
+                    },
                 };
 
                 const connected_accounts: Required<Profile>['connected_accounts'] = [];

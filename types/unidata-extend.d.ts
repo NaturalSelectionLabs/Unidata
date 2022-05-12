@@ -40,5 +40,3 @@ type Instance =
           identity: string;
           platform: NetworkSymbols;
       };
-
-declare const SDK_VERSION: string;

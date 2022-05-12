@@ -48,6 +48,8 @@ type Profiles = {
     list: Profile[];
 };
 
+type ProfilesInput = Omit<Profile, 'source' | 'metadata'>;
+
 // Links
 
 type Link = {

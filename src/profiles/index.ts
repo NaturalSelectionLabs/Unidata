@@ -10,6 +10,11 @@ export type ProfilesOptions = {
     cursor?: any;
 };
 
+export type ProfilesSetOptions = {
+    source: string;
+    identity: string;
+};
+
 class Profiles {
     map: {
         [key: string]: Base;
@@ -24,6 +29,10 @@ class Profiles {
 
     async get(options: ProfilesOptions) {
         return this.map[options.source].get(options);
+    }
+
+    async set(options: ProfilesSetOptions, input: ProfilesInput) {
+        return this.map[options.source].set(options, input);
     }
 }
 

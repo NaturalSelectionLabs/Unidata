@@ -2,10 +2,12 @@ import Main from '../index';
 import Base from './base';
 import { Contract } from 'crossbell.js';
 import axios from 'axios';
-import { ProfilesOptions } from './index';
+import { ProfilesOptions, ProfilesSetOptions } from './index';
+import { Web3Storage } from 'web3.storage';
 
 class Crossbell extends Base {
     contract: Contract;
+    contractSet: Contract;
 
     constructor(main: Main) {
         super(main);
@@ -77,6 +79,80 @@ class Crossbell extends Base {
             return {
                 total: 0,
                 list: [],
+            };
+        }
+    }
+
+    async set(options: ProfilesSetOptions, input: ProfilesInput) {
+        if (!this.contractSet) {
+            this.contractSet = new Contract(window.ethereum);
+            this.contractSet.connect();
+        }
+        const profile = (await this.get(options)).list[0];
+
+        // createProfile
+        if (!profile) {
+            const web3Storage = new Web3Storage({
+                token: this.main.options.web3StorageAPIToken!,
+            });
+            const username = input.username || options.identity;
+            delete input.username;
+            const result = input;
+            const blob = new Blob([JSON.stringify(result)], {
+                type: 'application/json',
+            });
+            const file = new File([blob], `${username}.json`);
+            const cid = await web3Storage.put([file], {
+                name: file.name,
+                maxRetries: 3,
+                wrapWithDirectory: false,
+            });
+            await this.contractSet.createProfile(options.identity, username, `ipfs://${cid}`);
+
+            return {
+                code: 0,
+                message: 'Success',
+            };
+        }
+
+        const proof = profile.metadata!.proof;
+
+        // setHandle
+        if (input.username && input.username !== profile.username) {
+            await this.contractSet.setHandle(proof, input.username);
+        }
+
+        // setProfileUri
+        if (Object.keys(input).filter((key) => key !== 'username').length) {
+            const web3Storage = new Web3Storage({
+                token: this.main.options.web3StorageAPIToken!,
+            });
+            const username = input.username || options.identity;
+            delete input.username;
+            let original = {};
+            if (profile.metadata?.uri) {
+                original = (await axios.get(this.main.utils.replaceIPFS(profile.metadata!.uri))).data;
+            }
+            const result = Object.assign(original, input);
+            const blob = new Blob([JSON.stringify(result)], {
+                type: 'application/json',
+            });
+            const file = new File([blob], `${username}.json`);
+            const cid = await web3Storage.put([file], {
+                name: file.name,
+                maxRetries: 3,
+                wrapWithDirectory: false,
+            });
+            await this.contractSet.setProfileUri(proof, `ipfs://${cid}`);
+
+            return {
+                code: 0,
+                message: 'Success',
+            };
+        } else {
+            return {
+                code: 0,
+                message: 'Success',
             };
         }
     }

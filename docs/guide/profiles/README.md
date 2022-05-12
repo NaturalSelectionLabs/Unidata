@@ -6,6 +6,8 @@ Profiles record the basic information of accounts, including the name, avatar, b
 
 ## API
 
+### Get
+
 ```ts
 const profiles: Profiles = await unidata.profiles.get(options: {
     source: string;
@@ -19,6 +21,35 @@ const profiles: Profiles = await unidata.profiles.get(options: {
 -   `limit`: The number of assets to return. Since providers use different pagination schemes, it cannot guarantee that the quantities are always accurate.
 -   `cursor`: The pagination cursor returned from the previous page's results. Since providers use different pagination schemes, its type is uncertain.
 
+### Set
+
+Incrementally updates your profile.
+
+```ts
+const result: {
+    code: number;
+    message: string;
+} = await unidata.profiles.set(
+    options: {
+        source: string;
+        identity: string;
+    },
+    input: {
+        username?: string;
+        name?: string;
+        avatars?: URI[];
+        bio?: string;
+        websites?: URI[];
+        banners?: URI[];
+        connected_accounts?: {
+            identity: string;
+            platform: string;
+            url?: string;
+        }[];
+    }
+);
+```
+
 ## Specification
 
 All returned data conform to the following specification.
@@ -28,6 +59,7 @@ type Profiles = {
     total: number;
 
     list: {
+        username?: string;
         name?: string;
         avatars?: URI[];
         bio?: string;
