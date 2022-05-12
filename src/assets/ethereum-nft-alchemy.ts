@@ -57,7 +57,7 @@ class EthereumNFTAlchemy extends Base {
                         },
                     };
 
-                    const preview = item.metadata.image || item.metadata.image_url;
+                    const preview = item.metadata?.image || item.metadata?.image_url;
                     if (preview) {
                         asset.previews = [
                             {
@@ -67,7 +67,7 @@ class EthereumNFTAlchemy extends Base {
                         ];
                     }
 
-                    const infoItem = item.metadata.animation_url || item.metadata.image || item.metadata.image_url;
+                    const infoItem = item.metadata?.animation_url || item.metadata?.image || item.metadata?.image_url;
                     if (infoItem) {
                         asset.items = [
                             {
@@ -77,8 +77,8 @@ class EthereumNFTAlchemy extends Base {
                         ];
                     }
 
-                    if (item.metadata.attributes) {
-                        const attributes = this.generateAttributes(item.metadata.attributes);
+                    if (item.metadata?.attributes) {
+                        const attributes = this.generateAttributes(item.metadata?.attributes);
                         if (attributes) {
                             asset.attributes = attributes;
                         }
@@ -86,11 +86,11 @@ class EthereumNFTAlchemy extends Base {
 
                     this.generateRelatedUrls(asset);
 
-                    if (item.metadata.external_url || item.metadata.external_link) {
+                    if (item.metadata?.external_url || item.metadata?.external_link) {
                         if (!asset.related_urls) {
                             asset.related_urls = [];
                         }
-                        asset.related_urls.push(item.metadata.external_url || item.metadata.external_link);
+                        asset.related_urls.push(item.metadata?.external_url || item.metadata?.external_link);
                     }
 
                     return asset;
