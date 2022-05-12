@@ -15,6 +15,10 @@ export default defineUserConfig({
         ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
         ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
         ['link', { rel: 'icon', href: '/images/logo.png' }],
+        [
+            'script',
+            { type: 'module', src: 'https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer.min.js' },
+        ],
     ],
 
     plugins: [

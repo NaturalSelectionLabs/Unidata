@@ -188,11 +188,6 @@ watchEffect(async () => {
             providerChecked.value.find((provider: string) => asset.metadata?.providers?.includes(provider)),
     );
 });
-
-let modelScript = document.createElement('script');
-modelScript.type = 'module';
-modelScript.setAttribute('src', 'https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer.min.js');
-document.head.appendChild(modelScript);
 </script>
 
 <style lang="less" scoped>

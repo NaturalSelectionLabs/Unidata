@@ -12,8 +12,13 @@ export default ({ app }) => {
     app.component('font-awesome-icon', FontAwesomeIcon);
     app.use(ElementPlus);
 
-    app.config.globalProperties.Unidata = Unidata;
-    app.config.globalProperties.unidata = new Unidata({
-        moralisWeb3APIKey: 'gqcVQSCpWGNlfs2nMM1xvW1pOmZhzHc058aNpEK8BKIp26Q39PJemBu5BJi6SZOD',
-    });
+    // @ts-ignore
+    if (!__VUEPRESS_SSR__) {
+        app.config.globalProperties.Unidata = Unidata;
+        app.config.globalProperties.unidata = new Unidata({
+            moralisWeb3APIKey: 'gqcVQSCpWGNlfs2nMM1xvW1pOmZhzHc058aNpEK8BKIp26Q39PJemBu5BJi6SZOD',
+        });
+
+        (<any>window).unidata = app.config.globalProperties.unidata;
+    }
 };
