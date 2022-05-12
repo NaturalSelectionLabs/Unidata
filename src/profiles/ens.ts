@@ -19,9 +19,9 @@ class ENS extends Base {
         if (!this.inited) {
             await this.init();
         }
-        const name = await this.ethersProvider.lookupAddress(options.identity);
-        if (name) {
-            const resolver = await this.ethersProvider.getResolver(name);
+        const username = await this.ethersProvider.lookupAddress(options.identity);
+        if (username) {
+            const resolver = await this.ethersProvider.getResolver(username);
             if (resolver) {
                 const fields = [
                     'avatar',
@@ -32,22 +32,21 @@ class ENS extends Base {
                     'org.telegram',
                     'com.discord',
                     'com.reddit',
+                    'name',
+                    'banners',
                 ];
                 const info = await Promise.all(fields.map((field) => resolver.getText(field)));
                 const profile: Profile = {
-                    name,
+                    name: info[8] || username,
+                    username: username,
                     source: 'ENS',
+
+                    ...(info[0] && { avatars: [this.main.utils.replaceIPFS(info[0])] }),
+                    ...(info[9] && { banners: [this.main.utils.replaceIPFS(info[9])] }),
+                    ...(info[1] && { bio: info[1] }),
+                    ...(info[2] && { websites: info[2].split('/n') }),
                 };
 
-                if (info[0]) {
-                    profile.avatars = [this.main.utils.replaceIPFS(info[0])];
-                }
-                if (info[1]) {
-                    profile.bio = info[1];
-                }
-                if (info[2]) {
-                    profile.websites = info[2].split('/n');
-                }
                 const connected_accounts: Required<Profile>['connected_accounts'] = [];
                 [info[3], info[4], info[5], info[6], info[7]].forEach((account, index) => {
                     if (account) {

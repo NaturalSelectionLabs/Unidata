@@ -56,14 +56,13 @@ class Crossbell extends Base {
             }
             const profile: Profile = Object.assign(
                 {
-                    name: info.handle,
+                    username: info.handle,
                     source: 'Crossbell',
 
                     metadata: {
                         network: 'Crossbell',
                         proof: profileId,
 
-                        handler: info.handle,
                         uri: info.uri,
                     },
                 },

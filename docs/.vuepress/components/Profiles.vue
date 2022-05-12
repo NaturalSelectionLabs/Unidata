@@ -28,9 +28,7 @@
                     <div class="text">
                         <div class="name">
                             {{ profile.name }}
-                            <span class="handler" v-if="profile.metadata?.handler">{{
-                                profile.metadata?.handler
-                            }}</span>
+                            <span class="username" v-if="profile.username">{{ profile.username }}</span>
                         </div>
                         <div class="bio">{{ profile.bio }}</div>
                         <div class="websites">
@@ -152,7 +150,7 @@ watchEffect(async () => {
                 font-size: 28px;
                 margin-bottom: 5px;
 
-                .handler {
+                .username {
                     font-size: 14px;
                     color: #999;
                     margin-left: 10px;

@@ -17,8 +17,11 @@ type LinkSource = string;
 type AssetSource = string;
 type NoteSource = string;
 
+// Profiles
+
 type Profile = {
     name?: string;
+    username?: string;
     avatars?: URI[];
     bio?: string;
     websites?: URI[];
@@ -45,6 +48,8 @@ type Profiles = {
     list: Profile[];
 };
 
+// Links
+
 type Link = {
     date_created?: string;
 
@@ -67,6 +72,8 @@ type Links = {
     cursor?: any;
     list: Link[];
 };
+
+// Notes
 
 type Note = {
     date_created: string;
@@ -115,6 +122,8 @@ type Notes = {
     cursor?: any;
     list: Note[];
 };
+
+// Assets
 
 type Asset = {
     date_created?: string;
