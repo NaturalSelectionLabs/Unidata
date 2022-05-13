@@ -1,11 +1,12 @@
 import Main from '../index';
 import Base from './base';
-import { Contract } from 'crossbell.js';
+import { Indexer, Contract } from 'crossbell.js';
 import axios from 'axios';
 import { ProfilesOptions, ProfilesSetOptions } from './index';
 import { Web3Storage } from 'web3.storage';
 
 class Crossbell extends Base {
+    indexer: Indexer;
     contract: Contract;
     contractSet: Contract;
 
@@ -14,8 +15,7 @@ class Crossbell extends Base {
     }
 
     private async init() {
-        this.contract = new Contract();
-        await this.contract.connect();
+        this.indexer = new Indexer();
         this.inited = true;
     }
 
@@ -23,64 +23,44 @@ class Crossbell extends Base {
         if (!this.inited) {
             await this.init();
         }
-        const profileId = (await this.contract.getPrimaryProfileId(options.identity)).data;
-        if (profileId && profileId !== '0') {
-            const info = (await this.contract.getProfile(profileId)).data;
-            let meta;
-            if (info.uri) {
-                meta = (await axios.get(this.main.utils.replaceIPFS(info.uri))).data;
-            }
-            if (meta?.avatars) {
-                meta.avatars = this.main.utils.replaceIPFSs(meta.avatars);
-            }
-            if (meta?.banners) {
-                meta.banners = this.main.utils.replaceIPFSs(meta.banners);
-            }
-            if (meta?.connected_accounts) {
-                meta.connected_accounts = meta.connected_accounts.map((account: any) => {
-                    const platform = account.platform.toLowerCase();
-                    if (account.identity && account.platform && this.accountsMap[platform]) {
-                        const acc: Required<Profile>['connected_accounts'][number] = {
-                            identity: account.identity,
-                            platform: this.accountsMap[platform].platform,
-                        };
-                        if (this.accountsMap[platform].url) {
-                            acc.url = this.accountsMap[platform].url?.replace('$$id', account.identity);
-                        }
-                        return acc;
-                    } else {
-                        return {
-                            identity: account.identity,
-                            platform: account.platform,
-                        };
-                    }
-                });
-            }
+        const res = await this.indexer.getProfiles(options.identity, {
+            lastIdentifier: options.cursor,
+            limit: options.limit,
+        });
+
+        const list = res.list.map((item: any) => {
             const profile: Profile = Object.assign(
                 {
-                    username: info.handle,
+                    username: item.handle,
                     source: 'Crossbell',
 
                     metadata: {
                         network: 'Crossbell',
-                        proof: profileId,
+                        proof: item.token_id,
 
-                        uri: info.uri,
+                        primary: item.primary,
+                        block_number: item.block_number,
                     },
                 },
-                meta,
+                {
+                    ...(item.metadata?.name && { name: item.metadata.name }),
+                    ...(item.metadata?.bio && { bio: item.metadata.bio }),
+                    ...(item.metadata?.banners && { banners: this.main.utils.replaceIPFSs(item.metadata.banners) }),
+                    ...(item.metadata?.avatars && { avatars: this.main.utils.replaceIPFSs(item.metadata.avatars) }),
+                    ...(item.metadata?.websites && { websites: item.metadata.websites }),
+                    ...(item.metadata?.connected_accounts && { connected_accounts: item.metadata.connected_accounts }),
+                },
             );
 
-            return {
-                total: 1,
-                list: [profile],
-            };
-        } else {
-            return {
-                total: 0,
-                list: [],
-            };
-        }
+            return profile;
+        });
+
+        return {
+            total: res.total,
+            ...(options.limit && list.length >= options.limit && { cursor: list[list.length - 1].metadata?.token_id }),
+
+            list,
+        };
     }
 
     async set(options: ProfilesSetOptions, input: ProfilesInput) {
@@ -88,7 +68,11 @@ class Crossbell extends Base {
             this.contractSet = new Contract(window.ethereum);
             this.contractSet.connect();
         }
-        const profile = (await this.get(options)).list[0];
+        const profile = (
+            await this.indexer.getProfiles(options.identity, {
+                primary: true,
+            })
+        ).list[0];
 
         // createProfile
         if (!profile) {
@@ -115,10 +99,10 @@ class Crossbell extends Base {
             };
         }
 
-        const proof = profile.metadata!.proof;
+        const proof = profile.token_id;
 
         // setHandle
-        if (input.username && input.username !== profile.username) {
+        if (input.username && input.username !== profile.handle) {
             await this.contractSet.setHandle(proof, input.username);
         }
 
@@ -129,11 +113,7 @@ class Crossbell extends Base {
             });
             const username = input.username || options.identity;
             delete input.username;
-            let original = {};
-            if (profile.metadata?.uri) {
-                original = (await axios.get(this.main.utils.replaceIPFS(profile.metadata!.uri))).data;
-            }
-            const result = Object.assign(original, input);
+            const result = Object.assign({}, profile.metadata, input);
             const blob = new Blob([JSON.stringify(result)], {
                 type: 'application/json',
             });
