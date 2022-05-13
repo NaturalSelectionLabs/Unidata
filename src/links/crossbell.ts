@@ -27,8 +27,8 @@ class Crossbell extends Base {
 
         let res = await this.indexer[options.reversed ? 'getBacklinkingProfiles' : 'getLinkingProfiles'](
             options.identity,
-            options.type,
             {
+                linkTypes: options.type,
                 limit: options.limit,
             },
         );
@@ -36,10 +36,10 @@ class Crossbell extends Base {
             date_created: item.created_at,
 
             from: options.reversed
-                ? item.to_detail.handle
+                ? item.from_detail.handle
                 : profiles.list.find((profile: any) => profile.token_id === item.from)?.handle,
             to: options.reversed
-                ? profiles.list.find((profile: any) => profile.token_id === item.from)?.handle
+                ? profiles.list.find((profile: any) => profile.token_id === item.to)?.handle
                 : item.to_detail.handle,
             type: options.type || '',
             source: 'Crossbell',
@@ -49,7 +49,7 @@ class Crossbell extends Base {
                 proof: item.transaction_hash,
                 block_number: item.block_number,
 
-                from_owner: options.reversed ? item.to_detail.owner : options.identity,
+                from_owner: options.reversed ? item.from_detail.owner : options.identity,
                 to_owner: options.reversed ? options.identity : item.to_detail.owner,
             },
         }));
