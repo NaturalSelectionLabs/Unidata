@@ -1,7 +1,7 @@
 import Main from '../index';
 import Base from './base';
 import { Indexer, Contract } from 'crossbell.js';
-import { ProfilesOptions, ProfilesSetOptions } from './index';
+import { ProfilesOptions, ProfilesSetOptions, ProfilesInput } from './index';
 import { Web3Storage } from 'web3.storage';
 import axios from 'axios';
 

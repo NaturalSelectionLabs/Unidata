@@ -18,6 +18,8 @@ export type ProfilesSetOptions = {
     action?: string;
 };
 
+export type ProfilesInput = Omit<Profile, 'source' | 'metadata'>;
+
 class Profiles {
     map: {
         [key: string]: Base;
@@ -35,7 +37,14 @@ class Profiles {
     }
 
     async set(options: ProfilesSetOptions, input: ProfilesInput) {
-        return this.map[options.source].set(options, input);
+        if (this.map[options.source].set) {
+            return this.map[options.source].set!(options, input);
+        } else {
+            return {
+                code: 1,
+                message: 'Method not implemented',
+            };
+        }
     }
 }
 

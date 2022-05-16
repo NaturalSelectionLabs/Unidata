@@ -1,5 +1,5 @@
 import Main from '../index';
-import { ProfilesOptions, ProfilesSetOptions } from './index';
+import { ProfilesOptions, ProfilesSetOptions, ProfilesInput } from './index';
 
 abstract class Base {
     main: Main;
@@ -42,7 +42,7 @@ abstract class Base {
 
     abstract get(options: ProfilesOptions): Promise<Profiles>;
 
-    abstract set(
+    abstract set?(
         options: ProfilesSetOptions,
         input: ProfilesInput,
     ): Promise<{

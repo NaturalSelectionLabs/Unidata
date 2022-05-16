@@ -94,6 +94,8 @@ class ENS extends Base {
             };
         }
     }
+
+    set: undefined;
 }
 
 export default ENS;
