@@ -73,7 +73,6 @@ class EthereumNFTMoralis extends Base {
                                         );
                                     }, resyncIndex * 10000);
                                     resyncIndex++;
-                                    metadata = (await axios.get(item.token_uri)).data;
                                 }
                             } catch (error) {}
 
