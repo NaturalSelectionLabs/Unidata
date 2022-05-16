@@ -136,76 +136,115 @@ class Crossbell extends Base {
     }
 
     async set(options: ProfilesSetOptions, input: ProfilesInput) {
+        options = Object.assign(
+            {
+                platform: 'Ethereum',
+                action: 'update',
+            },
+            options,
+        );
+
         if (!this.contractSet) {
             this.contractSet = new Contract(window.ethereum);
-            this.contractSet.connect();
-        }
-        const profile = (
-            await this.indexer.getProfiles(options.identity, {
-                primary: true,
-            })
-        ).list[0];
-
-        // createProfile
-        if (!profile) {
-            const web3Storage = new Web3Storage({
-                token: this.main.options.web3StorageAPIToken!,
-            });
-            const username = input.username || options.identity;
-            delete input.username;
-            const result = input;
-            const blob = new Blob([JSON.stringify(result)], {
-                type: 'application/json',
-            });
-            const file = new File([blob], `${username}.json`);
-            const cid = await web3Storage.put([file], {
-                name: file.name,
-                maxRetries: 3,
-                wrapWithDirectory: false,
-            });
-            await this.contractSet.createProfile(options.identity, username, `ipfs://${cid}`);
-
-            return {
-                code: 0,
-                message: 'Success',
-            };
+            await this.contractSet.connect();
         }
 
-        const proof = profile.token_id;
+        switch (options.action) {
+            case 'update': {
+                let profile: any = {};
 
-        // setHandle
-        if (input.username && input.username !== profile.handle) {
-            await this.contractSet.setHandle(proof, input.username);
-        }
+                switch (options.platform) {
+                    case 'Ethereum':
+                        {
+                            profile = (
+                                await this.indexer.getProfiles(options.identity, {
+                                    primary: true,
+                                })
+                            ).list[0];
+                        }
+                        break;
+                    case 'Crossbell':
+                        {
+                            const info = (await this.contractSet.getProfileByHandle(options.identity)).data;
+                            let meta;
+                            if (info.uri) {
+                                meta = (await axios.get(this.main.utils.replaceIPFS(info.uri))).data;
+                            }
+                            profile = {
+                                token_id: info.profileId,
+                                handle: info.handle,
+                                metadata: meta,
+                            };
+                        }
+                        break;
+                    default:
+                        throw new Error(`Unsupported platform: ${options.platform}`);
+                }
 
-        // setProfileUri
-        if (Object.keys(input).filter((key) => key !== 'username').length) {
-            const web3Storage = new Web3Storage({
-                token: this.main.options.web3StorageAPIToken!,
-            });
-            const username = input.username || options.identity;
-            delete input.username;
-            const result = Object.assign({}, profile.metadata, input);
-            const blob = new Blob([JSON.stringify(result)], {
-                type: 'application/json',
-            });
-            const file = new File([blob], `${username}.json`);
-            const cid = await web3Storage.put([file], {
-                name: file.name,
-                maxRetries: 3,
-                wrapWithDirectory: false,
-            });
-            await this.contractSet.setProfileUri(proof, `ipfs://${cid}`);
+                // createProfile
+                if (!profile) {
+                    const web3Storage = new Web3Storage({
+                        token: this.main.options.web3StorageAPIToken!,
+                    });
+                    const username = input.username || options.identity;
+                    delete input.username;
+                    const result = input;
+                    const blob = new Blob([JSON.stringify(result)], {
+                        type: 'application/json',
+                    });
+                    const file = new File([blob], `${username}.json`);
+                    const cid = await web3Storage.put([file], {
+                        name: file.name,
+                        maxRetries: 3,
+                        wrapWithDirectory: false,
+                    });
+                    await this.contractSet.createProfile(options.identity, username, `ipfs://${cid}`);
 
-            return {
-                code: 0,
-                message: 'Success',
-            };
-        } else {
-            return {
-                code: 0,
-                message: 'Success',
-            };
+                    return {
+                        code: 0,
+                        message: 'Success',
+                    };
+                }
+
+                const proof = profile.token_id;
+
+                // setHandle
+                if (input.username && input.username !== profile.handle) {
+                    await this.contractSet.setHandle(proof, input.username);
+                }
+
+                // setProfileUri
+                if (Object.keys(input).filter((key) => key !== 'username').length) {
+                    const web3Storage = new Web3Storage({
+                        token: this.main.options.web3StorageAPIToken!,
+                    });
+                    const username = input.username || options.identity;
+                    delete input.username;
+                    const result = Object.assign({}, profile.metadata, input);
+                    const blob = new Blob([JSON.stringify(result)], {
+                        type: 'application/json',
+                    });
+                    const file = new File([blob], `${username}.json`);
+                    const cid = await web3Storage.put([file], {
+                        name: file.name,
+                        maxRetries: 3,
+                        wrapWithDirectory: false,
+                    });
+                    await this.contractSet.setProfileUri(proof, `ipfs://${cid}`);
+
+                    return {
+                        code: 0,
+                        message: 'Success',
+                    };
+                } else {
+                    return {
+                        code: 0,
+                        message: 'Success',
+                    };
+                }
+            }
+            default:
+                throw new Error(`Unsupported action: ${options.action}`);
         }
     }
 }

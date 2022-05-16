@@ -36,6 +36,7 @@ const result: {
         source: string;
         identity: string;
         platform?: string;
+        action?: string;
     },
     input: {
         username?: string;

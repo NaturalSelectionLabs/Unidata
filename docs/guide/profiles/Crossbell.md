@@ -38,6 +38,7 @@ const result: {
         source: 'Crossbell';
         identity: string;
         platform?: 'Ethereum' | 'Crossbell';
+        action?: 'update';
     },
     input: {
         username?: string;

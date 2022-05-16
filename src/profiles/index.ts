@@ -14,6 +14,8 @@ export type ProfilesOptions = {
 export type ProfilesSetOptions = {
     source: string;
     identity: string;
+    platform?: string;
+    action?: string;
 };
 
 class Profiles {
