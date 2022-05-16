@@ -183,26 +183,9 @@ class Crossbell extends Base {
 
                 // createProfile
                 if (!profile) {
-                    const web3Storage = new Web3Storage({
-                        token: this.main.options.web3StorageAPIToken!,
-                    });
-                    const username = input.username || options.identity;
-                    delete input.username;
-                    const result = input;
-                    const blob = new Blob([JSON.stringify(result)], {
-                        type: 'application/json',
-                    });
-                    const file = new File([blob], `${username}.json`);
-                    const cid = await web3Storage.put([file], {
-                        name: file.name,
-                        maxRetries: 3,
-                        wrapWithDirectory: false,
-                    });
-                    await this.contractSet.createProfile(options.identity, username, `ipfs://${cid}`);
-
                     return {
-                        code: 0,
-                        message: 'Success',
+                        code: 1,
+                        message: 'Profile not found',
                     };
                 }
 
@@ -241,6 +224,35 @@ class Crossbell extends Base {
                         code: 0,
                         message: 'Success',
                     };
+                }
+            }
+            case 'add': {
+                switch (options.platform) {
+                    case 'Ethereum': {
+                        const web3Storage = new Web3Storage({
+                            token: this.main.options.web3StorageAPIToken!,
+                        });
+                        const username = input.username || options.identity;
+                        delete input.username;
+                        const result = input;
+                        const blob = new Blob([JSON.stringify(result)], {
+                            type: 'application/json',
+                        });
+                        const file = new File([blob], `${username}.json`);
+                        const cid = await web3Storage.put([file], {
+                            name: file.name,
+                            maxRetries: 3,
+                            wrapWithDirectory: false,
+                        });
+                        await this.contractSet.createProfile(options.identity, username, `ipfs://${cid}`);
+
+                        return {
+                            code: 0,
+                            message: 'Success',
+                        };
+                    }
+                    default:
+                        throw new Error(`Unsupported platform: ${options.platform}`);
                 }
             }
             default:

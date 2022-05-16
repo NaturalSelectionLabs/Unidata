@@ -24,8 +24,8 @@ const profiles: Profiles = await unidata.profiles.get(options: {
 });
 ```
 
--   Use Ethereum address as `identity` and Ethereum as `platfrom` to get all profiles belonging to this address.
--   Use Crossbell handle as the `identity` and Crossbell as the `platfrom` to get a specific profile.
+-   Use Ethereum address as `identity` and Ethereum as `platform` to get all profiles belonging to this address.
+-   Use Crossbell handle as the `identity` and Crossbell as the `platform` to get a specific profile.
 
 ### Set
 
@@ -38,7 +38,7 @@ const result: {
         source: 'Crossbell';
         identity: string;
         platform?: 'Ethereum' | 'Crossbell';
-        action?: 'update';
+        action?: 'update' | 'add';
     },
     input: {
         username?: string;
@@ -56,8 +56,10 @@ const result: {
 );
 ```
 
--   Use Ethereum address as `identity` and Ethereum as `platfrom` to set primary profile of this address.
--   Use Crossbell handle as the `identity` and Crossbell as the `platfrom` to set a specific profile.
+-   Use Ethereum address as `identity` and Ethereum as `platform` to set primary profile of this address.
+-   Use Crossbell handle as the `identity` and Crossbell as the `platform` to set a specific profile.
+-   `action`: can be `update` or `add`, default to `update`.
+-   If the `platform` is Crossbell, then the `action` cannot be `add`.
 
 ## Live Demo
 
@@ -75,12 +77,15 @@ const result: {
 
 Open the browser console and execute the following code
 
+**update action:**
+
 ```ts
 await unidata.profiles.set(
     {
         source: 'Crossbell',
         identity: '<your_ethereum_address>',
         platform: 'Ethereum',
+        action: 'update',
     },
     {
         name: '<your_name>',
@@ -88,16 +93,18 @@ await unidata.profiles.set(
 );
 ```
 
-or
+**add action:**
 
 ```ts
 await unidata.profiles.set(
     {
         source: 'Crossbell',
-        identity: '<your_crossbell_handle>',
-        platform: 'Crossbell',
+        identity: '<your_ethereum_address>',
+        platform: 'Ethereum',
+        action: 'add',
     },
     {
+        username: '<crossbell_handle>',
         name: '<your_name>',
     },
 );

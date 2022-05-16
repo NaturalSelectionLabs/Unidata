@@ -125,6 +125,7 @@ watchEffect(async () => {
 
 .profile-card {
     position: relative;
+    margin-bottom: 20px;
 
     .banner {
         position: absolute;
