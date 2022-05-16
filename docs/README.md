@@ -17,7 +17,7 @@ features:
     - title: Easy
       details: All data is prepared for you through the same specifications and simple API.
     - title: Diverse
-      details: A large number of platfroms and data sources are being supported for you to choose from.
+      details: A large number of platforms and data sources are being supported for you to choose from.
 footer: MIT Licensed
 ---
 

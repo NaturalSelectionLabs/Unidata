@@ -16,9 +16,13 @@ You can initialize with `ipfsGateway` and `infuraProjectID` to get potentially f
 const profiles: Profiles = await unidata.profiles.get(options: {
     source: 'ENS';
     identity: string;
+    platform?: 'Ethereum';
 });
 ```
 
 ## Live Demo
 
-<Profiles :source="'ENS'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
+<Profiles :source="'ENS'" :defaultIdentity="[{
+    identity: '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944',
+    platform: 'Ethereum'
+}]" />

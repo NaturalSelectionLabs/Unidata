@@ -6,6 +6,7 @@ import Crossbell from './crossbell';
 export type ProfilesOptions = {
     source: string;
     identity: string;
+    platform?: string;
     limit?: number;
     cursor?: any;
 };

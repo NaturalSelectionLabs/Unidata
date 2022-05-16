@@ -11,10 +11,22 @@
                 class="input"
             />
         </div>
+        <div class="input-wrap">
+            <label>Platform: </label>
+            <el-select v-model="platform">
+                <el-option
+                    v-for="item in defaultIdentity"
+                    :key="item.platform"
+                    :label="item.platform"
+                    :value="item.platform"
+                />
+            </el-select>
+        </div>
         <h5>Code</h5>
         <pre class="code"><code>{{ `const profiles: Profiles = await unidata.profiles.get({
     source: '${props.source}',
-    identity: '${identity}',${providers ? `
+    identity: '${identity}',
+    platform: '${platform}',${providers ? `
     providers: ${JSON.stringify(providers)},` : ''}
 });`}}</code></pre>
         <h5>View</h5>
@@ -65,12 +77,13 @@ const props = defineProps({
         required: true,
     },
     defaultIdentity: {
-        type: String,
+        type: Array,
         required: true,
     },
 });
 
-const identity = ref(props.defaultIdentity);
+const identity = ref((<any>props.defaultIdentity[0]).identity);
+const platform = ref((<any>props.defaultIdentity[0]).platform);
 
 const loading = ref(true);
 const profiles = ref<Profiles>({
@@ -79,6 +92,11 @@ const profiles = ref<Profiles>({
 });
 
 const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
+
+watchEffect(async () => {
+    identity.value = (<any>props.defaultIdentity.find((item: any) => item.platform === platform.value))?.identity;
+});
+
 watchEffect(async () => {
     if (identity.value) {
         loading.value = true;
@@ -89,6 +107,7 @@ watchEffect(async () => {
         unidata.profiles
             .get({
                 identity: identity.value,
+                platform: platform.value,
                 source: props.source,
             })
             .then((p: Profiles) => {
