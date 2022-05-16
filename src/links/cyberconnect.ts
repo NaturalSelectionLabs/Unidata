@@ -61,6 +61,8 @@ class CyberConnect extends Base {
                 })) || [],
         };
     }
+
+    set: undefined;
 }
 
 export default CyberConnect;

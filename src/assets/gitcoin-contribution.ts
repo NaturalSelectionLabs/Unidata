@@ -22,7 +22,6 @@ class GitcoinContribution extends Base {
         const result: Assets = {
             total: response.total,
             list: response.list.map((item: any) => {
-                console.log('item', item);
                 const asset: Asset = {
                     date_created: item.date_created,
                     date_updated: item.date_updated,

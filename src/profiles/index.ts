@@ -18,7 +18,7 @@ export type ProfilesSetOptions = {
     action?: string;
 };
 
-export type ProfilesInput = Omit<Profile, 'source' | 'metadata'>;
+export type ProfileInput = Omit<Profile, 'source' | 'metadata'>;
 
 class Profiles {
     map: {
@@ -36,7 +36,7 @@ class Profiles {
         return this.map[options.source].get(options);
     }
 
-    async set(options: ProfilesSetOptions, input: ProfilesInput) {
+    async set(options: ProfilesSetOptions, input: ProfileInput) {
         if (this.map[options.source].set) {
             return this.map[options.source].set!(options, input);
         } else {

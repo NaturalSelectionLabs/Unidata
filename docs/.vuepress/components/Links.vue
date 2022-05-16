@@ -16,7 +16,7 @@
     source: '${props.source}',
     identity: '${identity}',${providers ? `
     providers: ${JSON.stringify(providers)},` : ''}
-    limit: 20,
+    limit: 3,
 });`}}</code></pre>
         <h5>View</h5>
         <el-card class="links-card" v-loading="loading">
@@ -39,6 +39,7 @@
         </el-card>
         <h5>Data</h5>
         <pre class="data">{{ JSON.stringify(links, null, 4) }}</pre>
+        <h6>Reversed Links Data</h6>
         <pre class="data">{{ JSON.stringify(backlinks, null, 4) }}</pre>
     </div>
 </template>
@@ -73,7 +74,7 @@ watchEffect(async () => {
             .get({
                 source: props.source,
                 identity: identity.value,
-                limit: 20,
+                limit: 3,
             })
             .then((p: any) => {
                 links.value = p;
@@ -84,7 +85,7 @@ watchEffect(async () => {
                 source: props.source,
                 identity: identity.value,
                 reversed: true,
-                limit: 20,
+                limit: 3,
             })
             .then((p: any) => {
                 backlinks.value = p;

@@ -25,7 +25,7 @@ const profiles: Profiles = await unidata.profiles.get(options: {
 
 ### Set
 
-Incrementally updates your profile.
+Add or update your profiles.
 
 ```ts
 const result: {

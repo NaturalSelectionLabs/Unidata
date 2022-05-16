@@ -1,7 +1,7 @@
 import Main from '../index';
 import Base from './base';
 import { Indexer, Contract } from 'crossbell.js';
-import { ProfilesOptions, ProfilesSetOptions, ProfilesInput } from './index';
+import { ProfilesOptions, ProfilesSetOptions, ProfileInput } from './index';
 import { Web3Storage } from 'web3.storage';
 import axios from 'axios';
 
@@ -158,7 +158,7 @@ class Crossbell extends Base {
         }
     }
 
-    async set(options: ProfilesSetOptions, input: ProfilesInput) {
+    async set(options: ProfilesSetOptions, input: ProfileInput) {
         options = Object.assign(
             {
                 platform: 'Ethereum',
@@ -179,6 +179,9 @@ class Crossbell extends Base {
                 switch (options.platform) {
                     case 'Ethereum':
                         {
+                            if (!this.indexer) {
+                                this.indexer = new Indexer();
+                            }
                             profile = (
                                 await this.indexer.getProfiles(options.identity, {
                                     primary: true,
