@@ -1,6 +1,5 @@
 import Main from '../index';
 import Base from './base';
-import CyberConnect from './cyberconnect';
 import Crossbell from './crossbell';
 
 export type LinksOptions = {
@@ -29,7 +28,6 @@ class Links {
 
     constructor(main: Main) {
         this.map = {
-            CyberConnect: new CyberConnect(main),
             Crossbell: new Crossbell(main),
         };
     }

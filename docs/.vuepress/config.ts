@@ -94,7 +94,7 @@ export default defineUserConfig({
                 {
                     text: 'Links',
                     link: '/guide/links/README.md',
-                    children: ['/guide/links/README.md', '/guide/links/Crossbell.md', '/guide/links/CyberConnect.md'],
+                    children: ['/guide/links/README.md', '/guide/links/Crossbell.md'],
                 },
             ],
         },

@@ -52,12 +52,6 @@ const data = [
         image: '/images/sources/crossbell.svg',
         url: 'https://github.com/Crossbell-Box/',
     },
-    {
-        name: 'CyberConnect',
-        type: 'Links',
-        image: '/images/sources/cyberconnect.svg',
-        url: 'https://cyberconnect.me/',
-    },
 
     // Assets
     {
