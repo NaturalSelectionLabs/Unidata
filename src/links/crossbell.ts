@@ -2,7 +2,6 @@ import Main from '../index';
 import Base from './base';
 import { LinksOptions, LinksSetOptions, LinkInput } from './index';
 import { Indexer, Contract } from 'crossbell.js';
-import axios from 'axios';
 
 class Crossbell extends Base {
     indexer: Indexer;
@@ -32,9 +31,12 @@ class Crossbell extends Base {
                     options.identity,
                     {
                         linkTypes: options.type,
-                        limit: options.limit,
+                        // limit: options.limit,
                     },
                 );
+                if (options.limit) {
+                    res.list = res?.list?.slice(0, options.limit);
+                }
                 const list = res?.list?.map((item: any) => ({
                     date_created: item.created_at,
 
