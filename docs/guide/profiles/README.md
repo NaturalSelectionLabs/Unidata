@@ -20,8 +20,8 @@ const profiles: Profiles = await unidata.profiles.get(options: {
 
 -   `identity`: Ethereum address, Solana address, Flow address, Crossbell handle, etc.
 -   `platform`: Platfrom of the identity. Ethereum, Solana, Flow, Crossbell, etc. Default to `Ethereum`.
--   `limit`: The number of assets to return. Since providers use different pagination schemes, it cannot guarantee that the quantities are always accurate.
--   `cursor`: The pagination cursor returned from the previous page's results. Since providers use different pagination schemes, its type is uncertain.
+-   `limit`: The number of assets to return. Since providers use different pagination schemes, there is no guarantee that the quantities are always accurate.
+-   `cursor`: The pagination cursor returned from the previous page's results. Since providers use different pagination schemes, the type is uncertain.
 
 ### Set
 

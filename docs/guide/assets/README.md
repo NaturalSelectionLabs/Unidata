@@ -18,8 +18,8 @@ const assets: Assets = await unidata.assets.get(options: {
 
 -   `providers`: The providers of the data, requesting and aggregating from all supported providers by default.
 -   `identity`: Ethereum address, Solana address, Flow address, etc.
--   `limit`: The number of assets to return. Since providers use different pagination schemes, it cannot guarantee that the quantities are always accurate.
--   `cursor`: The pagination cursor returned from the previous page's results. Since providers use different pagination schemes, its type is uncertain.
+-   `limit`: The number of assets to return. Since providers use different pagination schemes, there is no guarantee that the quantities are always accurate.
+-   `cursor`: The pagination cursor returned from the previous page's results. Since providers use different pagination schemes, the type is uncertain.
 
 ## Specification
 

@@ -24,7 +24,7 @@ const links: Links = await unidata.links.get(options: {
 });
 ```
 
--   Use Ethereum address as `identity` and Ethereum as `platform` to get links from all profiles belonging to this address.
+-   Use Ethereum address as the `identity` and Ethereum as the `platform` to get links from all profiles belonging to this address.
 -   Use Crossbell handle as the `identity` and Crossbell as the `platform` to get links from a specific profile.
 
 ### Set
@@ -47,7 +47,7 @@ const result: {
 );
 ```
 
--   Use Ethereum address as `identity` and Ethereum as `platform` to set link from primary profile of this address.
+-   Use Ethereum address as the `identity` and Ethereum as the `platform` to set link from primary profile of this address.
 -   Use Crossbell handle as the `identity` and Crossbell as the `platform` to set link from a specific profile.
 -   `action`: can be `add` or `remove`, default to `add`.
 -   `to`: the profile handle you want to link to.

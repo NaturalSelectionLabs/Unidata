@@ -8,7 +8,7 @@ You can use Crossbell API for free (no rate limit disclosed).
 
 [Crossbell](https://github.com/Crossbell-Box/).
 
-You can initialize with `ipfsGateway` `web3StorageAPIToken` to get potentially faster response or higher stability.
+You can initialize with `ipfsGateway` `web3StorageAPIToken` to potentially get a faster response or higher stability.
 
 ## API
 
@@ -24,7 +24,7 @@ const profiles: Profiles = await unidata.profiles.get(options: {
 });
 ```
 
--   Use Ethereum address as `identity` and Ethereum as `platform` to get all profiles belonging to this address.
+-   Use Ethereum address as the `identity` and Ethereum as the `platform` to get all profiles belonging to this address.
 -   Use Crossbell handle as the `identity` and Crossbell as the `platform` to get a specific profile.
 
 ### Set
@@ -56,7 +56,7 @@ const result: {
 );
 ```
 
--   Use Ethereum address as `identity` and Ethereum as `platform` to set primary profile of this address.
+-   Use Ethereum address as the `identity` and Ethereum as the `platform` to set primary profile of this address.
 -   Use Crossbell handle as the `identity` and Crossbell as the `platform` to set a specific profile.
 -   `action`: can be `update` or `add`, default to `update`.
 -   If the `platform` is Crossbell, then the `action` cannot be `add`.

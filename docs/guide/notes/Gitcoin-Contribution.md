@@ -6,7 +6,7 @@
 You can use RSS3 API for free (no rate limit disclosed).
 :::
 
-[Gitcoin Grants](https://gitcoin.co/grants/explorer/) allows individuals to get funding for a public goods project they are working on. Gitcoin Contributions is contributions to Gitcoin Grants.
+[Gitcoin Grants](https://gitcoin.co/grants/explorer/) allows individuals to get funding for a public goods project they are working on. Gitcoin Contributions are contributions to Gitcoin Grants.
 
 ## API
 

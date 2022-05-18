@@ -6,7 +6,7 @@
 You can use Alchemy API for free (no rate limit disclosed).
 :::
 
-You can initialize with `ipfsGateway` and `alchemyAPIKey` to get potentially faster response or higher stability.
+You can initialize with `ipfsGateway` and `alchemyAPIKey` to potentially get a faster response or higher stability.
 
 ## API
 

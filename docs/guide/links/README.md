@@ -24,8 +24,8 @@ const links: Links = await unidata.links.get(options: {
 -   `platform`: Platfrom of the identity. Ethereum, Solana, Flow, Crossbell, etc. Default to `Ethereum`.
 -   `type`: The type of links, follow, like, comment, etc.
 -   `reversed`: If true, returns the reversed links that point to the current identity.
--   `limit`: The number of assets to return. Since providers use different pagination schemes, it cannot guarantee that the quantities are always accurate.
--   `cursor`: The pagination cursor returned from the previous page's results. Since providers use different pagination schemes, its type is uncertain.
+-   `limit`: The number of assets to return. Since providers use different pagination schemes, there is no guarantee that the quantities are always accurate.
+-   `cursor`: The pagination cursor returned from the previous page's results. Since providers use different pagination schemes, the type is uncertain.
 
 ### Set
 
