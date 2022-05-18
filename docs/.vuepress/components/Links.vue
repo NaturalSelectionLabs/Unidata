@@ -25,14 +25,22 @@
                     <p>{{ links.total }}</p>
                     <p>Following</p>
                     <ul>
-                        <li v-for="item in links.list" :key="item">{{ item.to }}</li>
+                        <li v-for="item in links.list" :key="item">
+                            {{ item.to }} ({{ item.metadata.to_owner.slice(0, 5) }}...{{
+                                item.metadata.to_owner.slice(-4)
+                            }})
+                        </li>
                     </ul>
                 </div>
                 <div class="follow">
                     <p>{{ backlinks.total }}</p>
                     <p>Followers</p>
                     <ul>
-                        <li v-for="item in backlinks.list" :key="item">{{ item.from }}</li>
+                        <li v-for="item in backlinks.list" :key="item">
+                            {{ item.from }} ({{ item.metadata.from_owner.slice(0, 5) }}...{{
+                                item.metadata.from_owner.slice(-4)
+                            }})
+                        </li>
                     </ul>
                 </div>
             </div>
