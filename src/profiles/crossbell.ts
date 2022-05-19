@@ -116,6 +116,19 @@ class Crossbell extends Base {
                 }
                 if (meta?.connected_accounts) {
                     meta.connected_accounts = meta.connected_accounts.map((account: any) => {
+                        if (typeof account === 'string') {
+                            const match = account.match(/:\/\/(.*)@(.*)/);
+                            if (match) {
+                                account = {
+                                    identity: match[1],
+                                    platform: match[2],
+                                };
+                            } else {
+                                account = {
+                                    identity: account,
+                                };
+                            }
+                        }
                         const platform = account.platform.toLowerCase();
                         if (account.identity && account.platform && this.accountsMap[platform]) {
                             const acc: Required<Profile>['connected_accounts'][number] = {
