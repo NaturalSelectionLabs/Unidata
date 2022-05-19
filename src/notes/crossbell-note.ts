@@ -75,7 +75,7 @@ class CrossbellNote extends Base {
         );
 
         if (!this.contractSet) {
-            this.contractSet = new Contract(window.ethereum);
+            this.contractSet = new Contract(this.main.options.ethereumProvider);
             await this.contractSet.connect();
         }
 
