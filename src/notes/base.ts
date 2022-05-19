@@ -23,6 +23,7 @@ abstract class Base {
     ): Promise<{
         code: number;
         message: string;
+        data?: any;
     }>;
 }
 

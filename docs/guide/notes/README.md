@@ -33,6 +33,7 @@ Add, update or remove your notes.
 const result: {
     code: number;
     message: string;
+    data?: any;
 } = await unidata.profiles.set(
     options: {
         source: string;

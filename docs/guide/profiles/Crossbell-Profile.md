@@ -24,8 +24,8 @@ const profiles: Profiles = await unidata.profiles.get(options: {
 });
 ```
 
--   Use Ethereum address as the `identity` and Ethereum as the `platform` to get all profiles belonging to this address.
--   Use Crossbell handle as the `identity` and Crossbell as the `platform` to get a specific profile.
+-   Use Ethereum address as the `identity` and `'Ethereum'` as the `platform` to get all profiles belonging to this address.
+-   Use Crossbell handle as the `identity` and `'Crossbell'` as the `platform` to get a specific profile.
 
 ### Set
 
@@ -56,8 +56,8 @@ const result: {
 );
 ```
 
--   Use Ethereum address as the `identity` and Ethereum as the `platform` to set primary profile of this address.
--   Use Crossbell handle as the `identity` and Crossbell as the `platform` to set a specific profile.
+-   Use Ethereum address as the `identity` and `'Ethereum'` as the `platform` to set primary profile of this address.
+-   Use Crossbell handle as the `identity` and `'Crossbell'` as the `platform` to set a specific profile.
 -   `action`: can be `update` or `add`, default to `update`.
 -   If the `platform` is Crossbell, then the `action` cannot be `add`.
 

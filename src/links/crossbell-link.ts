@@ -90,29 +90,10 @@ class CrossbellLink extends Base {
             await this.contractSet.connect();
         }
 
-        let fromProfileId;
-
-        switch (options.platform) {
-            case 'Ethereum':
-                {
-                    if (!this.indexer) {
-                        this.indexer = new Indexer();
-                    }
-                    fromProfileId = (
-                        await this.indexer.getProfiles(options.identity, {
-                            primary: true,
-                        })
-                    ).list[0].token_id;
-                }
-                break;
-            case 'Crossbell':
-                {
-                    fromProfileId = (await this.contractSet.getProfileByHandle(options.identity)).data.profileId;
-                }
-                break;
-            default:
-                throw new Error(`Unsupported platform: ${options.platform}`);
-        }
+        let fromProfileId = await this.main.utils.getCrossbellProfileId({
+            identity: options.identity,
+            platform: options.platform!,
+        });
 
         const toProfileId = (await this.contractSet.getProfileByHandle(link.to)).data.profileId;
 
