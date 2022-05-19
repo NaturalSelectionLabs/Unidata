@@ -4,6 +4,4 @@ declare global {
     }
 }
 
-declare const SDK_VERSION: string;
-
 export {};
