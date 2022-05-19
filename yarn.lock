@@ -1651,10 +1651,10 @@ cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-crossbell.js@0.5.5:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/crossbell.js/-/crossbell.js-0.5.5.tgz#7c1f0d69077e7a04a6479d269f5b3ebe267160c8"
-  integrity sha512-Hu7O924SG6tgPNiEaPj113cU3rvnTdujvcrfa5AUcH+Y6+g/mKbgHb+5lcrKKZP/JRQD+A3HsKhSQi/HdoFJlw==
+crossbell.js@0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/crossbell.js/-/crossbell.js-0.5.6.tgz#592072af902bbf561010b5d41238ade9ce213ab9"
+  integrity sha512-QByL0anKwHlzXEJeZd2/wDLHBCj99XI/YPkx9cOyTReaAMBU79DiaW4cD7EjWFbH/tqPuH82Z5m94jlcrlW48A==
   dependencies:
     ethers "^5.6.3"
     ts-mixer "^6.0.1"

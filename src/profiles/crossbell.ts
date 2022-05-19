@@ -1,6 +1,6 @@
 import Main from '../index';
 import Base from './base';
-import { Indexer, Contract } from 'crossbell.js';
+import { Indexer, Contract, Network } from 'crossbell.js';
 import { ProfilesOptions, ProfilesSetOptions, ProfileInput } from './index';
 import { Web3Storage } from 'web3.storage';
 import axios from 'axios';
@@ -12,6 +12,8 @@ class Crossbell extends Base {
 
     constructor(main: Main) {
         super(main);
+
+        Network.setIpfsGateway(this.main.options.ipfsGateway!);
     }
 
     async get(options: ProfilesOptions) {
@@ -102,8 +104,8 @@ class Crossbell extends Base {
                     await this.contract.connect();
                 }
                 const info = (await this.contract.getProfileByHandle(options.identity)).data;
-                let meta;
-                if (info.uri) {
+                let meta: any = info.metadata;
+                if (!meta && info.uri) {
                     meta = (await axios.get(this.main.utils.replaceIPFS(info.uri))).data;
                 }
                 if (meta?.avatars) {
