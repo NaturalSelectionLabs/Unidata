@@ -3,7 +3,7 @@ import Base from './base';
 import { LinksOptions, LinksSetOptions, LinkInput } from './index';
 import { Indexer, Contract } from 'crossbell.js';
 
-class Crossbell extends Base {
+class CrossbellLink extends Base {
     indexer: Indexer;
     contractSet: Contract;
 
@@ -47,7 +47,7 @@ class Crossbell extends Base {
                         ? profiles.list.find((profile: any) => profile.token_id === item.to)?.handle
                         : item.to_detail.handle,
                     type: options.type || '',
-                    source: 'Crossbell',
+                    source: 'Crossbell Link',
 
                     metadata: {
                         network: 'Crossbell',
@@ -139,4 +139,4 @@ class Crossbell extends Base {
     }
 }
 
-export default Crossbell;
+export default CrossbellLink;

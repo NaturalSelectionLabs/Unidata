@@ -89,12 +89,16 @@ export default defineUserConfig({
                 {
                     text: 'Profiles',
                     link: '/guide/profiles/README.md',
-                    children: ['/guide/profiles/README.md', '/guide/profiles/Crossbell.md', '/guide/profiles/ENS.md'],
+                    children: [
+                        '/guide/profiles/README.md',
+                        '/guide/profiles/Crossbell-Profile.md',
+                        '/guide/profiles/ENS.md',
+                    ],
                 },
                 {
                     text: 'Links',
                     link: '/guide/links/README.md',
-                    children: ['/guide/links/README.md', '/guide/links/Crossbell.md'],
+                    children: ['/guide/links/README.md', '/guide/links/Crossbell-Link.md'],
                 },
             ],
         },

@@ -5,7 +5,7 @@ import { ProfilesOptions, ProfilesSetOptions, ProfileInput } from './index';
 import { Web3Storage } from 'web3.storage';
 import axios from 'axios';
 
-class Crossbell extends Base {
+class CrossbellProfile extends Base {
     indexer: Indexer;
     contract: Contract;
     contractSet: Contract;
@@ -38,7 +38,7 @@ class Crossbell extends Base {
                     const profile: Profile = Object.assign(
                         {
                             username: item.handle,
-                            source: 'Crossbell',
+                            source: 'Crossbell Profile',
 
                             metadata: {
                                 network: 'Crossbell',
@@ -150,7 +150,7 @@ class Crossbell extends Base {
                 const profile: Profile = Object.assign(
                     {
                         name: info.handle,
-                        source: 'Crossbell',
+                        source: 'Crossbell Profile',
 
                         metadata: {
                             network: 'Crossbell',
@@ -302,4 +302,4 @@ class Crossbell extends Base {
     }
 }
 
-export default Crossbell;
+export default CrossbellProfile;

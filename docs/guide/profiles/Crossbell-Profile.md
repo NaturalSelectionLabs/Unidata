@@ -1,4 +1,4 @@
-# Crossbell
+# Crossbell Profile
 
 <Logos type="Profiles" :names="['Crossbell']" />
 
@@ -16,7 +16,7 @@ You can initialize with `ipfsGateway` `web3StorageAPIToken` to potentially get a
 
 ```ts
 const profiles: Profiles = await unidata.profiles.get(options: {
-    source: 'Crossbell';
+    source: 'Crossbell Profile';
     identity: string;
     platform?: 'Ethereum' | 'Crossbell';
     limit?: number;
@@ -35,7 +35,7 @@ const result: {
     message: string;
 } = await unidata.profiles.set(
     options: {
-        source: 'Crossbell';
+        source: 'Crossbell Profile';
         identity: string;
         platform?: 'Ethereum' | 'Crossbell';
         action?: 'update' | 'add';
@@ -65,7 +65,7 @@ const result: {
 
 ### Get
 
-<Profiles :source="'Crossbell'" :defaultIdentity="[{
+<Profiles :source="'Crossbell Profile'" :defaultIdentity="[{
     identity: '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944',
     platform: 'Ethereum'
 }, {
@@ -82,7 +82,7 @@ Open the browser console and execute the following code
 ```ts
 await unidata.profiles.set(
     {
-        source: 'Crossbell',
+        source: 'Crossbell Profile',
         identity: '<your_ethereum_address>',
         platform: 'Ethereum',
         action: 'update',
@@ -98,7 +98,7 @@ await unidata.profiles.set(
 ```ts
 await unidata.profiles.set(
     {
-        source: 'Crossbell',
+        source: 'Crossbell Profile',
         identity: '<your_ethereum_address>',
         platform: 'Ethereum',
         action: 'add',

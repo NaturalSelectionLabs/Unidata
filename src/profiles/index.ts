@@ -1,7 +1,7 @@
 import Main from '../index';
 import Base from './base';
 import ENS from './ens';
-import Crossbell from './crossbell';
+import CrossbellProfile from './crossbell-profile';
 
 export type ProfilesOptions = {
     source: string;
@@ -28,7 +28,7 @@ class Profiles {
     constructor(main: Main) {
         this.map = {
             ENS: new ENS(main),
-            Crossbell: new Crossbell(main),
+            'Crossbell Profile': new CrossbellProfile(main),
         };
     }
 

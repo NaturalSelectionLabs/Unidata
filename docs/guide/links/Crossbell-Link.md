@@ -1,4 +1,4 @@
-# Crossbell
+# Crossbell Link
 
 <Logos type="Links" :names="['Crossbell']" />
 
@@ -14,7 +14,7 @@ You can use Crossbell API for free (no rate limit disclosed).
 
 ```ts
 const links: Links = await unidata.links.get(options: {
-    source: 'Crossbell';
+    source: 'Crossbell Link';
     identity: string;
     platform?: string;
     type?: string;
@@ -35,7 +35,7 @@ const result: {
     message: string;
 } = await unidata.profiles.set(
     options: {
-        source: 'Crossbell';
+        source: 'Crossbell Link';
         identity: string;
         platform?: 'Ethereum' | 'Crossbell';
         action?: 'add' | 'remove';
@@ -54,7 +54,7 @@ const result: {
 
 ## Live Demo
 
-<Links :source="'Crossbell'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
+<Links :source="'Crossbell Link'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
 
 ### Set
 
@@ -65,7 +65,7 @@ Open the browser console and execute the following code
 ```ts
 await unidata.links.set(
     {
-        source: 'Crossbell',
+        source: 'Crossbell Link',
         identity: '<your_ethereum_address>',
         platform: 'Ethereum',
         action: 'add',
@@ -82,7 +82,7 @@ await unidata.links.set(
 ```ts
 await unidata.links.set(
     {
-        source: 'Crossbell',
+        source: 'Crossbell Link',
         identity: '<your_ethereum_address>',
         platform: 'Ethereum',
         action: 'remove',

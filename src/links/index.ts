@@ -1,6 +1,6 @@
 import Main from '../index';
 import Base from './base';
-import Crossbell from './crossbell';
+import CrossbellLink from './crossbell-link';
 
 export type LinksOptions = {
     source: string;
@@ -28,7 +28,7 @@ class Links {
 
     constructor(main: Main) {
         this.map = {
-            Crossbell: new Crossbell(main),
+            'Crossbell Link': new CrossbellLink(main),
         };
     }
 
