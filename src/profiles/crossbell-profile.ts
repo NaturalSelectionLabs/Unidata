@@ -1,7 +1,7 @@
 import Main from '../index';
 import Base from './base';
 import { Indexer, Contract, Network } from 'crossbell.js';
-import { ProfilesOptions, ProfilesSetOptions, ProfileInput } from './index';
+import { ProfilesOptions, ProfileSetOptions, ProfileInput } from './index';
 import { Web3Storage } from 'web3.storage';
 import axios from 'axios';
 
@@ -173,7 +173,7 @@ class CrossbellProfile extends Base {
         }
     }
 
-    async set(options: ProfilesSetOptions, input: ProfileInput) {
+    async set(options: ProfileSetOptions, input: ProfileInput) {
         options = Object.assign(
             {
                 platform: 'Ethereum',

@@ -12,7 +12,7 @@ export type LinksOptions = {
     limit?: number;
 };
 
-export type LinksSetOptions = {
+export type LinkSetOptions = {
     source: string;
     identity: string;
     platform?: string;
@@ -36,7 +36,7 @@ class Links {
         return this.map[options.source].get(options);
     }
 
-    async set(options: LinksSetOptions, input: LinkInput) {
+    async set(options: LinkSetOptions, input: LinkInput) {
         if (this.map[options.source].set) {
             return this.map[options.source].set!(options, input);
         } else {

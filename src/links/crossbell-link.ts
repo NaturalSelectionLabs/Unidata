@@ -1,6 +1,6 @@
 import Main from '../index';
 import Base from './base';
-import { LinksOptions, LinksSetOptions, LinkInput } from './index';
+import { LinksOptions, LinkSetOptions, LinkInput } from './index';
 import { Indexer, Contract } from 'crossbell.js';
 
 class CrossbellLink extends Base {
@@ -76,7 +76,7 @@ class CrossbellLink extends Base {
         }
     }
 
-    async set(options: LinksSetOptions, link: LinkInput) {
+    async set(options: LinkSetOptions, link: LinkInput) {
         options = Object.assign(
             {
                 platform: 'Ethereum',

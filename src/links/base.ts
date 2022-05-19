@@ -1,5 +1,5 @@
 import Main from '../index';
-import { LinksOptions, LinksSetOptions, LinkInput } from './index';
+import { LinksOptions, LinkSetOptions, LinkInput } from './index';
 
 abstract class Base {
     main: Main;
@@ -12,7 +12,7 @@ abstract class Base {
     abstract get(options: LinksOptions): Promise<Links | null>;
 
     abstract set?(
-        options: LinksSetOptions,
+        options: LinkSetOptions,
         input: LinkInput,
     ): Promise<{
         code: number;

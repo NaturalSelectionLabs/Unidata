@@ -11,7 +11,7 @@ export type ProfilesOptions = {
     cursor?: any;
 };
 
-export type ProfilesSetOptions = {
+export type ProfileSetOptions = {
     source: string;
     identity: string;
     platform?: string;
@@ -36,7 +36,7 @@ class Profiles {
         return this.map[options.source].get(options);
     }
 
-    async set(options: ProfilesSetOptions, input: ProfileInput) {
+    async set(options: ProfileSetOptions, input: ProfileInput) {
         if (this.map[options.source].set) {
             return this.map[options.source].set!(options, input);
         } else {
