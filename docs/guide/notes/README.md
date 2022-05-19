@@ -39,16 +39,23 @@ type Notes = {
         tags?: string[];
         authors: AccountInstanceURI[];
         title?: string;
-        summary?: string;
 
-        previews?: {
+        summary?: {
             content?: string;
             address?: URI;
             mime_type?: string;
             size_in_bytes?: number;
-        }[];
+        };
 
-        items?: {
+        body?: {
+            content?: string;
+            address?: URI;
+            mime_type?: string;
+            size_in_bytes?: number;
+        };
+
+        attachments?: {
+            name?: string;
             content?: string;
             address?: URI;
             mime_type?: string;

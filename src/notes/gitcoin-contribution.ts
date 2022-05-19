@@ -21,9 +21,10 @@ class GitcoinContribution extends Base {
 
         const result: Notes = {
             total: response.total,
-            ...(new URL(response.identifier_next).searchParams.get('last_identifier') && {
-                cursor: new URL(response.identifier_next).searchParams.get('last_identifier'),
-            }),
+            ...(response.identifier_next &&
+                new URL(response.identifier_next).searchParams.get('last_identifier') && {
+                    cursor: new URL(response.identifier_next).searchParams.get('last_identifier'),
+                }),
 
             list: response.list.map((item: any) => {
                 delete item.identifier;
@@ -51,13 +52,15 @@ class GitcoinContribution extends Base {
                     if (attachment.address) {
                         attachment.address = this.main.utils.replaceIPFS(attachment.address);
                     }
+                    attachment.name = attachment.type;
+                    delete attachment.type;
                     return attachment;
                 });
 
-                const body = item.attachments?.find((attachment: any) => attachment.type === 'description');
+                const body = item.attachments?.find((attachment: any) => attachment.name === 'description');
                 if (body) {
                     item.body = body;
-                    item.attachments = item.attachments.filter((attachment: any) => attachment.type !== 'description');
+                    item.attachments = item.attachments.filter((attachment: any) => attachment.name !== 'description');
                     if (!item.attachments.length) {
                         delete item.attachments;
                     }

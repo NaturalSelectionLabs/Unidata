@@ -51,13 +51,15 @@ class EthereumNFTActivity extends Base {
                     if (attachment.address) {
                         attachment.address = this.main.utils.replaceIPFS(attachment.address);
                     }
+                    attachment.name = attachment.type;
+                    delete attachment.type;
                     return attachment;
                 });
 
-                const body = item.attachments?.find((attachment: any) => attachment.type === 'body');
+                const body = item.attachments?.find((attachment: any) => attachment.name === 'body');
                 if (body) {
                     item.body = body;
-                    item.attachments = item.attachments.filter((attachment: any) => attachment.type !== 'body');
+                    item.attachments = item.attachments.filter((attachment: any) => attachment.name !== 'body');
                     if (!item.attachments.length) {
                         delete item.attachments;
                     }

@@ -100,7 +100,7 @@ type Note = {
     };
 
     attachments?: {
-        type?: string;
+        name?: string;
         content?: string;
         address?: URI;
         mime_type?: string;
