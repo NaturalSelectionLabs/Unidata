@@ -76,6 +76,8 @@ type Links = {
 // Notes
 
 type Note = {
+    id?: string;
+
     date_created: string;
     date_updated: string;
 

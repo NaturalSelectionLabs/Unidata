@@ -26,9 +26,11 @@ class MirrorEntry extends Base {
             }),
 
             list: response.list.map((item: any) => {
-                delete item.identifier;
                 delete item.links;
                 delete item.backlinks;
+
+                item.id = item.identifier;
+                delete item.identifier;
 
                 item.authors = item.authors.map((author: string) => {
                     return {
@@ -72,6 +74,8 @@ class MirrorEntry extends Base {
 
         return result;
     }
+
+    set: undefined;
 }
 
 export default MirrorEntry;

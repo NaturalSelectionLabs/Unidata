@@ -8,18 +8,69 @@ You can initialize with `ipfsGateway` to potentially get a faster response or hi
 
 ## API
 
+### Get
+
 ```ts
 const notes: Notes = await unidata.notes.get(options: {
     source: string;
     identity: string;
+    platform?: string;
     limit?: number;
     cursor?: any;
 });
 ```
 
 -   `identity`: Ethereum address, Solana address, Flow address, etc.
+-   `platform`: Platfrom of the identity. Ethereum, Solana, Flow, Crossbell, etc. Default to `Ethereum`.
 -   `limit`: The number of assets to return. Since providers use different pagination schemes, there is no guarantee that the quantities are always accurate.
 -   `cursor`: The pagination cursor returned from the previous page's results. Since providers use different pagination schemes, the type is uncertain.
+
+### Set
+
+Add, update or remove your notes.
+
+```ts
+const result: {
+    code: number;
+    message: string;
+} = await unidata.profiles.set(
+    options: {
+        source: string;
+        identity: string;
+        platform?: string;
+        action?: string;
+    },
+    input: {
+        related_urls?: string[];
+
+        tags?: string[];
+        authors: AccountInstanceURI[];
+        title?: string;
+
+        summary?: {
+            content?: string;
+            address?: URI;
+            mime_type?: string;
+            size_in_bytes?: number;
+        };
+
+        body?: {
+            content?: string;
+            address?: URI;
+            mime_type?: string;
+            size_in_bytes?: number;
+        };
+
+        attachments?: {
+            name?: string;
+            content?: string;
+            address?: URI;
+            mime_type?: string;
+            size_in_bytes?: number;
+        }[];
+    }
+);
+```
 
 ## Specification
 
@@ -31,6 +82,8 @@ type Notes = {
     cursor?: any;
 
     list: {
+        id?: string;
+
         date_created: string;
         date_updated: string;
 

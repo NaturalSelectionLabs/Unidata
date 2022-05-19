@@ -1,5 +1,5 @@
 import Main from '../index';
-import { NotesOptions } from './index';
+import { NotesOptions, NoteSetOptions, NoteInput } from './index';
 
 abstract class Base {
     main: Main;
@@ -16,6 +16,14 @@ abstract class Base {
     }
 
     abstract get(options: NotesOptions): Promise<Notes | null>;
+
+    abstract set?(
+        options: NoteSetOptions,
+        input: NoteInput,
+    ): Promise<{
+        code: number;
+        message: string;
+    }>;
 }
 
 export default Base;

@@ -11,6 +11,15 @@ export type NotesOptions = {
     cursor?: any;
 };
 
+export type NoteSetOptions = {
+    source: string;
+    identity: string;
+    platform?: string;
+    action?: string;
+};
+
+export type NoteInput = Omit<Note, 'date_created' | 'date_updated' | 'source' | 'metadata'>;
+
 class Notes {
     map: {
         [key: string]: Base;

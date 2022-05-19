@@ -27,9 +27,11 @@ class GitcoinContribution extends Base {
                 }),
 
             list: response.list.map((item: any) => {
-                delete item.identifier;
                 delete item.links;
                 delete item.backlinks;
+
+                item.id = item.identifier;
+                delete item.identifier;
 
                 item.authors = item.authors.map((author: string) => {
                     return {
@@ -75,6 +77,8 @@ class GitcoinContribution extends Base {
 
         return result;
     }
+
+    set: undefined;
 }
 
 export default GitcoinContribution;
