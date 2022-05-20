@@ -121,7 +121,7 @@
                     <iframe
                         style="width: 300px; height: 300px; border: none"
                         :src="currentData.items?.[0]?.address"
-                        v-if="currentData.items?.[0]?.mime_type?.split('/')[0] === 'text'"
+                        v-else-if="currentData.items?.[0]?.mime_type?.split('/')[0] === 'text'"
                     ></iframe>
                     <el-image
                         style="width: 300px; height: 300px"
