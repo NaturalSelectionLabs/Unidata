@@ -50,7 +50,6 @@
                             <video
                                 style="width: 100px; height: 100px"
                                 :src="asset.items?.[0]?.address"
-                                :fit="'cover'"
                                 v-if="asset.items?.[0]?.mime_type?.split('/')[0] === 'video'"
                                 autoplay
                                 loop
@@ -67,13 +66,26 @@
                                 enable-pan
                                 v-else-if="asset.items?.[0]?.mime_type?.split('/')[0] === 'model'"
                             ></model-viewer>
+                            <iframe
+                                style="width: 100px; height: 100px; border: none"
+                                :src="asset.items?.[0]?.address"
+                                v-else-if="asset.items?.[0]?.mime_type?.split('/')[0] === 'text'"
+                            ></iframe>
                             <el-image
                                 style="width: 100px; height: 100px"
                                 :src="asset.items?.[0]?.address"
                                 :fit="'cover'"
                                 @error="handleError"
                                 v-else
-                            />
+                            >
+                                <template #error>
+                                    <el-image
+                                        style="width: 100px; height: 100px; filter: grayscale(100%)"
+                                        src="/images/logo.png"
+                                        :fit="'contain'"
+                                    />
+                                </template>
+                            </el-image>
                             <div class="text">
                                 <div class="name">{{ asset.name }}</div>
                                 <div class="description">{{ asset.description }}</div>
@@ -86,8 +98,55 @@
                 </el-col>
             </el-row>
             <el-dialog v-model="dialogVisible" title="Data" width="60%">
+                <div class="dialog asset-body">
+                    <video
+                        style="width: 300px; height: 300px"
+                        :src="currentData.items?.[0]?.address"
+                        v-if="currentData.items?.[0]?.mime_type?.split('/')[0] === 'video'"
+                        autoplay
+                        loop
+                        muted
+                    />
+                    <model-viewer
+                        style="width: 300px; height: 300px"
+                        :src="currentData.items?.[0]?.address"
+                        ar
+                        ar-modes="webxr scene-viewer quick-look"
+                        seamless-poster
+                        shadow-intensity="1"
+                        camera-controls
+                        enable-pan
+                        v-else-if="currentData.items?.[0]?.mime_type?.split('/')[0] === 'model'"
+                    ></model-viewer>
+                    <iframe
+                        style="width: 300px; height: 300px; border: none"
+                        :src="currentData.items?.[0]?.address"
+                        v-if="currentData.items?.[0]?.mime_type?.split('/')[0] === 'text'"
+                    ></iframe>
+                    <el-image
+                        style="width: 300px; height: 300px"
+                        :src="currentData.items?.[0]?.address"
+                        :fit="'contain'"
+                        @error="handleError"
+                        v-else
+                    >
+                        <template #error>
+                            <el-image
+                                style="width: 300px; height: 300px; filter: grayscale(100%)"
+                                src="/images/logo.png"
+                                :fit="'contain'"
+                            />
+                        </template>
+                    </el-image>
+                    <div class="text">
+                        <div class="name">{{ currentData.name }}</div>
+                        <div class="description">{{ currentData.description }}</div>
+                        <a target="_blank" :href="url" v-for="url in currentData.related_urls" :key="url">
+                            <font-awesome-icon icon="link" />
+                        </a>
+                    </div>
+                </div>
                 <pre class="data">{{ JSON.stringify(currentData, null, 4) }}</pre>
-                <template #footer> </template>
             </el-dialog>
         </div>
         <h5>Data</h5>
@@ -233,41 +292,54 @@ watchEffect(async () => {
 
 .asset {
     margin-bottom: 20px;
+}
 
-    .asset-body {
-        display: flex;
+.asset-body {
+    display: flex;
 
+    .text {
+        flex: 1;
+        margin-left: 10px;
+
+        .name {
+            font-size: 14px;
+            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            word-break: break-all;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            word-break: break-word;
+            margin-bottom: 10px;
+        }
+
+        a {
+            margin-right: 7px;
+            color: #555;
+            font-size: 14px;
+        }
+    }
+
+    .dialog& {
         .text {
-            flex: 1;
-            margin-left: 10px;
-
             .name {
-                font-size: 14px;
-                font-weight: bold;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 1;
-                -webkit-box-orient: vertical;
-                word-break: break-all;
-                margin-bottom: 10px;
+                font-size: 24px;
             }
 
             .description {
-                font-size: 12px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-                word-break: break-word;
-                margin-bottom: 10px;
-            }
-
-            a {
-                margin-right: 7px;
-                color: #555;
-                font-size: 14px;
+                -webkit-line-clamp: 13;
+                line-height: 1.5;
             }
         }
     }
