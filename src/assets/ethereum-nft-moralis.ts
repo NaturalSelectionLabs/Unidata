@@ -79,7 +79,7 @@ class EthereumNFTMoralis extends Base {
                             const asset: Asset = {
                                 tags: ['NFT'],
                                 owners: [utils.getAddress(item.owner_of || options.identity)],
-                                name: metadata?.name || `${item.name} #${item.token_id}`,
+                                name: metadata?.name,
                                 description: metadata?.description,
 
                                 source: 'Ethereum NFT',

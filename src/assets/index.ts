@@ -19,6 +19,7 @@ export type AssetsOptions = {
 };
 
 class Assets {
+    main: Main;
     map: {
         [key: string]: {
             [key: string]: Base;
@@ -26,6 +27,7 @@ class Assets {
     };
 
     constructor(main: Main) {
+        this.main = main;
         this.map = {
             'Ethereum NFT': {
                 Alchemy: new EthereumNFTAlchemy(main),
@@ -54,6 +56,8 @@ class Assets {
             options,
         );
 
+        let result;
+
         if (options.providers!.length > 1) {
             const list = await Promise.all(
                 options.providers!.map(async (provider: string, index) => {
@@ -62,6 +66,7 @@ class Assets {
                             cursor: options.cursor?.[index],
                         }),
                     );
+                    this.main.utils.removeEmpty(result.list);
                     return result;
                 }),
             );
@@ -81,14 +86,37 @@ class Assets {
             const assets = values(merged);
             const cursor = list.map((item) => item.cursor);
 
-            return {
+            result = {
                 total: assets.length,
                 ...(cursor.find((id) => id) && { cursor: cursor }),
                 list: assets,
             };
         } else {
-            return await this.map[options.source][options.providers![0]].get(options);
+            result = await this.map[options.source][options.providers![0]].get(options);
         }
+
+        const networks = ['Gnosis', 'Binance Smart Chain', 'Polygon', 'Ethereum'];
+        result.list = result.list
+            .map((asset: Asset) => {
+                if (!asset.name) {
+                    asset.name = `${asset.metadata?.collection_name || asset.metadata?.token_symbol} #${
+                        asset.metadata?.token_id
+                    }`;
+                }
+                if (!asset.description) {
+                    asset.description = asset.name;
+                }
+
+                return asset;
+            })
+            .sort((a: Asset, b: Asset) => {
+                return (
+                    networks.indexOf(b.metadata?.network || '') - networks.indexOf(a.metadata?.network || '') ||
+                    parseInt(b.metadata?.block_number) - parseInt(a.metadata?.block_number)
+                );
+            });
+
+        return result;
     }
 }
 
