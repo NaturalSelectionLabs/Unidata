@@ -100,7 +100,7 @@
             <el-dialog v-model="dialogVisible" title="Data" width="60%">
                 <div class="dialog asset-body">
                     <video
-                        style="width: 300px; height: 300px"
+                        style="width: 500px; height: 500px"
                         :src="currentData.items?.[0]?.address"
                         v-if="currentData.items?.[0]?.mime_type?.split('/')[0] === 'video'"
                         autoplay
@@ -108,7 +108,7 @@
                         muted
                     />
                     <model-viewer
-                        style="width: 300px; height: 300px"
+                        style="width: 500px; height: 500px"
                         :src="currentData.items?.[0]?.address"
                         ar
                         ar-modes="webxr scene-viewer quick-look"
@@ -119,12 +119,12 @@
                         v-else-if="currentData.items?.[0]?.mime_type?.split('/')[0] === 'model'"
                     ></model-viewer>
                     <iframe
-                        style="width: 300px; height: 300px; border: none"
+                        style="width: 500px; height: 500px; border: none"
                         :src="currentData.items?.[0]?.address"
                         v-else-if="currentData.items?.[0]?.mime_type?.split('/')[0] === 'text'"
                     ></iframe>
                     <el-image
-                        style="width: 300px; height: 300px"
+                        style="width: 500px; height: 500px"
                         :src="currentData.items?.[0]?.address"
                         :fit="'contain'"
                         @error="handleError"
@@ -132,7 +132,7 @@
                     >
                         <template #error>
                             <el-image
-                                style="width: 300px; height: 300px; filter: grayscale(100%)"
+                                style="width: 500px; height: 500px; filter: grayscale(100%)"
                                 src="/images/logo.png"
                                 :fit="'contain'"
                             />
@@ -332,13 +332,19 @@ watchEffect(async () => {
     }
 
     .dialog& {
+        padding: 10px 30px;
+
         .text {
+            margin-left: 30px;
+
             .name {
-                font-size: 24px;
+                font-size: 35px;
+                -webkit-line-clamp: 3;
             }
 
             .description {
                 -webkit-line-clamp: 13;
+                font-size: 15px;
                 line-height: 1.5;
             }
         }
