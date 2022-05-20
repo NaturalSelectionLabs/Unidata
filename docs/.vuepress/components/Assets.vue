@@ -45,31 +45,31 @@
             </div>
             <el-row class="assets" :gutter="20">
                 <el-col class="asset" :span="8" v-loading="loading" v-for="asset in checkedAssets" :key="asset">
-                    <el-card class="asset-card">
+                    <el-card class="asset-card" @click="clickCard(asset)">
                         <div class="asset-body">
                             <video
                                 style="width: 100px; height: 100px"
-                                :src="asset.previews?.[0]?.address"
+                                :src="asset.items?.[0]?.address"
                                 :fit="'cover'"
-                                v-if="asset.previews?.[0]?.mime_type?.split('/')[0] === 'video'"
+                                v-if="asset.items?.[0]?.mime_type?.split('/')[0] === 'video'"
                                 autoplay
                                 loop
                                 muted
                             />
                             <model-viewer
                                 style="width: 100px; height: 100px"
-                                :src="asset.previews?.[0]?.address"
+                                :src="asset.items?.[0]?.address"
                                 ar
                                 ar-modes="webxr scene-viewer quick-look"
                                 seamless-poster
                                 shadow-intensity="1"
                                 camera-controls
                                 enable-pan
-                                v-else-if="asset.previews?.[0]?.mime_type?.split('/')[0] === 'model'"
+                                v-else-if="asset.items?.[0]?.mime_type?.split('/')[0] === 'model'"
                             ></model-viewer>
                             <el-image
                                 style="width: 100px; height: 100px"
-                                :src="asset.previews?.[0]?.address"
+                                :src="asset.items?.[0]?.address"
                                 :fit="'cover'"
                                 @error="handleError"
                                 v-else
@@ -85,6 +85,10 @@
                     </el-card>
                 </el-col>
             </el-row>
+            <el-dialog v-model="dialogVisible" title="Data" width="60%">
+                <pre class="data">{{ JSON.stringify(currentData, null, 4) }}</pre>
+                <template #footer> </template>
+            </el-dialog>
         </div>
         <h5>Data</h5>
         <pre class="data">{{ JSON.stringify(assets, null, 4) }}</pre>
@@ -129,6 +133,8 @@ const checkAll = ref(true);
 const isIndeterminate = ref(false);
 const networkChecked = ref<string[]>([]);
 const providerChecked = ref<string[]>([]);
+const dialogVisible = ref(false);
+const currentData = ref({});
 
 const handleCheckAllChange = (val: boolean) => {
     networkChecked.value = val ? Object.keys(networks.value) : [];
@@ -149,11 +155,16 @@ const handleError = async (e: any) => {
             method: 'HEAD',
         });
         assets.list.forEach((asset) => {
-            if (asset.previews?.[0]?.address === src) {
-                asset.previews![0].mime_type = result.headers['content-type'];
+            if (asset.items?.[0]?.address === src) {
+                asset.items![0].mime_type = result.headers['content-type'];
             }
         });
     }
+};
+
+const clickCard = (asset: Asset) => {
+    currentData.value = asset;
+    dialogVisible.value = true;
 };
 
 const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
