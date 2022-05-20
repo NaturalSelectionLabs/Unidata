@@ -71,6 +71,7 @@
                                 style="width: 100px; height: 100px"
                                 :src="asset.previews?.[0]?.address"
                                 :fit="'cover'"
+                                @error="handleError"
                                 v-else
                             />
                             <div class="text">
@@ -91,7 +92,8 @@
 </template>
 
 <script setup lang="ts">
-import { watchEffect, ref, getCurrentInstance } from 'vue';
+import { watchEffect, ref, getCurrentInstance, reactive } from 'vue';
+import axios from 'axios';
 
 const props = defineProps({
     source: {
@@ -111,7 +113,7 @@ const identity = ref(props.defaultIdentity);
 const providers = ref(props.providers);
 
 const loading = ref(true);
-const assets = ref<Assets>({
+const assets = reactive<Assets>({
     total: 0,
     list: [],
 });
@@ -139,14 +141,27 @@ const handleCheckedChange = (value: string[]) => {
     isIndeterminate.value = checkedCount > 0 && checkedCount < Object.keys(networks.value).length;
 };
 
+const handleError = async (e: any) => {
+    const src = e.path[0].getAttribute('src');
+    if (src) {
+        const result = await axios({
+            url: src,
+            method: 'HEAD',
+        });
+        assets.list.forEach((asset) => {
+            if (asset.previews?.[0]?.address === src) {
+                asset.previews![0].mime_type = result.headers['content-type'];
+            }
+        });
+    }
+};
+
 const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
 watchEffect(async () => {
     if (identity.value) {
         loading.value = true;
-        assets.value = {
-            total: 0,
-            list: [],
-        };
+        assets.total = 0;
+        assets.list = [];
         unidata.assets
             .get(
                 providers.value
@@ -161,7 +176,8 @@ watchEffect(async () => {
                       },
             )
             .then((p: Assets) => {
-                assets.value = p;
+                assets.total = p.total;
+                assets.list = p.list;
                 loading.value = false;
 
                 p.list.forEach((asset: Asset) => {
@@ -182,7 +198,7 @@ watchEffect(async () => {
 });
 
 watchEffect(async () => {
-    checkedAssets.value = assets.value.list.filter(
+    checkedAssets.value = assets.list.filter(
         (asset: Asset) =>
             networkChecked.value.includes(asset.metadata?.network || '') &&
             providerChecked.value.find((provider: string) => asset.metadata?.providers?.includes(provider)),
