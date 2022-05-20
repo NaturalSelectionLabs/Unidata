@@ -104,6 +104,12 @@ class CrossbellProfile extends Base {
                     await this.contract.connect();
                 }
                 const info = (await this.contract.getProfileByHandle(options.identity)).data;
+                if (info.profileId === '0') {
+                    return {
+                        total: 0,
+                        list: [],
+                    };
+                }
                 let meta: any = info.metadata;
                 if (!meta && info.uri) {
                     meta = (await axios.get(this.main.utils.replaceIPFS(info.uri))).data;
@@ -207,6 +213,12 @@ class CrossbellProfile extends Base {
                     case 'Crossbell':
                         {
                             const info = (await this.contractSet.getProfileByHandle(options.identity)).data;
+                            if (info.profileId === '0') {
+                                return {
+                                    code: 1,
+                                    message: 'Profile not found',
+                                };
+                            }
                             let meta;
                             if (info.uri) {
                                 meta = (await axios.get(this.main.utils.replaceIPFS(info.uri))).data;

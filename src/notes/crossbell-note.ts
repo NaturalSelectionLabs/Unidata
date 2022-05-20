@@ -31,6 +31,12 @@ class CrossbellNote extends Base {
             identity: options.identity,
             platform: options.platform!,
         });
+        if (profileId === '0') {
+            return {
+                total: 0,
+                list: [],
+            };
+        }
 
         const result = (await this.contract.getNote(profileId, '1')).data;
 
@@ -83,6 +89,12 @@ class CrossbellNote extends Base {
             identity: options.identity,
             platform: options.platform!,
         });
+        if (profileId === '0') {
+            return {
+                code: 1,
+                message: 'Profile not found',
+            };
+        }
 
         switch (options.action) {
             case 'add': {

@@ -9,6 +9,7 @@ export default defineConfig({
             name: 'Unidata',
             fileName: (format) => `unidata.${format}.js`,
         },
+        sourcemap: true,
     },
     define: {
         SDK_VERSION: JSON.stringify(version),

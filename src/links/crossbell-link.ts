@@ -94,8 +94,20 @@ class CrossbellLink extends Base {
             identity: options.identity,
             platform: options.platform!,
         });
+        if (fromProfileId === '0') {
+            return {
+                code: 1,
+                message: 'Profile not found',
+            };
+        }
 
         const toProfileId = (await this.contractSet.getProfileByHandle(link.to)).data.profileId;
+        if (toProfileId === '0') {
+            return {
+                code: 1,
+                message: 'Profile not found',
+            };
+        }
 
         switch (options.action) {
             case 'add': {
