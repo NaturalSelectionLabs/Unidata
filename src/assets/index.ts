@@ -78,7 +78,7 @@ class Assets {
                     keyBy(list[i].list, (item) => item.metadata?.proof),
                     (a, b) => {
                         if (Array.isArray(a)) {
-                            return uniqWith(a.concat(b), isEqual);
+                            return uniqWith(b.concat(a), isEqual);
                         }
                     },
                 );
@@ -99,8 +99,8 @@ class Assets {
         result.list = result.list
             .map((asset: Asset) => {
                 if (!asset.name) {
-                    asset.name = `${asset.metadata?.collection_name || asset.metadata?.token_symbol} #${
-                        asset.metadata?.token_id
+                    asset.name = `${asset.metadata?.collection_name || asset.metadata?.token_symbol || ''} #${
+                        asset.metadata?.token_id || ''
                     }`;
                 }
                 if (!asset.description) {
