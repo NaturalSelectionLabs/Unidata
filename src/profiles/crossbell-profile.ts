@@ -24,6 +24,7 @@ class CrossbellProfile extends Base {
             options,
         );
 
+        let result;
         switch (options.platform) {
             case 'Ethereum': {
                 if (!this.indexer) {
@@ -51,12 +52,8 @@ class CrossbellProfile extends Base {
                         {
                             ...(item.metadata?.name && { name: item.metadata.name }),
                             ...(item.metadata?.bio && { bio: item.metadata.bio }),
-                            ...(item.metadata?.banners && {
-                                banners: this.main.utils.replaceIPFSs(item.metadata.banners),
-                            }),
-                            ...(item.metadata?.avatars && {
-                                avatars: this.main.utils.replaceIPFSs(item.metadata.avatars),
-                            }),
+                            ...(item.metadata?.banners && { banners: item.metadata.banners }),
+                            ...(item.metadata?.avatars && { avatars: item.metadata.avatars }),
                             ...(item.metadata?.websites && { websites: item.metadata.websites }),
                             ...(item.metadata?.connected_accounts && {
                                 connected_accounts: item.metadata.connected_accounts,
@@ -67,36 +64,14 @@ class CrossbellProfile extends Base {
                     return profile;
                 });
 
-                list.map((profile: Profile) => {
-                    if (profile.connected_accounts) {
-                        profile.connected_accounts = profile.connected_accounts.map((account: any) => {
-                            const platform = account.platform.toLowerCase();
-                            if (account.identity && account.platform && this.accountsMap[platform]) {
-                                const acc: Required<Profile>['connected_accounts'][number] = {
-                                    identity: account.identity,
-                                    platform: this.accountsMap[platform].platform,
-                                };
-                                if (this.accountsMap[platform].url) {
-                                    acc.url = this.accountsMap[platform].url?.replace('$$id', account.identity);
-                                }
-                                return acc;
-                            } else {
-                                return {
-                                    identity: account.identity,
-                                    platform: account.platform,
-                                };
-                            }
-                        });
-                    }
-                });
-
-                return {
+                result = {
                     total: res.total,
                     ...(options.limit &&
                         list.length >= options.limit && { cursor: list[list.length - 1].metadata?.token_id }),
 
                     list,
                 };
+                break;
             }
             case 'Crossbell': {
                 if (!this.contract) {
@@ -114,45 +89,6 @@ class CrossbellProfile extends Base {
                 if (!meta && info.uri) {
                     meta = (await axios.get(this.main.utils.replaceIPFS(info.uri))).data;
                 }
-                if (meta?.avatars) {
-                    meta.avatars = this.main.utils.replaceIPFSs(meta.avatars);
-                }
-                if (meta?.banners) {
-                    meta.banners = this.main.utils.replaceIPFSs(meta.banners);
-                }
-                if (meta?.connected_accounts) {
-                    meta.connected_accounts = meta.connected_accounts.map((account: any) => {
-                        if (typeof account === 'string') {
-                            const match = account.match(/:\/\/(.*)@(.*)/);
-                            if (match) {
-                                account = {
-                                    identity: match[1],
-                                    platform: match[2],
-                                };
-                            } else {
-                                account = {
-                                    identity: account,
-                                };
-                            }
-                        }
-                        const platform = account.platform.toLowerCase();
-                        if (account.identity && account.platform && this.accountsMap[platform]) {
-                            const acc: Required<Profile>['connected_accounts'][number] = {
-                                identity: account.identity,
-                                platform: this.accountsMap[platform].platform,
-                            };
-                            if (this.accountsMap[platform].url) {
-                                acc.url = this.accountsMap[platform].url?.replace('$$id', account.identity);
-                            }
-                            return acc;
-                        } else {
-                            return {
-                                identity: account.identity,
-                                platform: account.platform,
-                            };
-                        }
-                    });
-                }
                 const profile: Profile = Object.assign(
                     {
                         name: info.handle,
@@ -169,14 +105,63 @@ class CrossbellProfile extends Base {
                     meta,
                 );
 
-                return {
+                result = {
                     total: 1,
                     list: [profile],
                 };
+                break;
             }
             default:
                 throw new Error(`Unsupported platform: ${options.platform}`);
         }
+
+        result.list = result.list.map((profile: Profile) => {
+            if (profile.avatars) {
+                profile.avatars = this.main.utils.replaceIPFSs(profile.avatars);
+            }
+            if (profile.banners) {
+                profile.banners = this.main.utils.replaceIPFSs(profile.banners);
+            }
+
+            // Crossbell specification compatibility
+            if (profile.connected_accounts) {
+                profile.connected_accounts = profile.connected_accounts.map((account: any) => {
+                    if (typeof account === 'string') {
+                        const match = account.match(/:\/\/account:(.*)@(.*)/);
+                        if (match) {
+                            account = {
+                                identity: match[1],
+                                platform: match[2],
+                            };
+                        } else {
+                            account = {
+                                identity: account,
+                            };
+                        }
+                    }
+                    const platform = account.platform.toLowerCase();
+                    if (account.identity && account.platform && this.accountsMap[platform]) {
+                        const acc: Required<Profile>['connected_accounts'][number] = {
+                            identity: account.identity,
+                            platform: this.accountsMap[platform].platform,
+                        };
+                        if (this.accountsMap[platform].url) {
+                            acc.url = this.accountsMap[platform].url?.replace('$$id', account.identity);
+                        }
+                        return acc;
+                    } else {
+                        return {
+                            identity: account.identity,
+                            platform: account.platform,
+                        };
+                    }
+                });
+            }
+
+            return profile;
+        });
+
+        return result;
     }
 
     async set(options: ProfileSetOptions, input: ProfileInput) {
@@ -251,16 +236,28 @@ class CrossbellProfile extends Base {
 
                 // setProfileUri
                 if (Object.keys(input).filter((key) => key !== 'username').length) {
-                    const web3Storage = new Web3Storage({
-                        token: this.main.options.web3StorageAPIToken!,
-                    });
                     const username = input.username || options.identity;
                     delete input.username;
+
+                    // Crossbell specification compatibility
+                    if (input.connected_accounts) {
+                        input.connected_accounts = input.connected_accounts.map((account: any) => {
+                            if (account.identity && account.platform) {
+                                return `csb://account:${account.identity}@${account.platform.toLowerCase()}`;
+                            } else {
+                                return account;
+                            }
+                        });
+                    }
+
                     const result = Object.assign({}, profile.metadata, input);
                     const blob = new Blob([JSON.stringify(result)], {
                         type: 'application/json',
                     });
                     const file = new File([blob], `${username}.json`);
+                    const web3Storage = new Web3Storage({
+                        token: this.main.options.web3StorageAPIToken!,
+                    });
                     const cid = await web3Storage.put([file], {
                         name: file.name,
                         maxRetries: 3,
