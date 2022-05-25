@@ -20,6 +20,8 @@ type NoteSource = string;
 // Profiles
 
 type Profile = {
+    date_created?: string;
+
     name?: string;
     username?: string;
     avatars?: URI[];

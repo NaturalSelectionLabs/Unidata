@@ -97,6 +97,7 @@ class Assets {
 
         const networks = ['Gnosis', 'Binance Smart Chain', 'Polygon', 'Ethereum'];
         result.list = result.list
+            // default values
             .map((asset: Asset) => {
                 if (!asset.name) {
                     asset.name = `${asset.metadata?.collection_name || asset.metadata?.token_symbol || ''} #${
@@ -109,6 +110,7 @@ class Assets {
 
                 return asset;
             })
+            // sort according to network and block_number
             .sort((a: Asset, b: Asset) => {
                 return (
                     networks.indexOf(b.metadata?.network || '') - networks.indexOf(a.metadata?.network || '') ||

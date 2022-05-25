@@ -116,13 +116,6 @@ class CrossbellProfile extends Base {
         }
 
         result.list = result.list.map((profile: Profile) => {
-            if (profile.avatars) {
-                profile.avatars = this.main.utils.replaceIPFSs(profile.avatars);
-            }
-            if (profile.banners) {
-                profile.banners = this.main.utils.replaceIPFSs(profile.banners);
-            }
-
             // Crossbell specification compatibility
             if (profile.connected_accounts) {
                 profile.connected_accounts = profile.connected_accounts.map((account: any) => {
@@ -139,22 +132,7 @@ class CrossbellProfile extends Base {
                             };
                         }
                     }
-                    const platform = account.platform.toLowerCase();
-                    if (account.identity && account.platform && this.accountsMap[platform]) {
-                        const acc: Required<Profile>['connected_accounts'][number] = {
-                            identity: account.identity,
-                            platform: this.accountsMap[platform].platform,
-                        };
-                        if (this.accountsMap[platform].url) {
-                            acc.url = this.accountsMap[platform].url?.replace('$$id', account.identity);
-                        }
-                        return acc;
-                    } else {
-                        return {
-                            identity: account.identity,
-                            platform: account.platform,
-                        };
-                    }
+                    return account;
                 });
             }
 
