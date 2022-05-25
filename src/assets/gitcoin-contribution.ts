@@ -54,13 +54,10 @@ class GitcoinContribution extends Base {
                 if (preview) {
                     asset.previews = [
                         {
-                            address: this.main.utils.replaceIPFS(preview),
-                            mime_type: this.generateMimeType(preview),
+                            address: preview,
                         },
                     ];
                 }
-
-                asset.items = asset.previews;
 
                 return asset;
             }),

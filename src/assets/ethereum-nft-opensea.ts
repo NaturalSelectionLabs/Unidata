@@ -51,8 +51,7 @@ class EthereumNFTOpensea extends Base {
             if (item.image_original_url) {
                 asset.previews = [
                     {
-                        address: this.main.utils.replaceIPFS(item.image_original_url),
-                        mime_type: this.generateMimeType(item.image_original_url),
+                        address: item.image_original_url,
                     },
                 ];
             }
@@ -60,8 +59,7 @@ class EthereumNFTOpensea extends Base {
             if (item.animation_original_url) {
                 asset.items = [
                     {
-                        address: this.main.utils.replaceIPFS(item.animation_original_url),
-                        mime_type: this.generateMimeType(item.animation_original_url),
+                        address: item.animation_original_url,
                     },
                 ];
             }
@@ -72,8 +70,6 @@ class EthereumNFTOpensea extends Base {
                     asset.attributes = attributes;
                 }
             }
-
-            this.generateRelatedUrls(asset);
 
             if (item.external_link) {
                 if (!asset.related_urls) {

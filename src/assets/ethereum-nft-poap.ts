@@ -18,13 +18,6 @@ class EthereumNFTPOAP extends Base {
                 name: item.event.name,
                 description: item.event.description,
 
-                previews: [
-                    {
-                        address: item.event.image_url,
-                        mime_type: 'image/png',
-                    },
-                ],
-
                 items: [
                     {
                         address: item.event.image_url,
@@ -83,8 +76,6 @@ class EthereumNFTPOAP extends Base {
                     providers: ['POAP'],
                 },
             };
-
-            this.generateRelatedUrls(asset);
 
             return asset;
         });

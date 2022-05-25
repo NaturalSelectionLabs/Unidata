@@ -66,8 +66,7 @@ class SolanaNFTMoralis extends Base {
                 if (metadata.image) {
                     asset.previews = [
                         {
-                            address: this.main.utils.replaceIPFS(metadata.image),
-                            mime_type: this.generateMimeType(metadata.image),
+                            address: metadata.image,
                         },
                     ];
                 }
@@ -76,8 +75,7 @@ class SolanaNFTMoralis extends Base {
                 if (infoItem) {
                     asset.items = [
                         {
-                            address: this.main.utils.replaceIPFS(infoItem),
-                            mime_type: this.generateMimeType(infoItem),
+                            address: infoItem,
                         },
                     ];
                 }
@@ -88,8 +86,6 @@ class SolanaNFTMoralis extends Base {
                         asset.attributes = attributes;
                     }
                 }
-
-                this.generateRelatedUrls(asset);
 
                 if (metadata.external_url) {
                     if (!asset.related_urls) {

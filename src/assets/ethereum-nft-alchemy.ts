@@ -61,8 +61,7 @@ class EthereumNFTAlchemy extends Base {
                     if (preview) {
                         asset.previews = [
                             {
-                                address: this.main.utils.replaceIPFS(preview),
-                                mime_type: this.generateMimeType(preview),
+                                address: preview,
                             },
                         ];
                     }
@@ -71,8 +70,7 @@ class EthereumNFTAlchemy extends Base {
                     if (infoItem) {
                         asset.items = [
                             {
-                                address: this.main.utils.replaceIPFS(infoItem),
-                                mime_type: this.generateMimeType(infoItem),
+                                address: infoItem,
                             },
                         ];
                     }
@@ -83,8 +81,6 @@ class EthereumNFTAlchemy extends Base {
                             asset.attributes = attributes;
                         }
                     }
-
-                    this.generateRelatedUrls(asset);
 
                     if (item.metadata?.external_url || item.metadata?.external_link) {
                         if (!asset.related_urls) {

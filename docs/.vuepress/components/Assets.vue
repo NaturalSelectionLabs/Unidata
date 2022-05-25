@@ -74,7 +74,7 @@
                             <el-image
                                 style="width: 100px; height: 100px"
                                 :src="asset.items?.[0]?.address"
-                                :fit="'cover'"
+                                :fit="'contain'"
                                 @error="handleError"
                                 v-else
                             >

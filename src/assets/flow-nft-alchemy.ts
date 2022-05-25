@@ -44,13 +44,10 @@ class FlowNFTAlchemy extends Base {
             };
 
             if (item.media?.length) {
-                asset.previews = item.media.map((media: any) => ({
-                    address: this.main.utils.replaceIPFS(media.uri),
-                    mime_type: this.generateMimeType(media.uri),
+                asset.items = item.media.map((media: any) => ({
+                    address: media.uri,
                 }));
             }
-
-            asset.items = asset.previews;
 
             if (item.metadata.metadata) {
                 const attributes = this.generateAttributes(item.metadata.metadata);
@@ -58,8 +55,6 @@ class FlowNFTAlchemy extends Base {
                     asset.attributes = attributes;
                 }
             }
-
-            this.generateRelatedUrls(asset);
 
             if (item.externalDomainViewUrl) {
                 if (!asset.related_urls) {

@@ -1,6 +1,7 @@
 import Main from '../index';
 import Base from './base';
 import { mergeWith, keyBy, values, uniqWith, isEqual } from 'lodash';
+import mime from 'mime';
 import EthereumNFTMoralis from './ethereum-nft-moralis';
 import EthereumNFTOpenSea from './ethereum-nft-opensea';
 import EthereumNFTPOAP from './ethereum-nft-poap';
@@ -40,12 +41,66 @@ class Assets {
                 Moralis: new SolanaNFTMoralis(main),
             },
             'Flow NFT': {
-                FlowNFTAlchemy: new FlowNFTAlchemy(main),
+                Alchemy: new FlowNFTAlchemy(main),
             },
             'Gitcoin Contribution': {
                 RSS3: new GitcoinContribution(main),
             },
         };
+    }
+
+    private generateRelatedUrls(asset: Asset) {
+        if (!asset.related_urls) {
+            asset.related_urls = [];
+        }
+        switch (asset.metadata?.network) {
+            case 'Ethereum':
+                if (asset.metadata.token_id && asset.metadata.collection_address) {
+                    asset.related_urls = asset.related_urls.concat([
+                        `https://etherscan.io/nft/${asset.metadata.collection_address}/${asset.metadata.token_id}`,
+                        `https://opensea.io/assets/${asset.metadata.collection_address}/${asset.metadata.token_id}`,
+                    ]);
+                }
+                break;
+            case 'Polygon':
+                if (asset.metadata.token_id && asset.metadata.collection_address) {
+                    asset.related_urls = asset.related_urls.concat([
+                        `https://polygonscan.com/token/${asset.metadata.collection_address}?a=${asset.metadata.token_id}`,
+                        `https://opensea.io/assets/matic/${asset.metadata.collection_address}/${asset.metadata.token_id}`,
+                    ]);
+                }
+                break;
+            case 'Binance Smart Chain':
+                if (asset.metadata.token_id && asset.metadata.collection_address) {
+                    asset.related_urls = asset.related_urls.concat([
+                        `https://bscscan.com/token/${asset.metadata.collection_address}?a=${asset.metadata.token_id}`,
+                    ]);
+                }
+                break;
+            case 'Gnosis':
+                if (asset.metadata.token_id && asset.metadata.collection_address) {
+                    asset.related_urls = asset.related_urls.concat([
+                        `https://blockscout.com/xdai/mainnet/token/0x22c1f6050e56d2876009903609a2cc3fef83b415/instance/${asset.metadata.token_id}/token-transfers`,
+                        `https://app.poap.xyz/token/${asset.metadata.token_id}`,
+                    ]);
+                }
+                break;
+            case 'Solana':
+                if (asset.metadata.token_id) {
+                    asset.related_urls = asset.related_urls.concat([
+                        `https://solscan.io/token/${asset.metadata.token_id}`,
+                    ]);
+                }
+                break;
+        }
+    }
+
+    private generateMimeType(address: string) {
+        address = this.main.utils.replaceIPFS(address);
+        const mimeType = mime.getType(address);
+        if (mimeType) {
+            return mimeType;
+        }
     }
 
     async get(options: AssetsOptions) {
@@ -107,6 +162,35 @@ class Assets {
                 if (!asset.description) {
                     asset.description = asset.name;
                 }
+                if (asset.previews) {
+                    asset.previews.forEach((item) => {
+                        if (item.address) {
+                            item.address = this.main.utils.replaceIPFS(item.address);
+                        }
+                        if (item.address && !item.mime_type) {
+                            item.mime_type = this.generateMimeType(item.address);
+                        }
+                    });
+                }
+                if (asset.items) {
+                    asset.items.forEach((item) => {
+                        if (item.address) {
+                            item.address = this.main.utils.replaceIPFS(item.address);
+                        }
+                        if (item.address && !item.mime_type) {
+                            item.mime_type = this.generateMimeType(item.address);
+                        }
+                    });
+                }
+
+                if (asset.items && !asset.previews) {
+                    asset.previews = asset.items;
+                }
+                if (asset.previews && !asset.items) {
+                    asset.items = asset.previews;
+                }
+
+                this.generateRelatedUrls(asset);
 
                 return asset;
             })

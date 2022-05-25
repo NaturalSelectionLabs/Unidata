@@ -106,8 +106,7 @@ class EthereumNFTMoralis extends Base {
                             if (preview) {
                                 asset.previews = [
                                     {
-                                        address: this.main.utils.replaceIPFS(preview),
-                                        mime_type: this.generateMimeType(preview),
+                                        address: preview,
                                     },
                                 ];
                             }
@@ -116,8 +115,7 @@ class EthereumNFTMoralis extends Base {
                             if (infoItem) {
                                 asset.items = [
                                     {
-                                        address: this.main.utils.replaceIPFS(infoItem),
-                                        mime_type: this.generateMimeType(infoItem),
+                                        address: infoItem,
                                     },
                                 ];
                             }
@@ -128,8 +126,6 @@ class EthereumNFTMoralis extends Base {
                                     asset.attributes = attributes;
                                 }
                             }
-
-                            this.generateRelatedUrls(asset);
 
                             if (metadata?.external_url || metadata?.external_link) {
                                 if (!asset.related_urls) {

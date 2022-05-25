@@ -53,8 +53,7 @@ class SolanaNFTSolscan extends Base {
                     if (data.metadata?.data.image) {
                         asset.previews = [
                             {
-                                address: this.main.utils.replaceIPFS(data.metadata?.data.image),
-                                mime_type: this.generateMimeType(data.metadata?.data.image),
+                                address: data.metadata?.data.image,
                             },
                         ];
                     }
@@ -63,8 +62,7 @@ class SolanaNFTSolscan extends Base {
                     if (infoItem) {
                         asset.items = [
                             {
-                                address: this.main.utils.replaceIPFS(infoItem),
-                                mime_type: this.generateMimeType(infoItem),
+                                address: infoItem,
                             },
                         ];
                     }
@@ -75,8 +73,6 @@ class SolanaNFTSolscan extends Base {
                             asset.attributes = attributes;
                         }
                     }
-
-                    this.generateRelatedUrls(asset);
 
                     if (data.metadata?.data.external_url) {
                         if (!asset.related_urls) {
