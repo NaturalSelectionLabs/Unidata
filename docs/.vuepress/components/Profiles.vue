@@ -36,7 +36,7 @@
                     <img :src="profile.banners?.[0]" />
                 </div>
                 <div class="info">
-                    <div class="avatar"><img :src="profile.avatars?.[0]" /></div>
+                    <div class="avatar" v-if="profile.avatars?.length"><img :src="profile.avatars?.[0]" /></div>
                     <div class="text">
                         <div class="name">
                             {{ profile.name }}

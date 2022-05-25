@@ -2,9 +2,11 @@ import Main from '../index';
 import Base from './base';
 import { ethers } from 'ethers';
 import { ProfilesOptions } from './index';
+import { createClient, Client } from '@urql/core';
 
 class ENS extends Base {
     ethersProvider: ethers.providers.BaseProvider;
+    urqlClient: Client;
 
     constructor(main: Main) {
         super(main);
@@ -12,6 +14,10 @@ class ENS extends Base {
 
     private async init() {
         this.ethersProvider = new ethers.providers.InfuraProvider('homestead', this.main.options.infuraProjectID);
+        this.urqlClient = createClient({
+            url: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
+            maskTypename: false,
+        });
         this.inited = true;
     }
 
@@ -19,80 +25,88 @@ class ENS extends Base {
         if (!this.inited) {
             await this.init();
         }
-        const username = await this.ethersProvider.lookupAddress(options.identity);
-        if (username) {
-            const resolver = await this.ethersProvider.getResolver(username);
-            if (resolver) {
-                const fields = [
-                    'avatar',
-                    'description',
-                    'url',
-                    'com.github',
-                    'com.twitter',
-                    'org.telegram',
-                    'com.discord',
-                    'com.reddit',
-                    'name',
-                    'banners',
-                ];
-                const info = await Promise.all(fields.map((field) => resolver.getText(field)));
-                const profile: Profile = {
-                    name: info[8] || username,
-                    username: username,
-                    source: 'ENS',
 
-                    ...(info[0] && { avatars: [this.main.utils.replaceIPFS(info[0])] }),
-                    ...(info[9] && { banners: [this.main.utils.replaceIPFS(info[9])] }),
-                    ...(info[1] && { bio: info[1] }),
-                    ...(info[2] && { websites: info[2].split('/n') }),
-
-                    metadata: {
-                        network: 'Ethereum',
-                        proof: username,
-                    },
-                };
-
-                const connected_accounts: Required<Profile>['connected_accounts'] = [];
-                [info[3], info[4], info[5], info[6], info[7]].forEach((account, index) => {
-                    if (account) {
-                        const key = fields[index + 3].split('.')[1];
-                        if (this.accountsMap[key]) {
-                            const acc: Required<Profile>['connected_accounts'][number] = {
-                                identity: account,
-                                platform: this.accountsMap[key].platform,
-                            };
-                            if (this.accountsMap[key].url) {
-                                acc.url = this.accountsMap[key].url?.replace('$$id', account);
+        const result = await this.urqlClient
+            .query(
+                `
+                query getRegistrations($identity: ID!, $limit: Int, $cursor: Int) {
+                    account(id: $identity) {
+                    domains(orderBy: createdAt, orderDirection: "desc", skip: $cursor, first: $limit) {
+                        id
+                        name
+                        createdAt
+                        labelhash
+                        resolver {
+                            texts
+                            id
+                                address
                             }
-                            connected_accounts.push(acc);
-                        } else {
-                            connected_accounts.push({
-                                identity: account,
-                                platform: key,
-                            });
                         }
                     }
-                });
-                if (connected_accounts.length) {
-                    profile.connected_accounts = connected_accounts;
-                }
+                }`,
+                {
+                    identity: options.identity.toLowerCase(),
+                    cursor: options.cursor || 0,
+                    limit: options.limit,
+                },
+            )
+            .toPromise();
 
-                return {
-                    total: 1,
-                    list: [profile],
-                };
-            } else {
-                return {
-                    total: 0,
-                    list: [],
-                };
-            }
-        } else {
-            return {
-                total: 0,
-                list: [],
-            };
-        }
+        const list =
+            (await Promise.all(
+                result?.data?.account?.domains?.map(async (domain: any) => {
+                    const profile: Profile = {
+                        date_created: new Date(+domain.createdAt).toISOString(),
+
+                        name: domain.name,
+                        username: domain.name,
+                        source: 'ENS',
+
+                        metadata: {
+                            network: 'Ethereum',
+                            proof: domain.name,
+                        },
+                    };
+                    const resolver = await this.ethersProvider.getResolver(domain.name);
+                    if (resolver) {
+                        const fields: string[] = domain.resolver?.texts || [];
+                        await Promise.all(
+                            fields.map(async (field) => {
+                                switch (field) {
+                                    case 'avatar':
+                                        profile.avatars = [await resolver.getText(field)];
+                                        break;
+                                    case 'description':
+                                        profile.bio = await resolver.getText(field);
+                                        break;
+                                    case 'url':
+                                        profile.websites = [await resolver.getText(field)];
+                                        break;
+                                    default:
+                                        const split = field.split('.');
+                                        if (split.length === 2 && (split[0] === 'com' || split[0] === 'org')) {
+                                            if (!profile.connected_accounts) {
+                                                profile.connected_accounts = [];
+                                            }
+                                            profile.connected_accounts.push({
+                                                identity: await resolver.getText(field),
+                                                platform: split[1],
+                                            });
+                                        }
+                                        break;
+                                }
+                            }),
+                        );
+                    }
+
+                    return profile;
+                }),
+            )) || [];
+
+        return {
+            total: list.length,
+            list,
+        };
     }
 
     set: undefined;

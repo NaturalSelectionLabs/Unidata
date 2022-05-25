@@ -1,6 +1,6 @@
 # ENS
 
-<Logos type="Profiles" :names="['ENS', 'Infura']" />
+<Logos type="Profiles" :names="['ENS', 'The Graph', 'Infura']" />
 
 ::: tip
 You can use Infura API for free (25 requests / seconds, 10,000,000 requests / month), and you can pay for more frequent requests.
@@ -23,6 +23,6 @@ const profiles: Profiles = await unidata.profiles.get(options: {
 ## Live Demo
 
 <Profiles :source="'ENS'" :defaultIdentity="[{
-    identity: '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944',
+    identity: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
     platform: 'Ethereum'
 }]" />

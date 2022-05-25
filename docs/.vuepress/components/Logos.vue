@@ -39,6 +39,12 @@ const data = [
         url: 'https://github.com/Crossbell-Box/',
     },
     {
+        name: 'The Graph',
+        type: 'Profiles',
+        image: '/images/sources/thegraph.svg',
+        url: 'https://thegraph.com/',
+    },
+    {
         name: 'Infura',
         type: 'Profiles',
         image: '/images/sources/infura.svg',
