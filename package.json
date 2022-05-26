@@ -40,7 +40,7 @@
     "dependencies": {
         "@urql/core": "2.5.0",
         "axios": "0.27.2",
-        "crossbell.js": "0.5.13",
+        "crossbell.js": "0.5.14",
         "ethers": "5.6.8",
         "graphql": "16.5.0",
         "lodash": "4.17.21",
