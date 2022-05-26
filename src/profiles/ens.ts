@@ -105,6 +105,8 @@ class ENS extends Base {
 
         return {
             total: list.length,
+
+            ...(options.limit && list.length >= options.limit && { cursor: options.limit + (options.cursor || 0) }),
             list,
         };
     }
