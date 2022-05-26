@@ -38,6 +38,13 @@ class Notes {
     }
 
     async get(options: NotesOptions) {
+        options = Object.assign(
+            {
+                limit: 10,
+            },
+            options,
+        );
+
         return this.map[options.source].get(options);
     }
 
