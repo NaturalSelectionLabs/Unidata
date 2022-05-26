@@ -1,7 +1,6 @@
 import Main from '../index';
 import Base from './base';
 import { mergeWith, keyBy, values, uniqWith, isEqual } from 'lodash';
-import mime from 'mime';
 import EthereumNFTMoralis from './ethereum-nft-moralis';
 import EthereumNFTOpenSea from './ethereum-nft-opensea';
 import EthereumNFTPOAP from './ethereum-nft-poap';
@@ -95,14 +94,6 @@ class Assets {
         }
     }
 
-    private generateMimeType(address: string) {
-        address = this.main.utils.replaceIPFS(address);
-        const mimeType = mime.getType(address);
-        if (mimeType) {
-            return mimeType;
-        }
-    }
-
     async get(options: AssetsOptions) {
         options = Object.assign(
             {
@@ -168,7 +159,7 @@ class Assets {
                             item.address = this.main.utils.replaceIPFS(item.address);
                         }
                         if (item.address && !item.mime_type) {
-                            item.mime_type = this.generateMimeType(item.address);
+                            item.mime_type = this.main.utils.getMimeType(item.address);
                         }
                     });
                 }
@@ -178,7 +169,7 @@ class Assets {
                             item.address = this.main.utils.replaceIPFS(item.address);
                         }
                         if (item.address && !item.mime_type) {
-                            item.mime_type = this.generateMimeType(item.address);
+                            item.mime_type = this.main.utils.getMimeType(item.address);
                         }
                     });
                 }

@@ -2316,14 +2316,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crossbell.js@npm:0.5.12":
-  version: 0.5.12
-  resolution: "crossbell.js@npm:0.5.12"
+"crossbell.js@npm:0.5.13":
+  version: 0.5.13
+  resolution: "crossbell.js@npm:0.5.13"
   dependencies:
     ethers: ^5.6.3
     ts-mixer: ^6.0.1
     undici: ^5.2.0
-  checksum: db66811a4362c12a7a4d7f04f8bdde6ff7e72ce0b21fa77d4efb517a7a3fb104e61bb85f6d2a7519e165e48251c81141b22ed13436d84b2ca522a2de270d4434
+  checksum: 706d109eca1542efdb4c3836a9209292fdcedbae15687c7b3411de1f724d921a21bfbe03a271490a274f38ac4e5f57c25012359429e47587f990fecb1e0767d6
   languageName: node
   linkType: hard
 
@@ -6149,7 +6149,7 @@ __metadata:
     "@vuepress/plugin-docsearch": 2.0.0-beta.45
     "@vuepress/plugin-register-components": 2.0.0-beta.45
     axios: 0.27.2
-    crossbell.js: 0.5.12
+    crossbell.js: 0.5.13
     element-plus: 2.2.2
     ethers: 5.6.8
     graphql: 16.5.0

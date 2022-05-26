@@ -1,5 +1,6 @@
 import Main from './index';
 import { Indexer, Contract, Network } from 'crossbell.js';
+import mime from 'mime';
 
 class Utils {
     main: Main;
@@ -77,6 +78,14 @@ class Utils {
         }
         if (Object.keys(obj).length === 0 && father) {
             delete father.obj[father.key];
+        }
+    }
+
+    getMimeType(address: string) {
+        address = this.main.utils.replaceIPFS(address);
+        const mimeType = mime.getType(address);
+        if (mimeType) {
+            return mimeType;
         }
     }
 }

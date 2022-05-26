@@ -13,10 +13,11 @@ You can initialize with `ipfsGateway` to potentially get a faster response or hi
 ```ts
 const notes: Notes = await unidata.notes.get(options: {
     source: string;
-    identity: string;
+    identity?: string;
     platform?: string;
     limit?: number;
     cursor?: any;
+    filters?: any;
 });
 ```
 
@@ -24,6 +25,7 @@ const notes: Notes = await unidata.notes.get(options: {
 -   `platform`: Platfrom of the identity. Ethereum, Solana, Flow, Crossbell, etc. Default to `Ethereum`.
 -   `limit`: The number of assets to return. Since providers use different pagination schemes, there is no guarantee that the quantities are always accurate.
 -   `cursor`: The pagination cursor returned from the previous page's results. Since providers use different pagination schemes, the type is uncertain.
+-   `filters`: Varies depending on the source.
 
 ### Set
 

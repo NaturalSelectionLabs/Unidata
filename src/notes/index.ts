@@ -7,10 +7,11 @@ import CrossbellNote from './crossbell-note';
 
 export type NotesOptions = {
     source: string;
-    identity: string;
+    identity?: string;
     platform?: string;
     limit?: number;
     cursor?: any;
+    filter?: any;
 };
 
 export type NoteSetOptions = {

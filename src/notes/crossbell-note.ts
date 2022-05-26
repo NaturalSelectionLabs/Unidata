@@ -3,11 +3,11 @@ import Base from './base';
 import { NotesOptions, NoteSetOptions, NoteInput } from './index';
 import { Indexer, Contract, Network } from 'crossbell.js';
 import { Web3Storage } from 'web3.storage';
+import { BigNumber } from 'ethers';
 
 class CrossbellNote extends Base {
     indexer: Indexer;
     contract: Contract;
-    contractSet: Contract;
 
     constructor(main: Main) {
         super(main);
@@ -15,11 +15,17 @@ class CrossbellNote extends Base {
         Network.setIpfsGateway(this.main.options.ipfsGateway!);
     }
 
+    async init() {
+        await Network.switchToCrossbellMainnet(this.main.options.ethereumProvider);
+        this.contract = new Contract(this.main.options.ethereumProvider);
+        await this.contract.connect();
+    }
+
     async get(options: NotesOptions) {
         if (!this.contract) {
-            this.contract = new Contract();
-            await this.contract.connect();
+            await this.init();
         }
+
         options = Object.assign(
             {
                 platform: 'Ethereum',
@@ -27,47 +33,96 @@ class CrossbellNote extends Base {
             options,
         );
 
-        let profileId = await this.main.utils.getCrossbellProfileId({
-            identity: options.identity,
-            platform: options.platform!,
-        });
-        if (profileId === '0') {
-            return {
-                total: 0,
-                list: [],
-            };
+        // @ts-ignore
+        const initialContract = this.contract.contract;
+
+        let events: any;
+        if (options.identity) {
+            let profileId = await this.main.utils.getCrossbellProfileId({
+                identity: options.identity,
+                platform: options.platform!,
+            });
+            if (profileId === '0') {
+                return {
+                    total: 0,
+                    list: [],
+                };
+            }
+            const filter = initialContract.filters.PostNote(BigNumber.from(profileId));
+            events = await initialContract.queryFilter(filter);
+        } else if (options.filter?.url) {
+            const filter = initialContract.filters.PostNote(
+                null,
+                null,
+                this.contract.getLinkKeyForAnyUri(options.filter?.url),
+            );
+            events = await initialContract.queryFilter(filter);
         }
 
-        const result = (await this.contract.getNote(profileId, '1')).data;
+        const list = await Promise.all(
+            events.reverse().map(async (event: any) => {
+                const profileId = event.args.profileId.toString();
+                const nodeId = event.args.noteId.toString();
+                const note = (await this.contract.getNote(profileId, nodeId, 'AnyUri')).data;
 
-        const now = new Date().toISOString();
+                // @ts-ignore
+                const date = new Date((await initialContract.provider.getBlock(event.blockNumber)).timestamp * 1000);
 
-        const item: Note = Object.assign({}, <any>result.metadata, {
-            id: result.noteId,
+                const item: Note = Object.assign({}, note.metadata as Partial<Note>, {
+                    id: `${profileId}-${nodeId}`,
 
-            date_created: now,
-            date_updated: now,
+                    date_created: date,
+                    date_updated: date,
 
-            authors: [options.identity],
+                    related_urls: [
+                        ...(note.linkItem?.uri && [note.linkItem?.uri]),
+                        `https://scan.crossbell.io/tx/${event.transactionHash}`,
+                    ],
 
-            source: 'Crossbell Note',
-            metadata: {
-                network: 'Crossbell',
-                proof: result.noteId,
-            },
-        });
+                    authors: [options.identity],
 
-        // Crossbell specification compatibility
-        if (item.summary) {
-            item.summary = {
-                content: (<any>item).summary,
-                mime_type: 'text/markdown',
-            };
-        }
+                    source: 'Crossbell Note',
+                    metadata: {
+                        network: 'Crossbell',
+                        proof: event.transactionHash,
+
+                        block_number: event.blockNumber,
+                    },
+                });
+
+                // Crossbell specification compatibility
+                if (item.summary) {
+                    item.summary = {
+                        content: (<any>item).summary,
+                        mime_type: 'text/markdown',
+                    };
+                }
+                if ((<any>item).content) {
+                    item.summary = {
+                        content: (<any>item).content,
+                        mime_type: 'text/markdown',
+                    };
+                    delete (<any>item).content;
+                }
+
+                if (item.attachments) {
+                    item.attachments.forEach((attachment) => {
+                        if (attachment.address) {
+                            attachment.address = this.main.utils.replaceIPFS(attachment.address);
+                        }
+                        if (attachment.address && !attachment.mime_type) {
+                            attachment.mime_type = this.main.utils.getMimeType(attachment.address);
+                        }
+                    });
+                }
+
+                return item;
+            }),
+        );
 
         return {
-            total: 1,
-            list: [item],
+            total: list.length,
+            list: list,
         };
     }
 
@@ -80,9 +135,8 @@ class CrossbellNote extends Base {
             options,
         );
 
-        if (!this.contractSet) {
-            this.contractSet = new Contract(this.main.options.ethereumProvider);
-            await this.contractSet.connect();
+        if (!this.contract) {
+            await this.init();
         }
 
         let profileId = await this.main.utils.getCrossbellProfileId({
@@ -103,6 +157,10 @@ class CrossbellNote extends Base {
                 });
 
                 // Crossbell specification compatibility
+                if (input.body) {
+                    (<any>input).content = input.body.content;
+                    delete input.body;
+                }
                 if (input.summary) {
                     (<any>input).summary = input.summary.content;
                 }
@@ -117,7 +175,7 @@ class CrossbellNote extends Base {
                     wrapWithDirectory: false,
                 });
 
-                const data = await this.contractSet.postNote(profileId, `ipfs://${cid}`);
+                const data = await this.contract.postNote(profileId, `ipfs://${cid}`);
 
                 return {
                     code: 0,
@@ -132,7 +190,7 @@ class CrossbellNote extends Base {
                         message: 'Missing id',
                     };
                 } else {
-                    await this.contractSet.deleteNote(profileId, input.id);
+                    await this.contract.deleteNote(profileId, input.id);
 
                     return {
                         code: 0,

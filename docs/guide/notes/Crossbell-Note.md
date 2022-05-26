@@ -17,15 +17,20 @@ You can initialize with `ipfsGateway` to potentially get a faster response or hi
 ```ts
 const notes: Notes = await unidata.notes.get(options: {
     source: 'Crossbell Note';
-    identity: string;
+    identity?: string;
     platform?: string;
     limit?: number;
     cursor?: string;
+    filter?: {
+        url?: string;
+    }
 });
 ```
 
+-   `identity` is optional, returns data based on filter only when not provided.
 -   Use Ethereum address as the `identity` and `'Ethereum'` as the `platform` to get notes from all profiles belonging to this address.
 -   Use Crossbell handle as the `identity` and `'Crossbell'` as the `platform` to get notes from a specific profile.
+-   Use `filter.url` to get notes linking to the url.
 
 ### Set
 
