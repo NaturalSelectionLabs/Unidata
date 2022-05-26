@@ -11,11 +11,25 @@
                 class="input"
             />
         </div>
+        <div class="input-wrap" v-if="source === 'Crossbell Note'">
+            <label>filter.url: </label>
+            <el-input
+                v-model="url"
+                placeholder="Please input ethereum address"
+                clearable
+                maxlength="42"
+                show-word-limit
+                class="input"
+            />
+        </div>
         <h5>Code</h5>
         <pre class="code"><code>{{ `const notes: Notes = await unidata.notes.get({
-    source: '${props.source}',
-    identity: '${identity}',${providers ? `
-    providers: ${JSON.stringify(providers)},` : ''}
+    source: '${props.source}',${identity ? `
+    identity: '${identity}',` : ''}${providers ? `
+    providers: ${JSON.stringify(providers)},` : ''}${url ? `
+    filter: {
+        url: '${url}',
+    },` : ''}
     limit: 10,
 });`}}</code></pre>
         <h5>View</h5>
@@ -97,6 +111,7 @@ const identity = ref(props.defaultIdentity);
 const loading = ref(true);
 const notes = ref<Notes>({} as Notes);
 const notesFiltered = ref<Note[]>([]);
+const url = ref('https://unidata.app/');
 
 const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
 watchEffect(async () => {
@@ -108,6 +123,9 @@ watchEffect(async () => {
                 identity: identity.value,
                 source: props.source,
                 limit: 10,
+                filter: {
+                    url: url.value,
+                },
             })
             .then((p: any) => {
                 notes.value = p;

@@ -37,8 +37,9 @@ class CrossbellNote extends Base {
         const initialContract = this.contract.contract;
 
         let events: any;
+        let profileId: string = '';
         if (options.identity) {
-            let profileId = await this.main.utils.getCrossbellProfileId({
+            profileId = await this.main.utils.getCrossbellProfileId({
                 identity: options.identity,
                 platform: options.platform!,
             });
@@ -48,15 +49,24 @@ class CrossbellNote extends Base {
                     list: [],
                 };
             }
-            const filter = initialContract.filters.PostNote(BigNumber.from(profileId));
-            events = await initialContract.queryFilter(filter);
-        } else if (options.filter?.url) {
+        }
+        if (options.filter?.url) {
             const filter = initialContract.filters.PostNote(
                 null,
                 null,
-                this.contract.getLinkKeyForAnyUri(options.filter?.url),
+                this.contract.getLinkKeyForAnyUri(options.filter.url),
             );
             events = await initialContract.queryFilter(filter);
+            if (profileId) {
+                events = events.filter((event: any) => event.args.profileId.toString() === profileId);
+            }
+        } else {
+            if (profileId) {
+                const filter = initialContract.filters.PostNote(BigNumber.from(profileId));
+                events = await initialContract.queryFilter(filter);
+            } else {
+                throw new Error('Missing identity');
+            }
         }
 
         const list = await Promise.all(
@@ -164,6 +174,15 @@ class CrossbellNote extends Base {
                 if (input.summary) {
                     (<any>input).summary = input.summary.content;
                 }
+                let url;
+                if (input.related_urls) {
+                    if (input.related_urls.length > 1) {
+                        throw new Error('Only one related_url is allowed');
+                    } else {
+                        url = input.related_urls[0];
+                        delete input.related_urls;
+                    }
+                }
 
                 const blob = new Blob([JSON.stringify(input)], {
                     type: 'application/json',
@@ -175,7 +194,12 @@ class CrossbellNote extends Base {
                     wrapWithDirectory: false,
                 });
 
-                const data = await this.contract.postNote(profileId, `ipfs://${cid}`);
+                let data;
+                if (url) {
+                    data = await this.contract.postNoteForAnyUri(profileId, `ipfs://${cid}`, url);
+                } else {
+                    data = await this.contract.postNote(profileId, `ipfs://${cid}`);
+                }
 
                 return {
                     code: 0,
