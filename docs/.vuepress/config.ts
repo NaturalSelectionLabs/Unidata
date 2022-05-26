@@ -5,6 +5,7 @@ import path from 'path';
 import { viteBundler } from '@vuepress/bundler-vite';
 import { defineUserConfig } from '@vuepress/cli';
 import viteConfig from '../../vite.config';
+import docsearchPlugin from '@vuepress/plugin-docsearch';
 
 export default defineUserConfig({
     title: 'Unidata',
@@ -24,6 +25,11 @@ export default defineUserConfig({
     plugins: [
         registerComponentsPlugin({
             componentsDir: path.resolve(__dirname, './components'),
+        }),
+        docsearchPlugin({
+            apiKey: '3f968df846740a9e2b38e89d8e6ce9fa',
+            indexName: 'unidata',
+            appId: 'LNA1UZCPZB',
         }),
     ],
 
@@ -105,7 +111,7 @@ export default defineUserConfig({
         },
     }),
 
-    clientAppEnhanceFiles: path.resolve(__dirname, './init.ts'),
+    clientConfigFile: path.resolve(__dirname, './init.ts'),
 
     bundler: viteBundler({
         viteOptions: {
