@@ -113,6 +113,15 @@ await unidata.notes.set(
             content: '> From Unidata',
             mime_type: 'text/markdown',
         },
+        body: {
+            content: 'Body of my first note',
+        },
+        attachments: [
+            {
+                address: 'ipfs://bafybeifwzi2443622ihqzbs7ed67fed2juhcko35ncyvlngljo6bfjc44e/unidata2.jpeg',
+            },
+        ],
+        related_urls: ['https://unidata.app/'],
     },
 );
 ```
@@ -133,7 +142,7 @@ await unidata.notes.set(
 );
 ```
 
-**update action:**
+**update action(TODO):**
 
 ```ts
 await unidata.notes.set(
