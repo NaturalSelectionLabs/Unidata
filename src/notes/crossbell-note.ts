@@ -69,8 +69,20 @@ class CrossbellNote extends Base {
             }
         }
 
+        const total = events.length;
+        let hasMore;
+
+        events = events.reverse();
+        if (options.cursor) {
+            events = events.slice(options.cursor);
+        }
+        if (options.limit) {
+            hasMore = events.length > options.limit;
+            events = events.slice(0, options.limit);
+        }
+
         const list = await Promise.all(
-            events.reverse().map(async (event: any) => {
+            events.map(async (event: any) => {
                 const profileId = event.args.profileId.toString();
                 const nodeId = event.args.noteId.toString();
                 const note = (await this.contract.getNote(profileId, nodeId, 'AnyUri')).data;
@@ -131,7 +143,9 @@ class CrossbellNote extends Base {
         );
 
         return {
-            total: list.length,
+            total,
+            ...(hasMore && { cursor: (options.cursor || 0) + options.limit }),
+
             list: list,
         };
     }
