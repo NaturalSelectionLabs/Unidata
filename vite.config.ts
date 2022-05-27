@@ -10,7 +10,6 @@ export default defineConfig({
             fileName: (format) => `unidata.${format}.js`,
         },
         sourcemap: true,
-        target: 'es2020',
     },
     define: {
         SDK_VERSION: JSON.stringify(version),
