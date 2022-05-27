@@ -1,6 +1,6 @@
 import Main from '../index';
 import Base from './base';
-import { mergeWith, keyBy, values, uniqWith, isEqual } from 'lodash';
+import { mergeWith, keyBy, values, uniqWith, isEqual } from 'lodash-es';
 import EthereumNFTMoralis from './ethereum-nft-moralis';
 import EthereumNFTOpenSea from './ethereum-nft-opensea';
 import EthereumNFTPOAP from './ethereum-nft-poap';
