@@ -23,6 +23,7 @@ specifiers:
     less: 4.1.2
     lint-staged: 12.4.2
     lodash-es: ^4.17.21
+    markdown-it: ^13.0.1
     mime: 3.0.0
     prettier: 2.6.2
     typescript: 4.7.2
@@ -58,6 +59,7 @@ devDependencies:
     husky: 8.0.1
     less: 4.1.2
     lint-staged: 12.4.2
+    markdown-it: 13.0.1
     prettier: 2.6.2
     typescript: 4.7.2
     vite: 2.9.9_less@4.1.2

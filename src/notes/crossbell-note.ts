@@ -98,6 +98,7 @@ class CrossbellNote extends Base {
 
                     related_urls: [
                         ...(note.linkItem?.uri && [note.linkItem?.uri]),
+                        ...(note.contentUri && [this.main.utils.replaceIPFS(note.contentUri)]),
                         `https://scan.crossbell.io/tx/${event.transactionHash}`,
                     ],
 
