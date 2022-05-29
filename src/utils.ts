@@ -15,7 +15,7 @@ class Utils {
         if (/^[a-zA-Z0-9]{46}$/.test(url)) {
             url = 'ipfs://' + url;
         }
-        return url.replace('ipfs://', this.main.options.ipfsGateway!);
+        return url.replace('ipfs://ipfs', 'ipfs://').replace('ipfs://', this.main.options.ipfsGateway!);
     }
 
     replaceIPFSs(urls: string[]) {
