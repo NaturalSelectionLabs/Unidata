@@ -6,7 +6,7 @@ specifiers:
     '@fortawesome/free-solid-svg-icons': 6.1.1
     '@fortawesome/vue-fontawesome': 3.0.0-5
     '@types/graceful-fs': 4.1.5
-    '@types/lodash-es': ^4.17.6
+    '@types/lodash': ^4.14.182
     '@types/mime': 2.0.3
     '@types/node': 17.0.35
     '@urql/core': 2.5.0
@@ -22,7 +22,7 @@ specifiers:
     husky: 8.0.1
     less: 4.1.2
     lint-staged: 12.4.2
-    lodash-es: ^4.17.21
+    lodash: ^4.17.21
     markdown-it: ^13.0.1
     mime: 3.0.0
     prettier: 2.6.2
@@ -33,12 +33,13 @@ specifiers:
     web3.storage: 4.2.0
 
 dependencies:
+    '@types/lodash': 4.14.182
     '@urql/core': 2.5.0_graphql@16.5.0
     axios: 0.27.2
     crossbell.js: 0.5.15
     ethers: 5.6.8
     graphql: 16.5.0
-    lodash-es: 4.17.21
+    lodash: 4.17.21
     mime: 3.0.0
     web3.storage: 4.2.0
 
@@ -48,7 +49,6 @@ devDependencies:
     '@fortawesome/free-solid-svg-icons': 6.1.1
     '@fortawesome/vue-fontawesome': 3.0.0-5_ra36apx7k7u2r4lnz24hnvxtpe
     '@types/graceful-fs': 4.1.5
-    '@types/lodash-es': 4.17.6
     '@types/mime': 2.0.3
     '@types/node': 17.0.35
     '@vitejs/plugin-vue': 2.3.3_vite@2.9.9+vue@3.2.36
@@ -1044,7 +1044,6 @@ packages:
             {
                 integrity: sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==,
             }
-        dev: true
 
     /@types/long/4.0.2:
         resolution:
@@ -4343,6 +4342,7 @@ packages:
             {
                 integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==,
             }
+        dev: true
 
     /lodash-unified/1.0.2_3ib2ivapxullxkx3xftsimdk7u:
         resolution:
@@ -4364,7 +4364,6 @@ packages:
             {
                 integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==,
             }
-        dev: true
 
     /log-symbols/4.1.0:
         resolution:

@@ -3,7 +3,7 @@ import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
 import { utils } from 'ethers/lib';
-import { mergeWith, keyBy, values, uniqWith, isEqual } from 'lodash-es';
+import { mergeWith, keyBy, values, uniqWith, isEqual } from 'lodash';
 
 class GitcoinContribution extends Base {
     constructor(main: Main) {
