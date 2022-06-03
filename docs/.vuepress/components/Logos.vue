@@ -103,6 +103,12 @@ const data = [
         url: 'https://poap.xyz/',
     },
     {
+        name: 'Crossbell',
+        type: 'Assets',
+        image: '/images/sources/crossbell.svg',
+        url: 'https://github.com/Crossbell-Box/',
+    },
+    {
         name: 'Solana',
         type: 'Assets',
         image: '/images/sources/solana.svg',
@@ -205,6 +211,12 @@ const data = [
         type: 'Notes',
         image: '/images/sources/gitcoin.svg',
         url: 'https://gitcoin.co/',
+    },
+    {
+        name: 'Crossbell',
+        type: 'Notes',
+        image: '/images/sources/crossbell.svg',
+        url: 'https://github.com/Crossbell-Box/',
     },
     {
         name: 'RSS3',
