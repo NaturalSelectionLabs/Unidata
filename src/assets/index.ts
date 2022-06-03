@@ -93,6 +93,13 @@ class Assets {
                     ]);
                 }
                 break;
+            case 'Crossbell':
+                if (asset.metadata.token_id) {
+                    asset.related_urls = asset.related_urls.concat([
+                        `https://scan.crossbell.io/token/${asset.metadata.collection_address}/instance/${asset.metadata.token_id}`,
+                    ]);
+                }
+                break;
         }
     }
 
@@ -143,7 +150,7 @@ class Assets {
             result = await this.map[options.source][options.providers![0]].get(options);
         }
 
-        const networks = ['Gnosis', 'Binance Smart Chain', 'Polygon', 'Ethereum'];
+        const networks = ['Gnosis', 'Binance Smart Chain', 'Polygon', 'Crossbell', 'Ethereum'];
         result.list = result.list
             // default values
             .map((asset: Asset) => {
