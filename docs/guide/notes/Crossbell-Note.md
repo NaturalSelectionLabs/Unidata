@@ -41,7 +41,7 @@ const result: {
     code: number;
     message: string;
     data?: any;
-} = await unidata.profiles.set(
+} = await unidata.notes.set(
     options: {
         source: 'Crossbell Note';
         identity: 'Ethereum' | 'Crossbell';
