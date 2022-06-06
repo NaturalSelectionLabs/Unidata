@@ -4,21 +4,29 @@ import { NotesOptions, NoteSetOptions, NoteInput } from './index';
 import { Indexer, Contract, Network } from 'crossbell.js';
 import { Web3Storage } from 'web3.storage';
 import { BigNumber } from 'ethers';
+import AsyncLock from 'async-lock';
 
 class CrossbellNote extends Base {
     indexer: Indexer;
     contract: Contract;
+    private lock: AsyncLock;
 
     constructor(main: Main) {
         super(main);
 
         Network.setIpfsGateway(this.main.options.ipfsGateway!);
+
+        this.lock = new AsyncLock();
     }
 
     async init() {
-        await Network.switchToCrossbellMainnet(this.main.options.ethereumProvider);
-        this.contract = new Contract(this.main.options.ethereumProvider);
-        await this.contract.connect();
+        await this.lock.acquire('CrossbellNoteInit', async () => {
+            if (!this.contract) {
+                await Network.switchToCrossbellMainnet(this.main.options.ethereumProvider);
+                this.contract = new Contract(this.main.options.ethereumProvider);
+                await this.contract.connect();
+            }
+        });
     }
 
     async get(options: NotesOptions) {
