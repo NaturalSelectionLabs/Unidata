@@ -3,7 +3,7 @@
 <Logos type="Assets" :names="['Ethereum', 'Polygon', 'Binance Smart Chain', 'Arbitrum', 'Moonbeam', 'Optimism', 'NFTScan']" />
 
 ::: tip
-You can use NFTScan API for free (10,000 Requests / Day, 10 Calls Per Second).
+You can use NFTScan API for free (10,000 requests / day, 10 requests / second), and you can pay for more frequent requests.
 :::
 
 You must register an NFTScan account and initialize with `nftscanAPIKey` to use this provider.
