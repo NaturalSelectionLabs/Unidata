@@ -51,6 +51,7 @@ const unidata = new Unidata({
 | `alchemyFlowAPIKey`     |                             | API Key of Alchemy Flow.             |
 | `web3StorageAPIToken`   | Unidata default token       | API Token of Web3 Storage.           |
 | `ethereumProvider`      | window.ethereum             | Ethereum provider                    |
+| `nftscanAPIKey`         |                             | API Key of NFTScan.                  |
 
 If you don't want to expose some api keys on the front end, or if you want to cache data for faster response and higher stability, then you can use the SDK for your Node.js project.
 

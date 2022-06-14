@@ -36,7 +36,7 @@ const data = [
         name: 'Crossbell',
         type: 'Profiles',
         image: '/images/sources/crossbell.svg',
-        url: 'https://github.com/Crossbell-Box/',
+        url: 'https://crossbell.io/',
     },
     {
         name: 'The Graph',
@@ -56,7 +56,7 @@ const data = [
         name: 'Crossbell',
         type: 'Links',
         image: '/images/sources/crossbell.svg',
-        url: 'https://github.com/Crossbell-Box/',
+        url: 'https://crossbell.io/',
     },
 
     // Assets
@@ -112,7 +112,7 @@ const data = [
         name: 'Crossbell',
         type: 'Assets',
         image: '/images/sources/crossbell.svg',
-        url: 'https://github.com/Crossbell-Box/',
+        url: 'https://crossbell.io/',
     },
     {
         name: 'Solana',
@@ -240,7 +240,7 @@ const data = [
         name: 'Crossbell',
         type: 'Notes',
         image: '/images/sources/crossbell.svg',
-        url: 'https://github.com/Crossbell-Box/',
+        url: 'https://crossbell.io/',
     },
     {
         name: 'RSS3',
