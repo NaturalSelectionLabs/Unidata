@@ -116,13 +116,20 @@ class Assets {
         if (options.providers!.length > 1) {
             const list = await Promise.all(
                 options.providers!.map(async (provider: string, index) => {
-                    const result = await this.map[options.source][provider].get(
-                        Object.assign(options, {
-                            cursor: options.cursor?.[index],
-                        }),
-                    );
-                    this.main.utils.removeEmpty(result.list);
-                    return result;
+                    try {
+                        const result = await this.map[options.source][provider].get(
+                            Object.assign(options, {
+                                cursor: options.cursor?.[index],
+                            }),
+                        );
+                        this.main.utils.removeEmpty(result.list);
+                        return result;
+                    } catch (error) {
+                        return {
+                            total: 0,
+                            list: [],
+                        };
+                    }
                 }),
             );
 
