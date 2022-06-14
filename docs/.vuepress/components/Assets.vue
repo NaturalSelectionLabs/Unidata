@@ -248,6 +248,11 @@ watchEffect(async () => {
             .then((p: Assets) => {
                 assets.total = p.total;
                 assets.list = p.list;
+                if (p.cursor) {
+                    assets.cursor = p.cursor;
+                } else {
+                    delete assets.cursor;
+                }
                 loading.value = false;
 
                 p.list.forEach((asset: Asset) => {

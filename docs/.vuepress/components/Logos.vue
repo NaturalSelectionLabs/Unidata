@@ -133,6 +133,24 @@ const data = [
         url: 'https://gitcoin.co/',
     },
     {
+        name: 'Moonbeam',
+        type: 'Assets',
+        image: '/images/sources/moonbeam.png',
+        url: 'https://moonbeam.network/',
+    },
+    {
+        name: 'Optimism',
+        type: 'Assets',
+        image: '/images/sources/optimism.svg',
+        url: 'https://www.optimism.io/',
+    },
+    {
+        name: 'NFTScan',
+        type: 'Assets',
+        image: '/images/sources/nftscan.png',
+        url: 'https://www.nftscan.com/',
+    },
+    {
         name: 'Alchemy',
         type: 'Assets',
         image: '/images/sources/alchemy.svg',

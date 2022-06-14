@@ -20,6 +20,7 @@ type IOptions = {
     alchemyFlowAPIKey?: string;
     web3StorageAPIToken?: string;
     ethereumProvider?: any;
+    nftscanAPIKey?: string;
 };
 
 class Unidata {

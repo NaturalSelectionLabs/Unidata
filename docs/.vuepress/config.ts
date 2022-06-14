@@ -57,6 +57,7 @@ export default defineUserConfig({
                             link: '/guide/assets/Ethereum-NFT/README.md',
                             children: [
                                 '/guide/assets/Ethereum-NFT/README.md',
+                                '/guide/assets/Ethereum-NFT/NFTScan.md',
                                 '/guide/assets/Ethereum-NFT/Alchemy.md',
                                 '/guide/assets/Ethereum-NFT/Moralis.md',
                                 '/guide/assets/Ethereum-NFT/OpenSea.md',

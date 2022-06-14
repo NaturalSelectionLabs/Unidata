@@ -22,6 +22,7 @@ export default defineClientConfig({
                 alchemyEthereumAPIKey: '4h0_z1B6WEmj9hp1HJZm7ujeWZpLR6rv',
                 alchemyPolygonAPIKey: 'm1tznK8U8nVecA0Zime5dzF8Pb2av70q',
                 alchemyFlowAPIKey: 'op8m1oqlivm297iodsezvn3hoya9960u',
+                nftscanAPIKey: 'YdKYhj6I',
             });
 
             (<any>window).unidata = app.config.globalProperties.unidata;

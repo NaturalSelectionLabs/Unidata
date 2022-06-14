@@ -10,6 +10,7 @@ import EthereumNFTAlchemy from './ethereum-nft-alchemy';
 import FlowNFTAlchemy from './flow-nft-alchemy';
 import GitcoinContribution from './gitcoin-contribution';
 import EthereumNFTCrossbell from './ethereum-nft-crossbell';
+import EthereumNFTNFTScan from './ethereum-nft-nftscan';
 
 export type AssetsOptions = {
     source: string;
@@ -31,6 +32,7 @@ class Assets {
         this.main = main;
         this.map = {
             'Ethereum NFT': {
+                NFTScan: new EthereumNFTNFTScan(main),
                 Alchemy: new EthereumNFTAlchemy(main),
                 Moralis: new EthereumNFTMoralis(main),
                 OpenSea: new EthereumNFTOpenSea(main),
@@ -203,10 +205,17 @@ class Assets {
             })
             // sort according to network and block_number
             .sort((a: Asset, b: Asset) => {
-                return (
-                    networks.indexOf(b.metadata?.network || '') - networks.indexOf(a.metadata?.network || '') ||
-                    parseInt(b.metadata?.block_number || 0) - parseInt(a.metadata?.block_number || 0)
-                );
+                const networkSort =
+                    networks.indexOf(b.metadata?.network || '') - networks.indexOf(a.metadata?.network || '');
+                if (networkSort) {
+                    return networkSort;
+                } else if (a.metadata?.block_number && b.metadata?.block_number) {
+                    return parseInt(b.metadata?.block_number || 0) - parseInt(a.metadata?.block_number || 0);
+                } else if (a.date_created && b.date_created) {
+                    return +new Date(b.date_created) - +new Date(a.date_created);
+                } else {
+                    return 0;
+                }
             });
 
         return result;

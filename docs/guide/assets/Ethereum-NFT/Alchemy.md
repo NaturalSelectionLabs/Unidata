@@ -6,7 +6,7 @@
 You can use Alchemy API for free (no rate limit disclosed).
 :::
 
-You must initialize with `alchemyEthereumAPIKey` and `alchemyPolygonAPIKey` to use this provider.
+You must register an Alchemy account and initialize with `alchemyEthereumAPIKey` and `alchemyPolygonAPIKey` to use this provider.
 
 You can initialize with `ipfsGateway` to potentially get a faster response or higher stability.
 
