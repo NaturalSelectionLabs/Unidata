@@ -18,7 +18,7 @@ export default defineClientConfig({
         if (!__VUEPRESS_SSR__) {
             app.config.globalProperties.Unidata = Unidata;
             app.config.globalProperties.unidata = new Unidata({
-                moralisWeb3APIKey: 'gqcVQSCpWGNlfs2nMM1xvW1pOmZhzHc058aNpEK8BKIp26Q39PJemBu5BJi6SZOD',
+                moralisWeb3APIKey: 'dCYUW7mpC8lJJitfSX5nsgWBREkBIb5SW1OfFlDLiV7A0v4b2vubtkpQXsBrXqt0',
                 alchemyEthereumAPIKey: '4h0_z1B6WEmj9hp1HJZm7ujeWZpLR6rv',
                 alchemyPolygonAPIKey: 'm1tznK8U8nVecA0Zime5dzF8Pb2av70q',
                 alchemyFlowAPIKey: 'op8m1oqlivm297iodsezvn3hoya9960u',
