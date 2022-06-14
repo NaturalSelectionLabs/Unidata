@@ -205,7 +205,7 @@ class Assets {
             .sort((a: Asset, b: Asset) => {
                 return (
                     networks.indexOf(b.metadata?.network || '') - networks.indexOf(a.metadata?.network || '') ||
-                    parseInt(b.metadata?.block_number) - parseInt(a.metadata?.block_number)
+                    parseInt(b.metadata?.block_number || 0) - parseInt(a.metadata?.block_number || 0)
                 );
             });
 
