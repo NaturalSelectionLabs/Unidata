@@ -1,6 +1,6 @@
 # Moralis Provider
 
-<Logos type="Assets" :names="['Ethereum', 'Polygon', 'Binance Smart Chain', 'Arbitrum', 'Fantom', 'Moralis']" />
+<Logos type="Assets" :names="['Ethereum', 'Polygon', 'Binance Smart Chain', 'Avalanche', 'Fantom', 'Moralis']" />
 
 ::: warning
 You can use Moralis API for free (5 requests per second per key), and you can pay for more frequent requests.

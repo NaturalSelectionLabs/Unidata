@@ -79,6 +79,12 @@ const data = [
         url: 'https://www.binance.org/en',
     },
     {
+        name: 'Avalanche',
+        type: 'Assets',
+        image: '/images/sources/avalanche.svg',
+        url: 'https://www.avax.network/',
+    },
+    {
         name: 'Arbitrum',
         type: 'Assets',
         image: '/images/sources/arbitrum.jpeg',

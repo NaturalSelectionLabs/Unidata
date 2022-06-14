@@ -1,6 +1,6 @@
 # Overview
 
-<Logos type="Assets" :names="['Ethereum', 'Polygon', 'Alchemy', 'Binance Smart Chain', 'Arbitrum', 'Fantom', 'Moralis', 'OpenSea', 'POAP']" />
+<Logos type="Assets" :names="['Ethereum', 'Polygon', 'Alchemy', 'Binance Smart Chain', 'Avalanche', 'Arbitrum', 'Fantom', 'Moralis', 'OpenSea', 'POAP']" />
 
 [Ethereum NFT](https://ethereum.org/en/nft/) is a kind of token on Ethereum with a chaotic specification. They can be normalized through Unidata now.
 
