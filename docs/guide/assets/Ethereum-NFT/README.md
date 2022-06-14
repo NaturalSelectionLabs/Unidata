@@ -4,7 +4,7 @@
 
 [Ethereum NFT](https://ethereum.org/en/nft/) is a kind of token on Ethereum with a chaotic specification. They can be normalized through Unidata now.
 
-You can initialize with `ipfsGateway` `alchemyAPIKey` `moralisWeb3APIKey` and `openseaAPIKey` to potentially get a faster response or higher stability.
+You can initialize with `ipfsGateway` `alchemyEthereumAPIKey` `alchemyPolygonAPIKey` `moralisWeb3APIKey` and `openseaAPIKey` to potentially get a faster response or higher stability.
 
 ## API
 

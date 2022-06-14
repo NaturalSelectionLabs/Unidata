@@ -11,7 +11,7 @@ You need to register a Moralis account to use it.
 
 You can initialize with `ipfsGateway` to potentially get a faster response or higher stability.
 
-You must initialize with `moralisWeb3APIKey`, which will expose your Moralis api key on the front end. The steps to get the key after registration are as follows:
+You must initialize with `moralisWeb3APIKey` to use this provider, which will expose your Moralis api key on the front end. The steps to get the key after registration are as follows:
 
 ![](https://i.imgur.com/wXPAPfm.png)
 

@@ -19,6 +19,9 @@ export default defineClientConfig({
             app.config.globalProperties.Unidata = Unidata;
             app.config.globalProperties.unidata = new Unidata({
                 moralisWeb3APIKey: 'gqcVQSCpWGNlfs2nMM1xvW1pOmZhzHc058aNpEK8BKIp26Q39PJemBu5BJi6SZOD',
+                alchemyEthereumAPIKey: '4h0_z1B6WEmj9hp1HJZm7ujeWZpLR6rv',
+                alchemyPolygonAPIKey: 'm1tznK8U8nVecA0Zime5dzF8Pb2av70q',
+                alchemyFlowAPIKey: 'op8m1oqlivm297iodsezvn3hoya9960u',
             });
 
             (<any>window).unidata = app.config.globalProperties.unidata;

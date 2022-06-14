@@ -15,7 +15,9 @@ type IOptions = {
     ipfsGateway?: string;
     moralisWeb3APIKey?: string;
     openseaAPIKey?: string;
-    alchemyAPIKey?: string;
+    alchemyEthereumAPIKey?: string;
+    alchemyPolygonAPIKey?: string;
+    alchemyFlowAPIKey?: string;
     web3StorageAPIToken?: string;
     ethereumProvider?: any;
 };
@@ -33,7 +35,6 @@ class Unidata {
             {},
             {
                 ipfsGateway: 'https://gateway.ipfs.io/ipfs/',
-                alchemyAPIKey: 'demo',
                 web3StorageAPIToken:
                     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDAyMDIwODZmRjU5OUU0Y0YyMzM4MkUzNjg1Y0NmZUEyOGNBODBCOTAiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTIzNjM1Njk3NDUsIm5hbWUiOiJVbmlkYXRhIn0.XmsAuXvbTj4BFhZlJK4xXfbd0ltVZJCEhqdYcW_kLOo',
                 ethereumProvider: window.ethereum,

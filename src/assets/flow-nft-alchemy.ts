@@ -10,8 +10,14 @@ class FlowNFTAlchemy extends Base {
     }
 
     async get(options: AssetsOptions) {
+        if (!this.main.options.alchemyFlowAPIKey) {
+            return {
+                total: 0,
+                list: [],
+            };
+        }
         const res = await axios.get(
-            `https://flow-mainnet.g.alchemy.com/v2/${this.main.options.alchemyAPIKey}/getNFTs/`,
+            `https://flow-mainnet.g.alchemy.com/v2/${this.main.options.alchemyFlowAPIKey}/getNFTs/`,
             {
                 params: {
                     owner: options.identity,

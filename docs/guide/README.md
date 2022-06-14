@@ -34,19 +34,23 @@ const unidata = new Unidata({
     ipfsGateway?: string;
     moralisWeb3APIKey?: string;
     openseaAPIKey?: string;
-    alchemyAPIKey?: string;
+    alchemyEthereumAPIKey?: string;
+    alchemyPolygonAPIKey?: string;
+    alchemyFlowAPIKey?: string;
 });
 ```
 
-| Parameter             | Default                     | Description                          |
-| --------------------- | --------------------------- | ------------------------------------ |
-| `infuraProjectID`     | ethers default keys         | The PROJECT ID of the Infura to use. |
-| `ipfsGateway`         | `'https://dweb.link/ipfs/'` | The IPFS gateway to use.             |
-| `moralisWeb3APIKey`   |                             | Account Web3 API Key of Moralis.     |
-| `openseaAPIKey`       |                             | API Key of OpenSea.                  |
-| `alchemyAPIKey`       | `'demo'`                    | API Key of Alchemy.                  |
-| `web3StorageAPIToken` | Unidata default token       | API Token of Web3 Storage.           |
-| `ethereumProvider`    | window.ethereum             | Ethereum provider                    |
+| Parameter               | Default                     | Description                          |
+| ----------------------- | --------------------------- | ------------------------------------ |
+| `infuraProjectID`       | ethers default keys         | The PROJECT ID of the Infura to use. |
+| `ipfsGateway`           | `'https://dweb.link/ipfs/'` | The IPFS gateway to use.             |
+| `moralisWeb3APIKey`     |                             | Account Web3 API Key of Moralis.     |
+| `openseaAPIKey`         |                             | API Key of OpenSea.                  |
+| `alchemyEthereumAPIKey` |                             | API Key of Alchemy Ethereum.         |
+| `alchemyPolygonAPIKey`  |                             | API Key of Alchemy Polygon.          |
+| `alchemyFlowAPIKey`     |                             | API Key of Alchemy Flow.             |
+| `web3StorageAPIToken`   | Unidata default token       | API Token of Web3 Storage.           |
+| `ethereumProvider`      | window.ethereum             | Ethereum provider                    |
 
 If you don't want to expose some api keys on the front end, or if you want to cache data for faster response and higher stability, then you can use the SDK for your Node.js project.
 

@@ -2,7 +2,7 @@
 
 <Logos type="Assets" :names="['Flow', 'Alchemy']" />
 
-You can initialize with `ipfsGateway` `alchemyAPIKey` to potentially get a faster response or higher stability.
+You can initialize with `ipfsGateway` `alchemyFlowAPIKey` to potentially get a faster response or higher stability.
 
 ## API
 

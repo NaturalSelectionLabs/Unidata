@@ -14,10 +14,19 @@ class EthereumNFTAlchemy extends Base {
         let result: Asset[] = [];
 
         const networkMap: {
-            [key: string]: string;
+            [key: string]: {
+                endpoint: string;
+                keyName: 'alchemyEthereumAPIKey' | 'alchemyPolygonAPIKey';
+            };
         } = {
-            Ethereum: 'https://eth-mainnet.alchemyapi.io/v2/',
-            Polygon: 'https://polygon-mainnet.g.alchemy.com/v2/',
+            Ethereum: {
+                endpoint: 'https://eth-mainnet.alchemyapi.io/v2/',
+                keyName: 'alchemyEthereumAPIKey',
+            },
+            Polygon: {
+                endpoint: 'https://polygon-mainnet.g.alchemy.com/v2/',
+                keyName: 'alchemyPolygonAPIKey',
+            },
         };
 
         const cursor: string[] = [];
@@ -25,7 +34,11 @@ class EthereumNFTAlchemy extends Base {
 
         await Promise.all(
             Object.keys(networkMap).map(async (network, index) => {
-                const res = await axios.get(`${networkMap[network]}${this.main.options.alchemyAPIKey}/getNFTs/`, {
+                const key = this.main.options[networkMap[network].keyName];
+                if (!key) {
+                    return;
+                }
+                const res = await axios.get(`${networkMap[network].endpoint}${key}/getNFTs/`, {
                     params: {
                         owner: options.identity,
                         pageKey: options.cursor?.[index],
