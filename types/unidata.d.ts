@@ -21,6 +21,7 @@ type NoteSource = string;
 
 type Profile = {
     date_created?: string;
+    date_updated?: string;
 
     name?: string;
     username?: string;

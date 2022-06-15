@@ -4,11 +4,13 @@ import { Indexer, Contract, Network } from 'crossbell.js';
 import { ProfilesOptions, ProfileSetOptions, ProfileInput } from './index';
 import { Web3Storage } from 'web3.storage';
 import axios from 'axios';
+import { createClient, Client } from '@urql/core';
 
 class CrossbellProfile extends Base {
     indexer: Indexer;
     contract: Contract;
     contractSet: Contract;
+    urqlClient: Client;
 
     constructor(main: Main) {
         super(main);
@@ -16,7 +18,18 @@ class CrossbellProfile extends Base {
         Network.setIpfsGateway(this.main.options.ipfsGateway!);
     }
 
+    private async init() {
+        this.urqlClient = createClient({
+            url: 'https://indexer.crossbell.io/v1/graphql',
+            maskTypename: false,
+        });
+    }
+
     async get(options: ProfilesOptions) {
+        if (!this.urqlClient) {
+            this.init();
+        }
+
         options = Object.assign(
             {
                 platform: 'Ethereum',
@@ -24,120 +37,101 @@ class CrossbellProfile extends Base {
             options,
         );
 
-        let result;
-        switch (options.platform) {
-            case 'Ethereum': {
-                if (!this.indexer) {
-                    this.indexer = new Indexer();
-                }
-                const res = await this.indexer.getProfiles(options.identity, {
-                    lastIdentifier: options.cursor,
-                    limit: options.limit,
-                });
-
-                const list = res.list.map((item: any) => {
-                    const profile: Profile = Object.assign(
-                        {
-                            username: item.handle,
-                            source: 'Crossbell Profile',
-
-                            metadata: {
-                                network: 'Crossbell',
-                                proof: item.token_id,
-
-                                primary: item.primary,
-                                block_number: item.block_number,
-                            },
-                        },
-                        {
-                            ...(item.metadata?.name && { name: item.metadata.name }),
-                            ...(item.metadata?.bio && { bio: item.metadata.bio }),
-                            ...(item.metadata?.banners && { banners: item.metadata.banners }),
-                            ...(item.metadata?.avatars && { avatars: item.metadata.avatars }),
-                            ...(item.metadata?.websites && { websites: item.metadata.websites }),
-                            ...(item.metadata?.connected_accounts && {
-                                connected_accounts: item.metadata.connected_accounts,
-                            }),
-                        },
-                    );
-
-                    return profile;
-                });
-
-                result = {
-                    total: res.total,
-                    ...(options.limit &&
-                        list.length >= options.limit && { cursor: list[list.length - 1].metadata?.token_id }),
-
-                    list,
-                };
-                break;
-            }
-            case 'Crossbell': {
-                if (!this.contract) {
-                    this.contract = new Contract();
-                    await this.contract.connect();
-                }
-                const info = (await this.contract.getProfileByHandle(options.identity)).data;
-                if (info.profileId === '0') {
-                    return {
-                        total: 0,
-                        list: [],
-                    };
-                }
-                let meta: any = info.metadata;
-                if (!meta && info.uri) {
-                    meta = (await axios.get(this.main.utils.replaceIPFS(info.uri))).data;
-                }
-                const profile: Profile = Object.assign(
-                    {
-                        name: info.handle,
-                        source: 'Crossbell Profile',
-
-                        metadata: {
-                            network: 'Crossbell',
-                            proof: info.profileId,
-
-                            handler: info.handle,
-                            uri: info.uri,
-                        },
-                    },
-                    meta,
-                );
-
-                result = {
-                    total: 1,
-                    list: [profile],
-                };
-                break;
-            }
-            default:
-                throw new Error(`Unsupported platform: ${options.platform}`);
-        }
-
-        result.list = result.list.map((profile: Profile) => {
-            // Crossbell specification compatibility
-            if (profile.connected_accounts) {
-                profile.connected_accounts = profile.connected_accounts.map((account: any) => {
-                    if (typeof account === 'string') {
-                        const match = account.match(/:\/\/account:(.*)@(.*)/);
-                        if (match) {
-                            account = {
-                                identity: match[1],
-                                platform: match[2],
-                            };
-                        } else {
-                            account = {
-                                identity: account,
-                            };
+        const response = await this.urqlClient
+            .query(
+                `
+                query getProfiles($identity: String!, $limit: Int) {
+                    profiles( where: { ${
+                        options.platform === 'Ethereum' ? 'owner' : 'handle'
+                    }: { equals: $identity } }, orderBy: [{ createdAt: asc }], ${
+                    options.cursor ? `cursor: { profileId: ${options.cursor}}, ` : ''
+                }take: $limit ) {
+                        handle
+                        profileId
+                        primary
+                        uri
+                        createdAt
+                        updatedAt
+                        metadata {
+                            content
                         }
+                        transactionHash
+                        blockNumber
+                        updatedTransactionHash
                     }
-                    return account;
-                });
-            }
+                }`,
+                {
+                    identity: options.identity.toLowerCase(),
+                    limit: options.limit,
+                },
+            )
+            .toPromise();
+
+        const list = response.data?.profiles?.map((item: any) => {
+            const profile: Profile = Object.assign(
+                {
+                    date_created: item.createdAt,
+                    date_updated: item.updatedAt,
+                    username: item.handle,
+                    source: 'Crossbell Profile',
+
+                    metadata: {
+                        network: 'Crossbell',
+                        proof: item.profileId,
+
+                        primary: item.primary,
+                        block_number: item.blockNumber,
+                        transactions: [
+                            item.transactionHash,
+                            ...(item.transactionHash !== item.updatedTransactionHash
+                                ? [item.updatedTransactionHash]
+                                : []),
+                        ],
+                    },
+                },
+                {
+                    ...(item.metadata?.content?.name && { name: item.metadata.content.name }),
+                    ...(item.metadata?.content?.bio && { bio: item.metadata.content.bio }),
+                    ...(item.metadata?.content?.banners && { banners: item.metadata.content.banners }),
+                    ...(item.metadata?.content?.avatars && { avatars: item.metadata.content.avatars }),
+                    ...(item.metadata?.content?.websites && { websites: item.metadata.content.websites }),
+                    ...(item.metadata?.content?.connected_accounts && {
+                        connected_accounts: item.metadata.content.connected_accounts,
+                    }),
+                },
+            );
 
             return profile;
         });
+
+        const result = {
+            total: list.length,
+            ...(options.limit && list.length >= options.limit && { cursor: list[list.length - 1].metadata.proof }),
+
+            list: list.map((profile: Profile) => {
+                // Crossbell specification compatibility
+                if (profile.connected_accounts) {
+                    profile.connected_accounts = profile.connected_accounts.map((account: any) => {
+                        if (typeof account === 'string') {
+                            const match = account.match(/:\/\/account:(.*)@(.*)/);
+                            if (match) {
+                                account = {
+                                    identity: match[1],
+                                    platform: match[2],
+                                };
+                            } else {
+                                account = {
+                                    identity: account,
+                                };
+                            }
+                        }
+                        return account;
+                    });
+                }
+
+                return profile;
+            }),
+        };
 
         return result;
     }
