@@ -8,6 +8,7 @@ import { BigNumber } from 'ethers';
 class CrossbellNote extends Base {
     indexer: Indexer;
     contract: Contract;
+    contractSet: Contract;
 
     constructor(main: Main) {
         super(main);
@@ -19,6 +20,13 @@ class CrossbellNote extends Base {
         if (!this.contract) {
             this.contract = new Contract();
             await this.contract.connect();
+        }
+    }
+
+    async initSet() {
+        if (!this.contractSet) {
+            this.contractSet = new Contract(this.main.options.ethereumProvider);
+            await this.contractSet.connect();
         }
     }
 
@@ -161,8 +169,8 @@ class CrossbellNote extends Base {
             options,
         );
 
-        if (!this.contract) {
-            await this.init();
+        if (!this.contractSet) {
+            await this.initSet();
         }
 
         let profileId = await this.main.utils.getCrossbellProfileId({
@@ -212,9 +220,9 @@ class CrossbellNote extends Base {
 
                 let data;
                 if (url) {
-                    data = await this.contract.postNoteForAnyUri(profileId, `ipfs://${cid}`, url);
+                    data = await this.contractSet.postNoteForAnyUri(profileId, `ipfs://${cid}`, url);
                 } else {
-                    data = await this.contract.postNote(profileId, `ipfs://${cid}`);
+                    data = await this.contractSet.postNote(profileId, `ipfs://${cid}`);
                 }
 
                 return {
@@ -230,7 +238,7 @@ class CrossbellNote extends Base {
                         message: 'Missing id',
                     };
                 } else {
-                    await this.contract.deleteNote(profileId, input.id);
+                    await this.contractSet.deleteNote(profileId, input.id);
 
                     return {
                         code: 0,
