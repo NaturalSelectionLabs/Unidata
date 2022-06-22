@@ -67,42 +67,53 @@ class CrossbellProfile extends Base {
             )
             .toPromise();
 
-        const list = response.data?.profiles?.map((item: any) => {
-            const profile: Profile = Object.assign(
-                {
-                    date_created: item.createdAt,
-                    date_updated: item.updatedAt,
-                    username: item.handle,
-                    source: 'Crossbell Profile',
+        const list = await Promise.all(
+            response.data?.profiles?.map(async (item: any) => {
+                if (item.uri && !(item.metadata && item.metadata.content)) {
+                    try {
+                        const res = await axios.get(this.main.utils.replaceIPFS(item.uri));
+                        item.metadata = {
+                            content: res.data,
+                        };
+                    } catch (error) {}
+                }
 
-                    metadata: {
-                        network: 'Crossbell',
-                        proof: item.profileId,
+                const profile: Profile = Object.assign(
+                    {
+                        date_created: item.createdAt,
+                        date_updated: item.updatedAt,
+                        username: item.handle,
+                        source: 'Crossbell Profile',
 
-                        primary: item.primary,
-                        block_number: item.blockNumber,
-                        transactions: [
-                            item.transactionHash,
-                            ...(item.transactionHash !== item.updatedTransactionHash
-                                ? [item.updatedTransactionHash]
-                                : []),
-                        ],
+                        metadata: {
+                            network: 'Crossbell',
+                            proof: item.profileId,
+
+                            primary: item.primary,
+                            block_number: item.blockNumber,
+                            transactions: [
+                                item.transactionHash,
+                                ...(item.transactionHash !== item.updatedTransactionHash
+                                    ? [item.updatedTransactionHash]
+                                    : []),
+                            ],
+                        },
                     },
-                },
-                {
-                    ...(item.metadata?.content?.name && { name: item.metadata.content.name }),
-                    ...(item.metadata?.content?.bio && { bio: item.metadata.content.bio }),
-                    ...(item.metadata?.content?.banners && { banners: item.metadata.content.banners }),
-                    ...(item.metadata?.content?.avatars && { avatars: item.metadata.content.avatars }),
-                    ...(item.metadata?.content?.websites && { websites: item.metadata.content.websites }),
-                    ...(item.metadata?.content?.connected_accounts && {
-                        connected_accounts: item.metadata.content.connected_accounts,
-                    }),
-                },
-            );
+                    {
+                        ...(item.metadata?.content?.name && { name: item.metadata.content.name }),
+                        ...(item.metadata?.content?.bio && { bio: item.metadata.content.bio }),
+                        ...(item.metadata?.content?.banners && { banners: item.metadata.content.banners }),
+                        ...(item.metadata?.content?.avatars && { avatars: item.metadata.content.avatars }),
+                        ...(item.metadata?.content?.websites && { websites: item.metadata.content.websites }),
+                        ...(item.metadata?.content?.connected_accounts && {
+                            connected_accounts: item.metadata.content.connected_accounts,
+                        }),
+                    },
+                );
 
-            return profile;
-        });
+                return profile;
+            }),
+        );
 
         const result = {
             total: list.length,
