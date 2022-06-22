@@ -98,30 +98,38 @@ class CrossbellNote extends Base {
                 const note = (await this.contract.getNote(profileId, nodeId, 'AnyUri')).data;
 
                 // @ts-ignore
-                const date = new Date((await initialContract.provider.getBlock(event.blockNumber)).timestamp * 1000);
+                const date = new Date(
+                    (await initialContract.provider.getBlock(event.blockNumber)).timestamp * 1000,
+                ).toISOString();
 
-                const item: Note = Object.assign({}, note.metadata as Partial<Note>, {
-                    id: `${profileId}-${nodeId}`,
-
-                    date_created: date,
-                    date_updated: date,
-
-                    related_urls: [
-                        ...(note.linkItem?.uri && [note.linkItem?.uri]),
-                        ...(note.contentUri && [this.main.utils.replaceIPFS(note.contentUri)]),
-                        `https://scan.crossbell.io/tx/${event.transactionHash}`,
-                    ],
-
-                    authors: [options.identity],
-
-                    source: 'Crossbell Note',
-                    metadata: {
-                        network: 'Crossbell',
-                        proof: event.transactionHash,
-
-                        block_number: event.blockNumber,
+                const item: Note = Object.assign(
+                    {
+                        date_published: date,
                     },
-                });
+                    note.metadata as Partial<Note>,
+                    {
+                        id: `${profileId}-${nodeId}`,
+
+                        date_created: date,
+                        date_updated: date,
+
+                        related_urls: [
+                            ...(note.linkItem?.uri && [note.linkItem?.uri]),
+                            ...(note.contentUri && [this.main.utils.replaceIPFS(note.contentUri)]),
+                            `https://scan.crossbell.io/tx/${event.transactionHash}`,
+                        ],
+
+                        authors: [options.identity],
+
+                        source: 'Crossbell Note',
+                        metadata: {
+                            network: 'Crossbell',
+                            proof: event.transactionHash,
+
+                            block_number: event.blockNumber,
+                        },
+                    },
+                );
 
                 // Crossbell specification compatibility
                 if (item.summary) {

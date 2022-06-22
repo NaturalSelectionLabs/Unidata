@@ -22,7 +22,7 @@ export type NoteSetOptions = {
     action?: string;
 };
 
-export type NoteInput = Omit<Note, 'date_created' | 'date_updated' | 'source' | 'metadata'>;
+export type NoteInput = Partial<Omit<Note, 'date_created' | 'date_updated' | 'source' | 'metadata'>>;
 
 class Notes {
     map: {
@@ -46,7 +46,17 @@ class Notes {
             options,
         );
 
-        return this.map[options.source].get(options);
+        const result = await this.map[options.source].get(options);
+        result?.list &&
+            (result.list = result.list.map((note) => {
+                if (!note.date_published) {
+                    note.date_published = note.date_created;
+                }
+
+                return note;
+            }));
+
+        return result;
     }
 
     async set(options: NoteSetOptions, input: NoteInput) {

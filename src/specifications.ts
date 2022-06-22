@@ -83,6 +83,7 @@ export type Note = {
 
     date_created: string;
     date_updated: string;
+    date_published: string; // used for scheduled future notes or synchronized old notes
 
     related_urls?: string[];
 

@@ -42,6 +42,7 @@
                     </a>
                 </h2>
                 <div class="note-date">
+                    <strong>Published:</strong> {{ new Date(note.date_published).toDateString() }}
                     <strong>Created:</strong> {{ new Date(note.date_created).toDateString() }}
                     <strong>Updated:</strong> {{ new Date(note.date_updated).toDateString() }}
                 </div>
