@@ -2,6 +2,7 @@ import Main from '../index';
 import Base from './base';
 import ENS from './ens';
 import CrossbellProfile from './crossbell-profile';
+import type { Profile } from '../specifications';
 
 export type ProfilesOptions = {
     source: string;

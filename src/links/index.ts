@@ -1,6 +1,7 @@
 import Main from '../index';
 import Base from './base';
 import CrossbellLink from './crossbell-link';
+import type { Link } from '../specifications';
 
 export type LinksOptions = {
     source: string;

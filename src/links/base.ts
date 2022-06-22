@@ -1,5 +1,6 @@
 import Main from '../index';
 import { LinksOptions, LinkSetOptions, LinkInput } from './index';
+import type { Links } from '../specifications';
 
 abstract class Base {
     main: Main;

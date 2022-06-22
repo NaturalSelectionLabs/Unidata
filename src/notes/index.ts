@@ -4,6 +4,7 @@ import MirrorEntry from './mirror-entry';
 import EthereumNFTActivity from './ethereum-nft-activity';
 import GitcoinContribution from './gitcoin-contribution';
 import CrossbellNote from './crossbell-note';
+import type { Note } from '../specifications';
 
 export type NotesOptions = {
     source: string;

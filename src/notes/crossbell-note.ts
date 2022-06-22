@@ -4,6 +4,7 @@ import { NotesOptions, NoteSetOptions, NoteInput } from './index';
 import { Indexer, Contract, Network } from 'crossbell.js';
 import { Web3Storage } from 'web3.storage';
 import { BigNumber } from 'ethers';
+import type { Note } from '../specifications';
 
 class CrossbellNote extends Base {
     indexer: Indexer;

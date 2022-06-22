@@ -1,5 +1,6 @@
 import Main from '../index';
 import { AssetsOptions } from './index';
+import type { Asset, Assets } from '../specifications';
 
 abstract class Base {
     main: Main;

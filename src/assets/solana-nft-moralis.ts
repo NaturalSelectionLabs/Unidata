@@ -2,6 +2,7 @@ import Main from '../index';
 import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
+import type { Asset } from '../specifications';
 
 class SolanaNFTMoralis extends Base {
     constructor(main: Main) {

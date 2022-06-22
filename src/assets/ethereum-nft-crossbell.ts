@@ -3,6 +3,7 @@ import Base from './base';
 import { AssetsOptions } from './index';
 import { ethers } from 'ethers';
 import { utils } from 'ethers/lib';
+import type { Asset } from '../specifications';
 
 class EthereumNFTCrossbell extends Base {
     private provider: ethers.providers.JsonRpcProvider;

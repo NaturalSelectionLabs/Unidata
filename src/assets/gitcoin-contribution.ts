@@ -4,6 +4,7 @@ import { AssetsOptions } from './index';
 import axios from 'axios';
 import { utils } from 'ethers/lib';
 import { mergeWith, keyBy, values, uniqWith, isEqual } from 'lodash';
+import type { Asset, Assets } from '../specifications';
 
 class GitcoinContribution extends Base {
     constructor(main: Main) {

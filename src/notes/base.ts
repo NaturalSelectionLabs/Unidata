@@ -1,5 +1,6 @@
 import Main from '../index';
 import { NotesOptions, NoteSetOptions, NoteInput } from './index';
+import type { Notes } from '../specifications';
 
 abstract class Base {
     main: Main;

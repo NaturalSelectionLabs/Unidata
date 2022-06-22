@@ -5,6 +5,7 @@ import { ProfilesOptions, ProfileSetOptions, ProfileInput } from './index';
 import { Web3Storage } from 'web3.storage';
 import axios from 'axios';
 import { createClient, Client } from '@urql/core';
+import type { Profile } from '../specifications';
 
 class CrossbellProfile extends Base {
     indexer: Indexer;

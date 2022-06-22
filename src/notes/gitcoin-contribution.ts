@@ -2,6 +2,7 @@ import Main from '../index';
 import Base from './base';
 import { NotesOptions } from './index';
 import axios from 'axios';
+import type { Notes } from '../specifications';
 
 class GitcoinContribution extends Base {
     constructor(main: Main) {

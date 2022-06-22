@@ -3,6 +3,7 @@ import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
 import { BigNumber } from 'ethers';
+import type { Asset } from '../specifications';
 
 class FlowNFTAlchemy extends Base {
     constructor(main: Main) {

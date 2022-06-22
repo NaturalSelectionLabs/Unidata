@@ -19,7 +19,7 @@ type NoteSource = string;
 
 // Profiles
 
-type Profile = {
+export type Profile = {
     date_created?: string;
     date_updated?: string;
 
@@ -46,14 +46,14 @@ type Profile = {
     };
 };
 
-type Profiles = {
+export type Profiles = {
     total: number;
     list: Profile[];
 };
 
 // Links
 
-type Link = {
+export type Link = {
     date_created?: string;
 
     from: InstanceURI;
@@ -70,7 +70,7 @@ type Link = {
     };
 };
 
-type Links = {
+export type Links = {
     total: number;
     cursor?: any;
     list: Link[];
@@ -78,7 +78,7 @@ type Links = {
 
 // Notes
 
-type Note = {
+export type Note = {
     id?: string;
 
     date_created: string;
@@ -122,7 +122,7 @@ type Note = {
     };
 };
 
-type Notes = {
+export type Notes = {
     total: number;
     cursor?: any;
     list: Note[];
@@ -130,7 +130,7 @@ type Notes = {
 
 // Assets
 
-type Asset = {
+export type Asset = {
     date_created?: string;
     date_updated?: string;
 
@@ -171,7 +171,7 @@ type Asset = {
     };
 };
 
-type Assets = {
+export type Assets = {
     total: number;
     cursor?: any;
     list: Asset[];

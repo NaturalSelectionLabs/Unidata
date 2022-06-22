@@ -11,6 +11,7 @@ import FlowNFTAlchemy from './flow-nft-alchemy';
 import GitcoinContribution from './gitcoin-contribution';
 import EthereumNFTCrossbell from './ethereum-nft-crossbell';
 import EthereumNFTNFTScan from './ethereum-nft-nftscan';
+import type { Asset } from '../specifications';
 
 export type AssetsOptions = {
     source: string;

@@ -1,8 +1,11 @@
 import Utils from './utils';
-import Profiles from './profiles';
-import Links from './links';
-import Assets from './assets';
-import Notes from './notes';
+import ProfilesC from './profiles';
+import LinksC from './links';
+import AssetsC from './assets';
+import NotesC from './notes';
+import type { Asset, Assets, Note, Notes, Link, Links, Profile, Profiles } from './specifications';
+
+export { Asset, Assets, Note, Notes, Link, Links, Profile, Profiles };
 
 console.log(
     `${'\n'} %c Unidata v${SDK_VERSION} %c https://unidata.app ${'\n'}`,
@@ -26,10 +29,10 @@ type IOptions = {
 class Unidata {
     options: IOptions;
     utils: Utils;
-    profiles: Profiles;
-    links: Links;
-    assets: Assets;
-    notes: Notes;
+    profiles: ProfilesC;
+    links: LinksC;
+    assets: AssetsC;
+    notes: NotesC;
 
     constructor(options?: IOptions) {
         this.options = Object.assign(
@@ -45,10 +48,10 @@ class Unidata {
 
         this.utils = new Utils(this);
 
-        this.profiles = new Profiles(this);
-        this.links = new Links(this);
-        this.assets = new Assets(this);
-        this.notes = new Notes(this);
+        this.profiles = new ProfilesC(this);
+        this.links = new LinksC(this);
+        this.assets = new AssetsC(this);
+        this.notes = new NotesC(this);
     }
 }
 

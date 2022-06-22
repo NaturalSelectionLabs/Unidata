@@ -3,6 +3,7 @@ import Base from './base';
 import { ethers } from 'ethers';
 import { ProfilesOptions } from './index';
 import { createClient, Client } from '@urql/core';
+import type { Profile } from '../specifications';
 
 class ENS extends Base {
     ethersProvider: ethers.providers.BaseProvider;

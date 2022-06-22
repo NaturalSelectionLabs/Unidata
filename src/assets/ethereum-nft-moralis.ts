@@ -3,6 +3,7 @@ import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
 import { utils } from 'ethers/lib';
+import type { Asset } from '../specifications';
 
 class EthereumNFTMoralis extends Base {
     constructor(main: Main) {

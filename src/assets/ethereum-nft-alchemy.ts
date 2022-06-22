@@ -4,6 +4,7 @@ import { AssetsOptions } from './index';
 import axios from 'axios';
 import { BigNumber } from 'ethers';
 import { utils } from 'ethers/lib';
+import type { Asset } from '../specifications';
 
 class EthereumNFTAlchemy extends Base {
     constructor(main: Main) {
