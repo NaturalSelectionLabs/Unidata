@@ -2,7 +2,6 @@ import Main from '../index';
 import Base from './base';
 import { Indexer, Contract, Network } from 'crossbell.js';
 import { ProfilesOptions, ProfileSetOptions, ProfileInput } from './index';
-import { Web3Storage } from 'web3.storage';
 import axios from 'axios';
 import { createClient, Client } from '@urql/core';
 import type { Profile } from '../specifications';
@@ -235,19 +234,8 @@ class CrossbellProfile extends Base {
                     }
 
                     const result = Object.assign({}, profile.metadata, input);
-                    const blob = new Blob([JSON.stringify(result)], {
-                        type: 'application/json',
-                    });
-                    const file = new File([blob], `${username}.json`);
-                    const web3Storage = new Web3Storage({
-                        token: this.main.options.web3StorageAPIToken!,
-                    });
-                    const cid = await web3Storage.put([file], {
-                        name: file.name,
-                        maxRetries: 3,
-                        wrapWithDirectory: false,
-                    });
-                    await this.contractSet.setProfileUri(proof, `ipfs://${cid}`);
+                    const ipfs = await this.main.utils.uploadToIPFS(result, username);
+                    await this.contractSet.setProfileUri(proof, ipfs);
 
                     return {
                         code: 0,
@@ -263,22 +251,11 @@ class CrossbellProfile extends Base {
             case 'add': {
                 switch (options.platform) {
                     case 'Ethereum': {
-                        const web3Storage = new Web3Storage({
-                            token: this.main.options.web3StorageAPIToken!,
-                        });
                         const username = input.username || options.identity;
                         delete input.username;
                         const result = input;
-                        const blob = new Blob([JSON.stringify(result)], {
-                            type: 'application/json',
-                        });
-                        const file = new File([blob], `${username}.json`);
-                        const cid = await web3Storage.put([file], {
-                            name: file.name,
-                            maxRetries: 3,
-                            wrapWithDirectory: false,
-                        });
-                        await this.contractSet.createProfile(options.identity, username, `ipfs://${cid}`);
+                        const ipfs = await this.main.utils.uploadToIPFS(result, username);
+                        await this.contractSet.createProfile(options.identity, username, ipfs);
 
                         return {
                             code: 0,

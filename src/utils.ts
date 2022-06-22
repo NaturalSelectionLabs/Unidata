@@ -1,6 +1,7 @@
 import Main from './index';
 import { Indexer, Contract, Network } from 'crossbell.js';
 import mime from 'mime';
+import { Web3Storage } from 'web3.storage';
 
 class Utils {
     main: Main;
@@ -87,6 +88,22 @@ class Utils {
         if (mimeType) {
             return mimeType;
         }
+    }
+
+    async uploadToIPFS(obj: any, filename = 'unidata') {
+        const blob = new Blob([JSON.stringify(obj)], {
+            type: 'application/json',
+        });
+        const file = new File([blob], `${filename}.json`);
+        const web3Storage = new Web3Storage({
+            token: this.main.options.web3StorageAPIToken!,
+        });
+        const cid = await web3Storage.put([file], {
+            name: file.name,
+            maxRetries: 3,
+            wrapWithDirectory: false,
+        });
+        return `ipfs://${cid}`;
     }
 }
 
