@@ -10,7 +10,7 @@
         "noImplicitAny": true,
         "moduleResolution": "node",
         "sourceMap": false,
-        "outDir": "dist/types",
+        "outDir": "dist",
         "baseUrl": "."
     },
     "include": ["src/**/*", "types/*"]
