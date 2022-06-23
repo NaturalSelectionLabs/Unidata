@@ -21,4 +21,7 @@ const notes: Notes = await unidata.notes.get(options: {
 
 ## Live Demo
 
-<Notes :source="'Gitcoin Contribution'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
+<Notes :source="'Gitcoin Contribution'" :defaultIdentity="[{
+    identity: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
+    platform: 'Ethereum'
+}]" />

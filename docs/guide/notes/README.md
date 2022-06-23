@@ -89,6 +89,7 @@ type Notes = {
 
         date_created: string;
         date_updated: string;
+        date_published: string;
 
         related_urls?: string[];
 

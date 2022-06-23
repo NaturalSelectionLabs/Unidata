@@ -11,12 +11,23 @@
                 class="input"
             />
         </div>
+        <div class="input-wrap">
+            <label>Platform: </label>
+            <el-select v-model="platform">
+                <el-option
+                    v-for="item in defaultIdentity"
+                    :key="item.platform"
+                    :label="item.platform"
+                    :value="item.platform"
+                />
+            </el-select>
+        </div>
         <h5>Code</h5>
         <pre class="code"><code>{{ `const links: Links = await unidata.links.get({
     source: '${props.source}',
-    identity: '${identity}',${providers ? `
+    identity: '${identity}',
+    platform: '${platform}',${providers ? `
     providers: ${JSON.stringify(providers)},` : ''}
-    limit: 3,
 });`}}</code></pre>
         <h5>View</h5>
         <el-card class="links-card" v-loading="loading">
@@ -61,18 +72,24 @@ const props = defineProps({
         required: true,
     },
     defaultIdentity: {
-        type: String,
+        type: Array,
         required: true,
     },
 });
 
-const identity = ref(props.defaultIdentity);
+const identity = ref((<any>props.defaultIdentity[0]).identity);
+const platform = ref((<any>props.defaultIdentity[0]).platform);
 
 const loading = ref(true);
 const links = ref({});
 const backlinks = ref({});
 
 const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
+
+watchEffect(async () => {
+    identity.value = (<any>props.defaultIdentity.find((item: any) => item.platform === platform.value))?.identity;
+});
+
 watchEffect(async () => {
     if (identity.value) {
         loading.value = true;
@@ -82,7 +99,7 @@ watchEffect(async () => {
             .get({
                 source: props.source,
                 identity: identity.value,
-                limit: 3,
+                platform: platform.value,
             })
             .then((p: any) => {
                 links.value = p;
@@ -92,8 +109,8 @@ watchEffect(async () => {
             .get({
                 source: props.source,
                 identity: identity.value,
+                platform: platform.value,
                 reversed: true,
-                limit: 3,
             })
             .then((p: any) => {
                 backlinks.value = p;

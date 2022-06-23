@@ -91,7 +91,13 @@ const result: {
 
 ### Get
 
-<Notes :source="'Crossbell Note'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
+<Notes :source="'Crossbell Note'" :defaultIdentity="[{
+    identity: '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944',
+    platform: 'Ethereum'
+}, {
+    identity: 'diygod',
+    platform: 'Crossbell'
+}]" />
 
 ### Set
 

@@ -11,11 +11,22 @@
                 class="input"
             />
         </div>
+        <div class="input-wrap">
+            <label>Platform: </label>
+            <el-select v-model="platform">
+                <el-option
+                    v-for="item in defaultIdentity"
+                    :key="item.platform"
+                    :label="item.platform"
+                    :value="item.platform"
+                />
+            </el-select>
+        </div>
         <div class="input-wrap" v-if="source === 'Crossbell Note'">
             <label>filter.url: </label>
             <el-input
                 v-model="url"
-                placeholder="Please input ethereum address"
+                placeholder="Please input target url"
                 clearable
                 maxlength="42"
                 show-word-limit
@@ -25,7 +36,8 @@
         <h5>Code</h5>
         <pre class="code"><code>{{ `const notes: Notes = await unidata.notes.get({
     source: '${props.source}',${identity ? `
-    identity: '${identity}',` : ''}${providers ? `
+    identity: '${identity}',` : ''}${identity ? `
+    platform: '${platform}',` : ''}${providers ? `
     providers: ${JSON.stringify(providers)},` : ''}${url ? `
     filter: {
         url: '${url}',
@@ -34,7 +46,7 @@
 });`}}</code></pre>
         <h5>View</h5>
         <el-card class="note-card" v-loading="loading">
-            <div class="note-content" v-for="note in notesFiltered" :key="note">
+            <div class="note-content" v-for="note in notes.list" :key="note">
                 <h2 class="note-title">
                     <span>{{ note.title }}</span>
                     <a target="_blank" :href="url" v-for="url in note.related_urls" :key="url">
@@ -102,49 +114,41 @@ const props = defineProps({
         required: true,
     },
     defaultIdentity: {
-        type: String,
+        type: Array,
         required: true,
     },
 });
 
-const identity = ref(props.defaultIdentity);
+const identity = ref((<any>props.defaultIdentity[0]).identity);
+const platform = ref((<any>props.defaultIdentity[0]).platform);
 
 const loading = ref(true);
 const notes = ref<Notes>({} as Notes);
-const notesFiltered = ref<Note[]>([]);
 const url = ref('https://unidata.app/');
 
 const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
-watchEffect(async () => {
-    if (identity.value) {
-        loading.value = true;
-        notes.value = {} as Notes;
-        unidata.notes
-            .get({
-                identity: identity.value,
-                source: props.source,
-                limit: 10,
-                filter: {
-                    url: url.value,
-                },
-            })
-            .then((p: any) => {
-                notes.value = p;
 
-                const titleMap: {
-                    [key: string]: boolean;
-                } = {};
-                notesFiltered.value = notes.value.list.filter((note) => {
-                    if (titleMap[note.title || '']) {
-                        return false;
-                    } else {
-                        titleMap[note.title || ''] = true;
-                        return true;
-                    }
-                });
-                loading.value = false;
-            });
-    }
+watchEffect(async () => {
+    identity.value = (<any>props.defaultIdentity.find((item: any) => item.platform === platform.value))?.identity;
+});
+
+watchEffect(async () => {
+    loading.value = true;
+    notes.value = {} as Notes;
+    unidata.notes
+        .get({
+            identity: identity.value,
+            platform: platform.value,
+            source: props.source,
+            limit: 100,
+            filter: {
+                url: url.value,
+            },
+        })
+        .then((p: any) => {
+            notes.value = p;
+            loading.value = false;
+        });
 });
 </script>
 

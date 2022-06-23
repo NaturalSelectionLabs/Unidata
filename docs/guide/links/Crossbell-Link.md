@@ -54,7 +54,13 @@ const result: {
 
 ## Live Demo
 
-<Links :source="'Crossbell Link'" :defaultIdentity="'0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'" />
+<Links :source="'Crossbell Link'" :defaultIdentity="[{
+    identity: '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944',
+    platform: 'Ethereum'
+}, {
+    identity: 'diygod',
+    platform: 'Crossbell'
+}]" />
 
 ### Set
 

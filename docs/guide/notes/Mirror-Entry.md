@@ -23,4 +23,7 @@ const notes: Notes = await unidata.notes.get(options: {
 
 ## Live Demo
 
-<Notes :source="'Mirror Entry'" :defaultIdentity="'0x9651B2a7Aa9ed9635cE896a1Af1a7d6294d5e902'" />
+<Notes :source="'Mirror Entry'" :defaultIdentity="[{
+    identity: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
+    platform: 'Ethereum'
+}]" />
