@@ -9,7 +9,6 @@ import type { Profile } from '../specifications';
 class CrossbellProfile extends Base {
     indexer: Indexer;
     contract: Contract;
-    contractSet: Contract;
     urqlClient: Client;
 
     constructor(main: Main) {
@@ -156,53 +155,18 @@ class CrossbellProfile extends Base {
             options,
         );
 
-        if (!this.contractSet) {
-            this.contractSet = new Contract(this.main.options.ethereumProvider);
-            await this.contractSet.connect();
+        if (!this.contract) {
+            this.contract = new Contract(this.main.options.ethereumProvider);
+            await this.contract.connect();
         }
 
         switch (options.action) {
             case 'update': {
-                let profile: any = {};
+                let profile = await this.main.utils.getCrossbellProfile({
+                    identity: options.identity,
+                    platform: options.platform!,
+                });
 
-                switch (options.platform) {
-                    case 'Ethereum':
-                        {
-                            if (!this.indexer) {
-                                this.indexer = new Indexer();
-                            }
-                            profile = (
-                                await this.indexer.getProfiles(options.identity, {
-                                    primary: true,
-                                })
-                            ).list[0];
-                        }
-                        break;
-                    case 'Crossbell':
-                        {
-                            const info = (await this.contractSet.getProfileByHandle(options.identity)).data;
-                            if (info.profileId === '0') {
-                                return {
-                                    code: 1,
-                                    message: 'Profile not found',
-                                };
-                            }
-                            let meta;
-                            if (info.uri) {
-                                meta = (await axios.get(this.main.utils.replaceIPFS(info.uri))).data;
-                            }
-                            profile = {
-                                token_id: info.profileId,
-                                handle: info.handle,
-                                metadata: meta,
-                            };
-                        }
-                        break;
-                    default:
-                        throw new Error(`Unsupported platform: ${options.platform}`);
-                }
-
-                // createProfile
                 if (!profile) {
                     return {
                         code: 1,
@@ -210,11 +174,9 @@ class CrossbellProfile extends Base {
                     };
                 }
 
-                const proof = profile.token_id;
-
                 // setHandle
                 if (input.username && input.username !== profile.handle) {
-                    await this.contractSet.setHandle(proof, input.username);
+                    await this.contract.setHandle(profile.profileId + '', input.username);
                 }
 
                 // setProfileUri
@@ -233,9 +195,9 @@ class CrossbellProfile extends Base {
                         });
                     }
 
-                    const result = Object.assign({}, profile.metadata, input);
+                    const result = Object.assign({}, profile.metadata?.content, input);
                     const ipfs = await this.main.utils.uploadToIPFS(result, username);
-                    await this.contractSet.setProfileUri(proof, ipfs);
+                    await this.contract.setProfileUri(profile.profileId + '', ipfs);
 
                     return {
                         code: 0,
@@ -255,7 +217,7 @@ class CrossbellProfile extends Base {
                         delete input.username;
                         const result = input;
                         const ipfs = await this.main.utils.uploadToIPFS(result, username);
-                        await this.contractSet.createProfile(options.identity, username, ipfs);
+                        await this.contract.createProfile(options.identity, username, ipfs);
 
                         return {
                             code: 0,

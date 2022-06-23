@@ -23,7 +23,7 @@ class CrossbellLink extends Base {
             options,
         );
 
-        const profile = await this.main.utils.getCrossbellProfileId({
+        const profile = await this.main.utils.getCrossbellProfile({
             identity: options.identity,
             platform: options.platform!,
         });
@@ -74,7 +74,7 @@ class CrossbellLink extends Base {
         }
 
         let fromProfileId = (
-            await this.main.utils.getCrossbellProfileId({
+            await this.main.utils.getCrossbellProfile({
                 identity: options.identity,
                 platform: options.platform!,
             })
@@ -87,7 +87,7 @@ class CrossbellLink extends Base {
         }
 
         const toProfileId = (
-            await this.main.utils.getCrossbellProfileId({
+            await this.main.utils.getCrossbellProfile({
                 identity: link.to,
                 platform: 'Crossbell',
             })

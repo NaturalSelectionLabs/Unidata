@@ -31,7 +31,7 @@ class CrossbellNote extends Base {
         let profileId: number | undefined;
         if (options.identity) {
             profileId = (
-                await this.main.utils.getCrossbellProfileId({
+                await this.main.utils.getCrossbellProfile({
                     identity: options.identity,
                     platform: options.platform!,
                 })
@@ -138,7 +138,7 @@ class CrossbellNote extends Base {
         }
 
         let profileId = (
-            await this.main.utils.getCrossbellProfileId({
+            await this.main.utils.getCrossbellProfile({
                 identity: options.identity,
                 platform: options.platform!,
             })
@@ -150,29 +150,29 @@ class CrossbellNote extends Base {
             };
         }
 
+        // Crossbell specification compatibility
+        if (input.body) {
+            (<any>input).content = input.body.content;
+            delete input.body;
+        }
+        if (input.summary) {
+            (<any>input).summary = input.summary.content;
+        }
+        let url;
+        if (input.related_urls) {
+            if (input.related_urls.length > 1) {
+                throw new Error('Only one related_url is allowed');
+            } else {
+                url = input.related_urls[0];
+                delete input.related_urls;
+            }
+        }
+
         switch (options.action) {
             case 'add': {
                 const web3Storage = new Web3Storage({
                     token: this.main.options.web3StorageAPIToken!,
                 });
-
-                // Crossbell specification compatibility
-                if (input.body) {
-                    (<any>input).content = input.body.content;
-                    delete input.body;
-                }
-                if (input.summary) {
-                    (<any>input).summary = input.summary.content;
-                }
-                let url;
-                if (input.related_urls) {
-                    if (input.related_urls.length > 1) {
-                        throw new Error('Only one related_url is allowed');
-                    } else {
-                        url = input.related_urls[0];
-                        delete input.related_urls;
-                    }
-                }
 
                 const blob = new Blob([JSON.stringify(input)], {
                     type: 'application/json',
@@ -218,7 +218,39 @@ class CrossbellNote extends Base {
                 }
             }
             case 'update': {
-                // TODO
+                if (!input.id) {
+                    return {
+                        code: 1,
+                        message: 'Missing id',
+                    };
+                } else if (input.id.split('-')[0] !== profileId + '') {
+                    return {
+                        code: 1,
+                        message: 'Wrong id',
+                    };
+                } else {
+                    if (!this.indexer) {
+                        this.indexer = new Indexer();
+                    }
+                    const note = await this.indexer.getNote(profileId + '', input.id.split('-')[1]);
+                    if (!note) {
+                        return {
+                            code: 1,
+                            message: 'Note not found',
+                        };
+                    } else {
+                        const id = input.id;
+                        delete input.id;
+                        const result = Object.assign({}, note.metadata?.content, input);
+                        const ipfs = await this.main.utils.uploadToIPFS(result, id);
+                        await this.contract.setNoteUri(profileId + '', id.split('-')[1], ipfs);
+
+                        return {
+                            code: 0,
+                            message: 'Success',
+                        };
+                    }
+                }
             }
             default:
                 throw new Error(`Unsupported action: ${options.action}`);
