@@ -9,7 +9,7 @@ export type LinksOptions = {
     platform?: string;
     type?: string;
     reversed?: boolean;
-    cursor?: number;
+    cursor?: any;
     limit?: number;
 };
 

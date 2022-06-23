@@ -10,9 +10,13 @@ export default defineConfig({
             fileName: (format) => `unidata.${format}.js`,
         },
         sourcemap: true,
+        target: 'esnext',
     },
     define: {
         SDK_VERSION: JSON.stringify(version),
+        'global.crypto': {},
+        'global.msCrypto': {},
+        'process.env': {},
     },
     server: {
         base: '/demo/',

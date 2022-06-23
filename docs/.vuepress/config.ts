@@ -117,7 +117,10 @@ export default defineUserConfig({
 
     bundler: viteBundler({
         viteOptions: {
-            define: viteConfig.define,
+            define: (<any>viteConfig).define,
+            build: {
+                target: (<any>viteConfig).build.target,
+            },
         },
     }),
 });

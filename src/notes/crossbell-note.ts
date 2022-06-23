@@ -9,7 +9,6 @@ import type { Note } from '../specifications';
 class CrossbellNote extends Base {
     indexer: Indexer;
     contract: Contract;
-    contractSet: Contract;
 
     constructor(main: Main) {
         super(main);
@@ -17,23 +16,9 @@ class CrossbellNote extends Base {
         Network.setIpfsGateway(this.main.options.ipfsGateway!);
     }
 
-    async init() {
-        if (!this.contract) {
-            this.contract = new Contract();
-            await this.contract.connect();
-        }
-    }
-
-    async initSet() {
-        if (!this.contractSet) {
-            this.contractSet = new Contract(this.main.options.ethereumProvider);
-            await this.contractSet.connect();
-        }
-    }
-
     async get(options: NotesOptions) {
-        if (!this.contract) {
-            await this.init();
+        if (!this.indexer) {
+            this.indexer = new Indexer();
         }
 
         options = Object.assign(
@@ -43,83 +28,52 @@ class CrossbellNote extends Base {
             options,
         );
 
-        // @ts-ignore
-        const initialContract = this.contract.contract;
-
-        let events: any;
-        let profileId: string = '';
+        let profileId: number | undefined;
         if (options.identity) {
-            profileId = await this.main.utils.getCrossbellProfileId({
-                identity: options.identity,
-                platform: options.platform!,
-            });
-            if (profileId === '0') {
+            profileId = (
+                await this.main.utils.getCrossbellProfileId({
+                    identity: options.identity,
+                    platform: options.platform!,
+                })
+            )?.profileId;
+            if (!profileId) {
                 return {
                     total: 0,
                     list: [],
                 };
             }
         }
-        if (options.filter?.url) {
-            const filter = initialContract.filters.PostNote(
-                null,
-                null,
-                this.contract.getLinkKeyForAnyUri(options.filter.url),
-            );
-            events = await initialContract.queryFilter(filter);
-            if (profileId) {
-                events = events.filter((event: any) => event.args.profileId.toString() === profileId);
-            }
-        } else {
-            if (profileId) {
-                const filter = initialContract.filters.PostNote(BigNumber.from(profileId));
-                events = await initialContract.queryFilter(filter);
-            } else {
-                throw new Error('Missing identity');
-            }
-        }
-
-        const total = events.length;
-        let hasMore;
-
-        events = events.reverse();
-        if (options.cursor) {
-            events = events.slice(options.cursor);
-        }
-        if (options.limit) {
-            hasMore = events.length > options.limit;
-            events = events.slice(0, options.limit);
-        }
+        const res = await this.indexer.getNotes({
+            cursor: options.cursor,
+            includeDeleted: false,
+            limit: options.limit,
+            ...(profileId && { profileId: profileId + '' }),
+            ...(options.filter?.url && { toUri: options.filter?.url }),
+        });
 
         const list = await Promise.all(
-            events.map(async (event: any) => {
-                const profileId = event.args.profileId.toString();
-                const nodeId = event.args.noteId.toString();
-                const note = (await this.contract.getNote(profileId, nodeId, 'AnyUri')).data;
-
-                // @ts-ignore
-                const date = new Date(
-                    (await initialContract.provider.getBlock(event.blockNumber)).timestamp * 1000,
-                ).toISOString();
-
+            res?.list.map(async (event) => {
                 const item: Note = Object.assign(
                     {
-                        date_published: date,
+                        date_published: event.createdAt,
                     },
-                    note.metadata as Partial<Note>,
+                    event.metadata?.content,
                     {
-                        id: `${profileId}-${nodeId}`,
+                        id: `${event.profileId}-${event.noteId}`,
 
-                        date_created: date,
-                        date_updated: date,
+                        date_created: event.createdAt,
+                        date_updated: event.updatedAt,
 
                         related_urls: [
-                            ...(note.linkItem?.uri && [note.linkItem?.uri]),
-                            ...(note.contentUri && [this.main.utils.replaceIPFS(note.contentUri)]),
+                            ...(event.toUri ? [event.toUri] : []),
+                            ...(event.uri ? [this.main.utils.replaceIPFS(event.uri)] : []),
                             `https://scan.crossbell.io/tx/${event.transactionHash}`,
+                            ...(event.updatedTransactionHash && event.updatedTransactionHash !== event.transactionHash
+                                ? [`https://scan.crossbell.io/tx/${event.updatedTransactionHash}`]
+                                : []),
                         ],
 
-                        authors: [options.identity],
+                        authors: [options.identity!],
 
                         source: 'Crossbell Note',
                         metadata: {
@@ -162,8 +116,8 @@ class CrossbellNote extends Base {
         );
 
         return {
-            total,
-            ...(hasMore && { cursor: (options.cursor || 0) + options.limit }),
+            total: res.count,
+            ...(res.cursor && { cursor: res.cursor }),
 
             list: list,
         };
@@ -178,15 +132,18 @@ class CrossbellNote extends Base {
             options,
         );
 
-        if (!this.contractSet) {
-            await this.initSet();
+        if (!this.contract) {
+            this.contract = new Contract(this.main.options.ethereumProvider);
+            await this.contract.connect();
         }
 
-        let profileId = await this.main.utils.getCrossbellProfileId({
-            identity: options.identity,
-            platform: options.platform!,
-        });
-        if (profileId === '0') {
+        let profileId = (
+            await this.main.utils.getCrossbellProfileId({
+                identity: options.identity,
+                platform: options.platform!,
+            })
+        )?.profileId;
+        if (!profileId) {
             return {
                 code: 1,
                 message: 'Profile not found',
@@ -229,9 +186,9 @@ class CrossbellNote extends Base {
 
                 let data;
                 if (url) {
-                    data = await this.contractSet.postNoteForAnyUri(profileId, `ipfs://${cid}`, url);
+                    data = await this.contract.postNoteForAnyUri(profileId + '', `ipfs://${cid}`, url);
                 } else {
-                    data = await this.contractSet.postNote(profileId, `ipfs://${cid}`);
+                    data = await this.contract.postNote(profileId + '', `ipfs://${cid}`);
                 }
 
                 return {
@@ -246,8 +203,13 @@ class CrossbellNote extends Base {
                         code: 1,
                         message: 'Missing id',
                     };
+                } else if (input.id.split('-')[0] !== profileId + '') {
+                    return {
+                        code: 1,
+                        message: 'Wrong id',
+                    };
                 } else {
-                    await this.contractSet.deleteNote(profileId, input.id);
+                    await this.contract.deleteNote(profileId + '', input.id.split('-')[1]);
 
                     return {
                         code: 0,

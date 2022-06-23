@@ -5,7 +5,7 @@ import { Indexer, Contract } from 'crossbell.js';
 
 class CrossbellLink extends Base {
     indexer: Indexer;
-    contractSet: Contract;
+    contract: Contract;
 
     constructor(main: Main) {
         super(main);
@@ -23,57 +23,40 @@ class CrossbellLink extends Base {
             options,
         );
 
-        switch (options.platform) {
-            case 'Ethereum': {
-                const profiles = await this.indexer.getProfiles(options.identity);
+        const profile = await this.main.utils.getCrossbellProfileId({
+            identity: options.identity,
+            platform: options.platform!,
+        });
 
-                let res = await this.indexer[options.reversed ? 'getBacklinkingProfiles' : 'getLinkingProfiles'](
-                    options.identity,
-                    {
-                        linkTypes: options.type,
-                        // limit: options.limit,
-                    },
-                );
-                if (options.limit) {
-                    res.list = res?.list?.slice(0, options.limit);
-                }
-                const list = res?.list?.map((item: any) => ({
-                    date_created: item.created_at,
+        let res = await this.indexer[options.reversed ? 'getBacklinksOfProfile' : 'getLinks'](profile?.profileId + '', {
+            linkType: options.type,
+            limit: options.limit,
+            cursor: options.cursor,
+        });
 
-                    from: options.reversed
-                        ? item.from_detail.handle
-                        : profiles.list.find((profile: any) => profile.token_id === item.from)?.handle,
-                    to: options.reversed
-                        ? profiles.list.find((profile: any) => profile.token_id === item.to)?.handle
-                        : item.to_detail.handle,
-                    type: options.type || '',
-                    source: 'Crossbell Link',
+        const list = res?.list?.map((item) => ({
+            date_created: item.createdAt,
 
-                    metadata: {
-                        network: 'Crossbell',
-                        proof: item.transaction_hash,
-                        block_number: item.block_number,
+            from: (options.reversed ? item.fromProfile?.handle : profile?.handle) || '',
+            to: (options.reversed ? profile?.handle : item.toProfile?.handle) || '',
+            type: options.type || '',
+            source: 'Crossbell Link',
 
-                        from_owner: options.reversed ? item.from_detail.owner : options.identity,
-                        to_owner: options.reversed ? options.identity : item.to_detail.owner,
-                    },
-                }));
+            metadata: {
+                network: 'Crossbell',
+                proof: item.transactionHash,
+                block_number: item.blockNumber,
 
-                return {
-                    total: res?.total,
-                    list,
-                };
-            }
-            case 'Crossbell': {
-                // TODO
-                return {
-                    total: 0,
-                    list: [],
-                };
-            }
-            default:
-                throw new Error(`Unsupported platform: ${options.platform}`);
-        }
+                from_owner: options.reversed ? item.fromProfile?.owner : options.identity,
+                to_owner: options.reversed ? options.identity : item.toProfile?.owner,
+            },
+        }));
+
+        return {
+            total: res?.count,
+            ...(res?.cursor && { cursor: res?.cursor }),
+            list,
+        };
     }
 
     async set(options: LinkSetOptions, link: LinkInput) {
@@ -85,24 +68,31 @@ class CrossbellLink extends Base {
             options,
         );
 
-        if (!this.contractSet) {
-            this.contractSet = new Contract(this.main.options.ethereumProvider);
-            await this.contractSet.connect();
+        if (!this.contract) {
+            this.contract = new Contract(this.main.options.ethereumProvider);
+            await this.contract.connect();
         }
 
-        let fromProfileId = await this.main.utils.getCrossbellProfileId({
-            identity: options.identity,
-            platform: options.platform!,
-        });
-        if (fromProfileId === '0') {
+        let fromProfileId = (
+            await this.main.utils.getCrossbellProfileId({
+                identity: options.identity,
+                platform: options.platform!,
+            })
+        )?.profileId;
+        if (!fromProfileId) {
             return {
                 code: 1,
                 message: 'Profile not found',
             };
         }
 
-        const toProfileId = (await this.contractSet.getProfileByHandle(link.to)).data.profileId;
-        if (toProfileId === '0') {
+        const toProfileId = (
+            await this.main.utils.getCrossbellProfileId({
+                identity: link.to,
+                platform: 'Crossbell',
+            })
+        )?.profileId;
+        if (!toProfileId) {
             return {
                 code: 1,
                 message: 'Profile not found',
@@ -111,7 +101,7 @@ class CrossbellLink extends Base {
 
         switch (options.action) {
             case 'add': {
-                await this.contractSet.linkProfile(fromProfileId, toProfileId, link.type);
+                await this.contract.linkProfile(fromProfileId + '', toProfileId + '', link.type);
 
                 return {
                     code: 0,
@@ -119,7 +109,7 @@ class CrossbellLink extends Base {
                 };
             }
             case 'remove': {
-                await this.contractSet.unlinkProfile(fromProfileId, toProfileId, link.type);
+                await this.contract.unlinkProfile(fromProfileId + '', toProfileId + '', link.type);
 
                 return {
                     code: 0,

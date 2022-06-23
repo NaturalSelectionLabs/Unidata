@@ -6,7 +6,6 @@ import { Web3Storage } from 'web3.storage';
 class Utils {
     main: Main;
     indexer: Indexer;
-    contract: Contract;
 
     constructor(main: Main) {
         this.main = main;
@@ -24,36 +23,24 @@ class Utils {
     }
 
     async getCrossbellProfileId(options: { identity: string; platform: string }) {
-        let profileId;
+        let profile;
 
-        if (!this.contract) {
-            this.contract = new Contract();
-            await this.contract.connect();
+        if (!this.indexer) {
+            this.indexer = new Indexer();
         }
 
         switch (options.platform) {
             case 'Ethereum':
-                {
-                    if (!this.indexer) {
-                        this.indexer = new Indexer();
-                    }
-                    profileId = (
-                        await this.indexer.getProfiles(options.identity, {
-                            primary: true,
-                        })
-                    ).list[0].token_id;
-                }
+                profile = await this.indexer.getPrimaryProfile(options.identity);
                 break;
             case 'Crossbell':
-                {
-                    profileId = (await this.contract.getProfileByHandle(options.identity)).data.profileId;
-                }
+                profile = await this.indexer.getProfileByHandle(options.identity);
                 break;
             default:
                 throw new Error(`Unsupported platform: ${options.platform}`);
         }
 
-        return profileId;
+        return profile;
     }
 
     removeEmpty(
