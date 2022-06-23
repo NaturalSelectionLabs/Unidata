@@ -1,6 +1,6 @@
 {
     "name": "unidata.js",
-    "version": "0.5.4",
+    "version": "0.5.5",
     "description": "💡 Providing easy access to human friendly Web3 data.",
     "exports": {
         "import": "./dist/index.mjs",
