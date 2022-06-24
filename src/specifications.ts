@@ -79,7 +79,7 @@ export type Links = {
 // Notes
 
 export type Note = {
-    id?: string;
+    id: string;
 
     date_created: string;
     date_updated: string;
