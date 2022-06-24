@@ -2,14 +2,9 @@
     "name": "unidata.js",
     "version": "0.5.7",
     "description": "💡 Providing easy access to human friendly Web3 data.",
-    "exports": {
-        "import": "./dist/index.mjs",
-        "require": "./dist/index.js"
-    },
-    "main": "./dist/index.js",
-    "module": "./dist/index.mjs",
-    "browser": "./dist/index.global.js",
-    "types": "./dist/index.d.ts",
+    "main": "./dist/unidata.umd.js",
+    "module": "./dist/unidata.es.js",
+    "types": "./dist/types/index.d.ts",
     "files": [
         "src",
         "dist",
@@ -17,8 +12,9 @@
     ],
     "scripts": {
         "prepare": "husky install",
-        "build": "tsup",
-        "dev": "npm run docs:dev",
+        "dev": "vite",
+        "build": "vite build && tsc --emitDeclarationOnly",
+        "preview": "vite preview",
         "docs:dev": "vuepress dev docs",
         "docs:build": "vuepress build docs"
     },
@@ -70,8 +66,8 @@
         "lint-staged": "13.0.2",
         "markdown-it": "^13.0.1",
         "prettier": "2.7.1",
-        "tsup": "^6.1.2",
         "typescript": "4.7.4",
+        "vite": "2.9.12",
         "vue": "3.2.37",
         "vuepress": "2.0.0-beta.45"
     }

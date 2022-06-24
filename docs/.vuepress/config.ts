@@ -6,7 +6,6 @@ import { viteBundler } from '@vuepress/bundler-vite';
 import { defineUserConfig } from '@vuepress/cli';
 import viteConfig from '../../vite.config';
 import docsearchPlugin from '@vuepress/plugin-docsearch';
-import { version } from '../../package.json';
 
 export default defineUserConfig({
     title: 'Unidata',
@@ -118,14 +117,9 @@ export default defineUserConfig({
 
     bundler: viteBundler({
         viteOptions: {
-            define: {
-                SDK_VERSION: JSON.stringify(version),
-                'global.crypto': {},
-                'global.msCrypto': {},
-                'process.env': {},
-            },
+            define: (<any>viteConfig).define,
             build: {
-                target: 'esnext',
+                target: (<any>viteConfig).build.target,
             },
         },
     }),
