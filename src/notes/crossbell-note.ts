@@ -93,7 +93,7 @@ class CrossbellNote extends Base {
                     };
                 }
                 if ((<any>item).content) {
-                    item.summary = {
+                    item.body = {
                         content: (<any>item).content,
                         mime_type: 'text/markdown',
                     };
