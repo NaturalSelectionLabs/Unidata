@@ -23,25 +23,22 @@ class CrossbellLink extends Base {
             options,
         );
 
-        const character = await this.main.utils.getCrossbellProfile({
+        const profile = await this.main.utils.getCrossbellProfile({
             identity: options.identity,
             platform: options.platform!,
         });
 
-        let res = await this.indexer[options.reversed ? 'getBacklinksOfCharacter' : 'getLinks'](
-            character?.characterId + '',
-            {
-                linkType: options.type,
-                limit: options.limit,
-                cursor: options.cursor,
-            },
-        );
+        let res = await this.indexer[options.reversed ? 'getBacklinksOfProfile' : 'getLinks'](profile?.profileId + '', {
+            linkType: options.type,
+            limit: options.limit,
+            cursor: options.cursor,
+        });
 
         const list = res?.list?.map((item) => ({
             date_created: item.createdAt,
 
-            from: (options.reversed ? item.fromCharacter?.handle : character?.handle) || '',
-            to: (options.reversed ? character?.handle : item.toCharacter?.handle) || '',
+            from: (options.reversed ? item.fromProfile?.handle : profile?.handle) || '',
+            to: (options.reversed ? profile?.handle : item.toProfile?.handle) || '',
             type: options.type || '',
             source: 'Crossbell Link',
 
@@ -50,8 +47,8 @@ class CrossbellLink extends Base {
                 proof: item.transactionHash,
                 block_number: item.blockNumber,
 
-                from_owner: options.reversed ? item.fromCharacter?.owner : options.identity,
-                to_owner: options.reversed ? options.identity : item.toCharacter?.owner,
+                from_owner: options.reversed ? item.fromProfile?.owner : options.identity,
+                to_owner: options.reversed ? options.identity : item.toProfile?.owner,
             },
         }));
 
@@ -76,35 +73,35 @@ class CrossbellLink extends Base {
             await this.contract.connect();
         }
 
-        let fromCharacterId = (
+        let fromProfileId = (
             await this.main.utils.getCrossbellProfile({
                 identity: options.identity,
                 platform: options.platform!,
             })
-        )?.characterId;
-        if (!fromCharacterId) {
+        )?.profileId;
+        if (!fromProfileId) {
             return {
                 code: 1,
-                message: 'Character not found',
+                message: 'Profile not found',
             };
         }
 
-        const toCharacterId = (
+        const toProfileId = (
             await this.main.utils.getCrossbellProfile({
                 identity: link.to,
                 platform: 'Crossbell',
             })
-        )?.characterId;
-        if (!toCharacterId) {
+        )?.profileId;
+        if (!toProfileId) {
             return {
                 code: 1,
-                message: 'Character not found',
+                message: 'Profile not found',
             };
         }
 
         switch (options.action) {
             case 'add': {
-                await this.contract.linkCharacter(fromCharacterId + '', toCharacterId + '', link.type);
+                await this.contract.linkProfile(fromProfileId + '', toProfileId + '', link.type);
 
                 return {
                     code: 0,
@@ -112,7 +109,7 @@ class CrossbellLink extends Base {
                 };
             }
             case 'remove': {
-                await this.contract.unlinkCharacter(fromCharacterId + '', toCharacterId + '', link.type);
+                await this.contract.unlinkProfile(fromProfileId + '', toProfileId + '', link.type);
 
                 return {
                     code: 0,

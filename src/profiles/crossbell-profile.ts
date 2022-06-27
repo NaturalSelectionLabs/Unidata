@@ -39,14 +39,14 @@ class CrossbellProfile extends Base {
         const response = await this.urqlClient
             .query(
                 `
-                query getCharacters($identity: String!, $limit: Int) {
-                    characters( where: { ${
+                query getProfiles($identity: String!, $limit: Int) {
+                    profiles( where: { ${
                         options.platform === 'Ethereum' ? 'owner' : 'handle'
                     }: { equals: $identity } }, orderBy: [{ createdAt: asc }], ${
-                    options.cursor ? `cursor: { characterId: ${options.cursor}}, ` : ''
+                    options.cursor ? `cursor: { profileId: ${options.cursor}}, ` : ''
                 }take: $limit ) {
                         handle
-                        characterId
+                        profileId
                         primary
                         uri
                         createdAt
@@ -67,7 +67,7 @@ class CrossbellProfile extends Base {
             .toPromise();
 
         const list = await Promise.all(
-            response.data?.characters?.map(async (item: any) => {
+            response.data?.profiles?.map(async (item: any) => {
                 if (item.uri && !(item.metadata && item.metadata.content)) {
                     try {
                         const res = await axios.get(this.main.utils.replaceIPFS(item.uri));
@@ -86,7 +86,7 @@ class CrossbellProfile extends Base {
 
                         metadata: {
                             network: 'Crossbell',
-                            proof: item.characterId,
+                            proof: item.profileId,
 
                             primary: item.primary,
                             block_number: item.blockNumber,
@@ -162,12 +162,12 @@ class CrossbellProfile extends Base {
 
         switch (options.action) {
             case 'update': {
-                let character = await this.main.utils.getCrossbellProfile({
+                let profile = await this.main.utils.getCrossbellProfile({
                     identity: options.identity,
                     platform: options.platform!,
                 });
 
-                if (!character) {
+                if (!profile) {
                     return {
                         code: 1,
                         message: 'Profile not found',
@@ -175,8 +175,8 @@ class CrossbellProfile extends Base {
                 }
 
                 // setHandle
-                if (input.username && input.username !== character.handle) {
-                    await this.contract.setHandle(character.characterId + '', input.username);
+                if (input.username && input.username !== profile.handle) {
+                    await this.contract.setHandle(profile.profileId + '', input.username);
                 }
 
                 // setProfileUri
@@ -195,9 +195,9 @@ class CrossbellProfile extends Base {
                         });
                     }
 
-                    const result = Object.assign({}, character.metadata?.content, input);
+                    const result = Object.assign({}, profile.metadata?.content, input);
                     const ipfs = await this.main.utils.uploadToIPFS(result, username);
-                    await this.contract.setCharacterUri(character.characterId + '', ipfs);
+                    await this.contract.setProfileUri(profile.profileId + '', ipfs);
 
                     return {
                         code: 0,
@@ -217,7 +217,7 @@ class CrossbellProfile extends Base {
                         delete input.username;
                         const result = input;
                         const ipfs = await this.main.utils.uploadToIPFS(result, username);
-                        await this.contract.createCharacter(options.identity, username, ipfs);
+                        await this.contract.createProfile(options.identity, username, ipfs);
 
                         return {
                             code: 0,

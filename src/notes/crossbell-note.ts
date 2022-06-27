@@ -28,15 +28,15 @@ class CrossbellNote extends Base {
             options,
         );
 
-        let characterId: number | undefined;
+        let profileId: number | undefined;
         if (options.identity) {
-            characterId = (
+            profileId = (
                 await this.main.utils.getCrossbellProfile({
                     identity: options.identity,
                     platform: options.platform!,
                 })
-            )?.characterId;
-            if (!characterId) {
+            )?.profileId;
+            if (!profileId) {
                 return {
                     total: 0,
                     list: [],
@@ -47,7 +47,7 @@ class CrossbellNote extends Base {
             cursor: options.cursor,
             includeDeleted: false,
             limit: options.limit,
-            ...(characterId && { profileId: characterId + '' }),
+            ...(profileId && { profileId: profileId + '' }),
             ...(options.filter?.url && { toUri: options.filter?.url }),
         });
 
@@ -59,7 +59,7 @@ class CrossbellNote extends Base {
                     },
                     event.metadata?.content,
                     {
-                        id: `${event.characterId}-${event.noteId}`,
+                        id: `${event.profileId}-${event.noteId}`,
 
                         date_created: event.createdAt,
                         date_updated: event.updatedAt,
@@ -137,16 +137,16 @@ class CrossbellNote extends Base {
             await this.contract.connect();
         }
 
-        let characterId = (
+        let profileId = (
             await this.main.utils.getCrossbellProfile({
                 identity: options.identity,
                 platform: options.platform!,
             })
-        )?.characterId;
-        if (!characterId) {
+        )?.profileId;
+        if (!profileId) {
             return {
                 code: 1,
-                message: 'Character not found',
+                message: 'Profile not found',
             };
         }
 
@@ -186,9 +186,9 @@ class CrossbellNote extends Base {
 
                 let data;
                 if (url) {
-                    data = await this.contract.postNoteForAnyUri(characterId + '', `ipfs://${cid}`, url);
+                    data = await this.contract.postNoteForAnyUri(profileId + '', `ipfs://${cid}`, url);
                 } else {
-                    data = await this.contract.postNote(characterId + '', `ipfs://${cid}`);
+                    data = await this.contract.postNote(profileId + '', `ipfs://${cid}`);
                 }
 
                 return {
@@ -203,13 +203,13 @@ class CrossbellNote extends Base {
                         code: 1,
                         message: 'Missing id',
                     };
-                } else if (input.id.split('-')[0] !== characterId + '') {
+                } else if (input.id.split('-')[0] !== profileId + '') {
                     return {
                         code: 1,
                         message: 'Wrong id',
                     };
                 } else {
-                    await this.contract.deleteNote(characterId + '', input.id.split('-')[1]);
+                    await this.contract.deleteNote(profileId + '', input.id.split('-')[1]);
 
                     return {
                         code: 0,
@@ -223,7 +223,7 @@ class CrossbellNote extends Base {
                         code: 1,
                         message: 'Missing id',
                     };
-                } else if (input.id.split('-')[0] !== characterId + '') {
+                } else if (input.id.split('-')[0] !== profileId + '') {
                     return {
                         code: 1,
                         message: 'Wrong id',
@@ -232,7 +232,7 @@ class CrossbellNote extends Base {
                     if (!this.indexer) {
                         this.indexer = new Indexer();
                     }
-                    const note = await this.indexer.getNote(characterId + '', input.id.split('-')[1]);
+                    const note = await this.indexer.getNote(profileId + '', input.id.split('-')[1]);
                     if (!note) {
                         return {
                             code: 1,
@@ -243,7 +243,7 @@ class CrossbellNote extends Base {
                         delete input.id;
                         const result = Object.assign({}, note.metadata?.content, input);
                         const ipfs = await this.main.utils.uploadToIPFS(result, id);
-                        await this.contract.setNoteUri(characterId + '', id.split('-')[1], ipfs);
+                        await this.contract.setNoteUri(profileId + '', id.split('-')[1], ipfs);
 
                         return {
                             code: 0,
