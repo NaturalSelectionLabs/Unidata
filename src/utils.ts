@@ -31,10 +31,10 @@ class Utils {
 
         switch (options.platform) {
             case 'Ethereum':
-                profile = await this.indexer.getPrimaryProfile(options.identity);
+                profile = await this.indexer.getPrimaryCharacter(options.identity);
                 break;
             case 'Crossbell':
-                profile = await this.indexer.getProfileByHandle(options.identity);
+                profile = await this.indexer.getCharacterByHandle(options.identity);
                 break;
             default:
                 throw new Error(`Unsupported platform: ${options.platform}`);
