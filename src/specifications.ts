@@ -29,6 +29,7 @@ export type Profile = {
     bio?: string;
     websites?: URI[];
     banners?: URI[];
+    tags?: string[];
 
     connected_accounts?: {
         identity: string;
