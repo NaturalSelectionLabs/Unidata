@@ -43,13 +43,29 @@ class CrossbellNote extends Base {
                 };
             }
         }
-        const res = await this.indexer.getNotes({
-            cursor: options.cursor,
-            includeDeleted: false,
-            limit: options.limit,
-            ...(profileId && { profileId: profileId + '' }),
-            ...(options.filter?.url && { toUri: options.filter?.url }),
-        });
+        let res;
+        if (options.filter?.id) {
+            const note = await this.indexer.getNote(profileId + '', options.filter.id.split('-')[1]);
+            if (note) {
+                res = {
+                    count: 1,
+                    list: [note],
+                };
+            } else {
+                res = {
+                    count: 0,
+                    list: [],
+                };
+            }
+        } else {
+            res = await this.indexer.getNotes({
+                cursor: options.cursor,
+                includeDeleted: false,
+                limit: options.limit,
+                ...(profileId && { profileId: profileId + '' }),
+                ...(options.filter?.url && { toUri: options.filter?.url }),
+            });
+        }
 
         const list = await Promise.all(
             res?.list.map(async (event) => {
@@ -59,7 +75,7 @@ class CrossbellNote extends Base {
                     },
                     event.metadata?.content,
                     {
-                        id: `${event.profileId}-${event.noteId}`,
+                        id: `${profileId}-${event.noteId}`,
 
                         date_created: event.createdAt,
                         date_updated: event.updatedAt,

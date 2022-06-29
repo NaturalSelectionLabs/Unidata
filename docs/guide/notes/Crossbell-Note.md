@@ -23,6 +23,7 @@ const notes: Notes = await unidata.notes.get(options: {
     cursor?: string;
     filter?: {
         url?: string;
+        id?: string;
     }
 });
 ```
@@ -31,6 +32,7 @@ const notes: Notes = await unidata.notes.get(options: {
 -   Use Ethereum address as the `identity` and `'Ethereum'` as the `platform` to get notes from all profiles belonging to this address.
 -   Use Crossbell handle as the `identity` and `'Crossbell'` as the `platform` to get notes from a specific profile.
 -   Use `filter.url` to get notes linking to the url.
+-   Use `filter.url` to get notes with a certain id.
 
 ### Set
 
