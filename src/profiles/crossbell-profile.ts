@@ -57,6 +57,7 @@ class CrossbellProfile extends Base {
                         transactionHash
                         blockNumber
                         updatedTransactionHash
+                        owner
                     }
                 }`,
                 {
@@ -90,6 +91,7 @@ class CrossbellProfile extends Base {
 
                             primary: item.primary,
                             block_number: item.blockNumber,
+                            owner: item.owner,
                             transactions: [
                                 item.transactionHash,
                                 ...(item.transactionHash !== item.updatedTransactionHash

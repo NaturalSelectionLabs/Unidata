@@ -94,9 +94,16 @@ class CrossbellNote extends Base {
                         source: 'Crossbell Note',
                         metadata: {
                             network: 'Crossbell',
-                            proof: event.transactionHash,
+                            proof: `${profileId}-${event.noteId}`,
 
                             block_number: event.blockNumber,
+                            owner: event.owner,
+                            transactions: [
+                                event.transactionHash,
+                                ...(event.transactionHash !== event.updatedTransactionHash
+                                    ? [event.updatedTransactionHash]
+                                    : []),
+                            ],
                         },
                     },
                 );
