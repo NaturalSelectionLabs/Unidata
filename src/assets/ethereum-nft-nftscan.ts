@@ -5,7 +5,7 @@ import axios from 'axios';
 import { utils } from 'ethers/lib';
 import type { Asset } from '../specifications';
 
-class EthereumNFTAlchemy extends Base {
+class EthereumNFTNFTScan extends Base {
     constructor(main: Main) {
         super(main);
     }
@@ -141,4 +141,4 @@ class EthereumNFTAlchemy extends Base {
     }
 }
 
-export default EthereumNFTAlchemy;
+export default EthereumNFTNFTScan;
