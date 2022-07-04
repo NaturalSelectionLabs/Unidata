@@ -47,7 +47,7 @@ class CrossbellNote extends Base {
             cursor: options.cursor,
             includeDeleted: false,
             limit: options.limit,
-            ...(characterId && { profileId: characterId + '' }),
+            ...(characterId && { characterId: characterId + '' }),
             ...(options.filter?.url && { toUri: options.filter?.url }),
         });
 
