@@ -45,7 +45,7 @@ class CrossbellNote extends Base {
         }
         let res;
         if (options.filter?.id) {
-            const note = await this.indexer.getNote(profileId + '', options.filter.id.split('-')[1]);
+            const note = await this.indexer.getNote(characterId + '', options.filter.id.split('-')[1]);
             if (note) {
                 res = {
                     count: 1,
@@ -68,7 +68,7 @@ class CrossbellNote extends Base {
         }
 
         const list = await Promise.all(
-            res?.list.map(async (event) => {
+            res?.list.map(async (event: any) => {
                 const item: Note = Object.assign(
                     {
                         date_published: event.createdAt,
