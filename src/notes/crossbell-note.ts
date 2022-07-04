@@ -31,7 +31,7 @@ class CrossbellNote extends Base {
         let characterId: number | undefined;
         if (options.identity) {
             characterId = (
-                await this.main.utils.getCrossbellProfile({
+                await this.main.utils.getCrossbellCharacter({
                     identity: options.identity,
                     platform: options.platform!,
                 })
@@ -138,7 +138,7 @@ class CrossbellNote extends Base {
         }
 
         let characterId = (
-            await this.main.utils.getCrossbellProfile({
+            await this.main.utils.getCrossbellCharacter({
                 identity: options.identity,
                 platform: options.platform!,
             })

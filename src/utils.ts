@@ -22,7 +22,7 @@ class Utils {
         return urls.map((url: string) => this.replaceIPFS(url));
     }
 
-    async getCrossbellProfile(options: { identity: string; platform: string }) {
+    async getCrossbellCharacter(options: { identity: string; platform: string }) {
         let profile;
 
         if (!this.indexer) {

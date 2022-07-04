@@ -165,7 +165,7 @@ class CrossbellProfile extends Base {
 
         switch (options.action) {
             case 'update': {
-                let character = await this.main.utils.getCrossbellProfile({
+                let character = await this.main.utils.getCrossbellCharacter({
                     identity: options.identity,
                     platform: options.platform!,
                 });
