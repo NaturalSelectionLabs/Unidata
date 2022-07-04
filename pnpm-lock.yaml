@@ -15,7 +15,7 @@ specifiers:
     '@vuepress/plugin-docsearch': 2.0.0-beta.45
     '@vuepress/plugin-register-components': 2.0.0-beta.45
     axios: 0.27.2
-    crossbell.js: 0.7.10
+    crossbell.js: 0.10.1
     element-plus: 2.2.6
     ethers: 5.6.9
     graphql: 16.5.0
@@ -36,7 +36,7 @@ dependencies:
     '@types/lodash': 4.14.182
     '@urql/core': 2.5.0_graphql@16.5.0
     axios: 0.27.2
-    crossbell.js: 0.7.10
+    crossbell.js: 0.10.1
     ethers: 5.6.9
     graphql: 16.5.0
     lodash: 4.17.21
@@ -2252,7 +2252,7 @@ packages:
         engines: { node: '>=6.14.2' }
         requiresBuild: true
         dependencies:
-            node-gyp-build: 4.4.0
+            node-gyp-build: 4.5.0
         dev: false
 
     /cac/6.7.12:
@@ -2552,19 +2552,21 @@ packages:
             which: 2.0.2
         dev: true
 
-    /crossbell.js/0.7.10:
+    /crossbell.js/0.10.1:
         resolution:
             {
-                integrity: sha512-LyUop73bME1ZH/w4lqvWoFSAXLc/Rrs53qTikk/ejKcwQML6dDAwJW4DLplXh9/2BZB/wSLEDp//lIroaQfyNw==,
+                integrity: sha512-D1gmBwMOLTscPzS6z6BznYL4cnREFGCSgH3+sQsvbBdcMF8Fbun7hXKxG3raFMZd7aPZphfT2POHj2zw2TNMRQ==,
             }
         dependencies:
             ethers: 5.6.9
+            fetch-undici: 3.0.1
+            is-ipfs: 6.0.2
             query-string: 7.1.1
             ts-mixer: 6.0.1
-            undici: 5.5.1
             web3-providers-ws: 1.7.4
         transitivePeerDependencies:
             - bufferutil
+            - node-fetch
             - supports-color
             - utf-8-validate
         dev: false
@@ -3715,6 +3717,16 @@ packages:
             reusify: 1.0.4
         dev: true
 
+    /fetch-undici/3.0.1:
+        resolution:
+            {
+                integrity: sha512-UHHu1HqW22ZhK6C/1Zmjf7mQpOwPwLYZ+xcsOgpzistONU8QqvCop6Od29p/kw1GUVoq2Ihu6ItpKLtlojx4FQ==,
+            }
+        engines: { node: '>=16' }
+        dependencies:
+            undici: 5.6.0
+        dev: false
+
     /files-from-path/0.2.6:
         resolution:
             {
@@ -4551,6 +4563,23 @@ packages:
             ip-regex: 4.3.0
         dev: false
 
+    /is-ipfs/6.0.2:
+        resolution:
+            {
+                integrity: sha512-RinUnsggL4hlLoHlZcvs2+92OE46Uflg/YVU1m5fXhyDBS/zh3bq+i6Aw7IbzJZ9oZXJx26TgxpqCuCr+LH/DA==,
+            }
+        engines: { node: '>=14.0.0', npm: '>=6.0.0' }
+        dependencies:
+            iso-url: 1.2.1
+            mafmt: 10.0.0
+            multiaddr: 10.0.1
+            multiformats: 9.7.0
+            uint8arrays: 3.0.0
+        transitivePeerDependencies:
+            - node-fetch
+            - supports-color
+        dev: false
+
     /is-negative-zero/2.0.2:
         resolution:
             {
@@ -4882,7 +4911,7 @@ packages:
         requiresBuild: true
         dependencies:
             node-addon-api: 2.0.2
-            node-gyp-build: 4.4.0
+            node-gyp-build: 4.5.0
             readable-stream: 3.6.0
         dev: false
 
@@ -5082,6 +5111,18 @@ packages:
         engines: { node: '>=10' }
         dependencies:
             yallist: 4.0.0
+        dev: false
+
+    /mafmt/10.0.0:
+        resolution:
+            {
+                integrity: sha512-K1bziJOXcnepfztu+2Xy9FLKVLaFMDuspmiyJIYRxnO0WOxFSV7XKSdMxMrVZxcvg1+YjlTIvSGTImUHU2k4Aw==,
+            }
+        dependencies:
+            multiaddr: 10.0.1
+        transitivePeerDependencies:
+            - node-fetch
+            - supports-color
         dev: false
 
     /magic-string/0.25.9:
@@ -5415,6 +5456,13 @@ packages:
             }
         dev: false
 
+    /multiformats/9.7.0:
+        resolution:
+            {
+                integrity: sha512-uv/tcgwk0yN4DStopnBN4GTgvaAlYdy6KnZpuzEPFOYQd71DYFJjs0MN1ERElAflrZaYyGBWXyGxL5GgrxIx0Q==,
+            }
+        dev: false
+
     /murmurhash3js-revisited/3.0.0:
         resolution:
             {
@@ -5516,10 +5564,10 @@ packages:
         engines: { node: '>= 6.13.0' }
         dev: false
 
-    /node-gyp-build/4.4.0:
+    /node-gyp-build/4.5.0:
         resolution:
             {
-                integrity: sha512-amJnQCcgtRVw9SvoebO3BKGESClrfXGCUTX9hSn1OuGQTQBOZmVd0Z0OlecpuRksKvbsUqALE8jls/ErClAPuQ==,
+                integrity: sha512-2iGbaQBV+ITgCz76ZEjmhUKAKVf7xfY1sRl4UiKQspfZMH2h06SyhNsnSVy50cwkFQDGLyif6m/6uFXHkOZ6rg==,
             }
         hasBin: true
         dev: false
@@ -6264,7 +6312,7 @@ packages:
         dependencies:
             elliptic: 6.5.4
             node-addon-api: 2.0.2
-            node-gyp-build: 4.4.0
+            node-gyp-build: 4.5.0
         dev: false
 
     /section-matter/1.0.0:
@@ -6823,10 +6871,10 @@ packages:
             which-boxed-primitive: 1.0.2
         dev: false
 
-    /undici/5.5.1:
+    /undici/5.6.0:
         resolution:
             {
-                integrity: sha512-MEvryPLf18HvlCbLSzCW0U00IMftKGI5udnjrQbC5D4P0Hodwffhv+iGfWuJwg16Y/TK11ZFK8i+BPVW2z/eAw==,
+                integrity: sha512-mc+8SY1fXubTrdx4CXDkeFFGV8lI3Tq4I/70U1V8Z6g4iscGII0uLO7CPnDt56bXEbvaKwo2T2+VrteWbZiXiQ==,
             }
         engines: { node: '>=12.18' }
         dev: false
@@ -6855,7 +6903,7 @@ packages:
         engines: { node: '>=6.14.2' }
         requiresBuild: true
         dependencies:
-            node-gyp-build: 4.4.0
+            node-gyp-build: 4.5.0
         dev: false
 
     /utf8/3.0.0:

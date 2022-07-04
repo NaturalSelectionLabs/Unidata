@@ -16,6 +16,7 @@ export default defineConfig({
         SDK_VERSION: JSON.stringify(version),
         'global.crypto': {},
         'global.msCrypto': {},
+        'global.fetch': {},
         'process.env': {},
     },
     server: {
