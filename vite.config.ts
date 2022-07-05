@@ -7,6 +7,7 @@ export default defineConfig({
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
             name: 'Unidata',
+            formats: ['cjs', 'es', 'umd'],
             fileName: (format) => `unidata.${format}.js`,
         },
         sourcemap: true,

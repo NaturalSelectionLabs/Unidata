@@ -2,8 +2,8 @@ import Main from '../index';
 import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
-import { utils } from 'ethers/lib';
-import { mergeWith, keyBy, values, uniqWith, isEqual } from 'lodash';
+import { utils } from 'ethers';
+import { mergeWith, keyBy, values, uniqWith, isEqual } from 'lodash-es';
 import type { Asset, Assets } from '../specifications';
 
 class GitcoinContribution extends Base {

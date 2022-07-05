@@ -1,8 +1,7 @@
 import Main from '../index';
 import Base from './base';
 import { AssetsOptions } from './index';
-import { ethers } from 'ethers';
-import { utils } from 'ethers/lib';
+import { ethers, utils } from 'ethers';
 import type { Asset } from '../specifications';
 
 class EthereumNFTCrossbell extends Base {

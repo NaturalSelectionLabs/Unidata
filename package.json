@@ -2,9 +2,13 @@
     "name": "unidata.js",
     "version": "0.6.1",
     "description": "💡 Providing easy access to human friendly Web3 data.",
-    "main": "./dist/unidata.umd.js",
-    "module": "./dist/unidata.es.js",
-    "types": "./dist/types/index.d.ts",
+    "exports": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.js"
+    },
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
     "files": [
         "src",
         "dist",
@@ -12,9 +16,8 @@
     ],
     "scripts": {
         "prepare": "husky install",
-        "dev": "vite",
-        "build": "vite build && tsc --emitDeclarationOnly",
-        "preview": "vite preview",
+        "build": "tsup",
+        "dev": "npm run docs:dev",
         "docs:dev": "vuepress dev docs",
         "docs:build": "vuepress build docs"
     },
@@ -41,10 +44,11 @@
         "@types/lodash": "^4.14.182",
         "@urql/core": "2.5.0",
         "axios": "0.27.2",
-        "crossbell.js": "0.10.1",
+        "crossbell.js": "0.10.2",
         "ethers": "5.6.9",
         "graphql": "16.5.0",
         "lodash": "^4.17.21",
+        "lodash-es": "^4.17.21",
         "mime": "3.0.0",
         "web3.storage": "4.2.0"
     },
@@ -54,6 +58,7 @@
         "@fortawesome/free-solid-svg-icons": "6.1.1",
         "@fortawesome/vue-fontawesome": "3.0.0-5",
         "@types/graceful-fs": "4.1.5",
+        "@types/lodash-es": "^4.17.6",
         "@types/mime": "2.0.3",
         "@types/node": "18.0.0",
         "@vitejs/plugin-vue": "2.3.3",
@@ -66,6 +71,7 @@
         "lint-staged": "13.0.2",
         "markdown-it": "^13.0.1",
         "prettier": "2.7.1",
+        "tsup": "^6.1.3",
         "typescript": "4.7.4",
         "vite": "2.9.12",
         "vue": "3.2.37",
