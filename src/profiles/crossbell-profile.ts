@@ -72,6 +72,8 @@ class CrossbellProfile extends Base {
                             network: 'Crossbell',
                             proof: item.characterId,
 
+                            raw: item.metadata?.content || {},
+
                             primary: item.primary,
                             block_number: item.blockNumber,
                             owner: item.owner,
@@ -96,8 +98,6 @@ class CrossbellProfile extends Base {
                         ...(item.metadata?.content?.connected_accounts && {
                             connected_accounts: item.metadata.content.connected_accounts,
                         }),
-
-                        raw: item.metadata?.content || {},
                     },
                 );
 
