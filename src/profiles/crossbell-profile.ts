@@ -96,6 +96,8 @@ class CrossbellProfile extends Base {
                         ...(item.metadata?.content?.connected_accounts && {
                             connected_accounts: item.metadata.content.connected_accounts,
                         }),
+
+                        raw: item.metadata?.content || {},
                     },
                 );
 
@@ -114,13 +116,14 @@ class CrossbellProfile extends Base {
                         if (typeof account === 'string') {
                             const match = account.match(/:\/\/account:(.*)@(.*)/);
                             if (match) {
-                                account = {
+                                return {
                                     identity: match[1],
                                     platform: match[2],
                                 };
                             } else {
-                                account = {
+                                return {
                                     identity: account,
+                                    platform: '',
                                 };
                             }
                         }

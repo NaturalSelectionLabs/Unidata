@@ -43,6 +43,10 @@ export type Profile = {
         network: Network;
         proof: string;
 
+        raw?: {
+            [key: string]: any;
+        };
+
         [key: string]: any;
     };
 };
