@@ -55,6 +55,7 @@ const result: {
 
         related_urls?: string[];
 
+        applications?: string[];
         tags?: string[];
         authors: AccountInstanceURI[];
         title?: string;

@@ -133,6 +133,10 @@ class CrossbellNote extends Base {
                         }
                     });
                 }
+                if ((<any>item).sources) {
+                    item.applications = (<any>item).sources;
+                    delete (<any>item).sources;
+                }
 
                 return item;
             }),
@@ -189,6 +193,10 @@ class CrossbellNote extends Base {
                 url = input.related_urls[0];
                 delete input.related_urls;
             }
+        }
+        if (input.applications) {
+            (<any>input).sources = input.applications;
+            delete input.applications;
         }
 
         switch (options.action) {

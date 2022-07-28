@@ -92,6 +92,7 @@ export type Note = {
 
     related_urls?: string[];
 
+    applications?: string[];
     tags?: string[];
     authors: AccountInstanceURI[];
     title?: string;
