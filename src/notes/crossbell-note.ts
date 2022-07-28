@@ -72,11 +72,12 @@ class CrossbellNote extends Base {
                 const item: Note = Object.assign(
                     {
                         date_published: event.createdAt,
+                        id: `${characterId}-${event.noteId}`,
+
+                        authors: [options.identity!],
                     },
                     event.metadata?.content,
                     {
-                        id: `${characterId}-${event.noteId}`,
-
                         date_created: event.createdAt,
                         date_updated: event.updatedAt,
 
@@ -88,8 +89,6 @@ class CrossbellNote extends Base {
                                 ? [`https://scan.crossbell.io/tx/${event.updatedTransactionHash}`]
                                 : []),
                         ],
-
-                        authors: [options.identity!],
 
                         source: 'Crossbell Note',
                         metadata: {
@@ -104,6 +103,8 @@ class CrossbellNote extends Base {
                                     ? [event.updatedTransactionHash]
                                     : []),
                             ],
+
+                            raw: event.metadata?.content,
                         },
                     },
                 );

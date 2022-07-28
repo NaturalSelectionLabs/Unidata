@@ -125,6 +125,10 @@ export type Note = {
         network: Network;
         proof: string;
 
+        raw?: {
+            [key: string]: any;
+        };
+
         [key: string]: any;
     };
 };
