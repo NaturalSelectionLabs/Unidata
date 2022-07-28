@@ -21,11 +21,15 @@ const links: Links = await unidata.links.get(options: {
     reversed?: boolean;
     cursor?: number;
     limit?: number;
+    filter?: {
+        to?: string;
+    }
 });
 ```
 
 -   Use Ethereum address as the `identity` and `'Ethereum'` as the `platform` to get links from all profiles belonging to this address.
 -   Use Crossbell handle as the `identity` and `'Crossbell'` as the `platform` to get links from a specific profile.
+-   Use `filter.to` to get links to a certain Crossbell identity, useful when checking if a link exists with a certain Crossbell identity.
 
 ### Set
 

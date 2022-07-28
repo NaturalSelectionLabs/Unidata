@@ -28,12 +28,21 @@ class CrossbellLink extends Base {
             platform: options.platform!,
         });
 
+        let characterTo;
+        if (options.filter?.to) {
+            characterTo = await this.main.utils.getCrossbellCharacter({
+                identity: options.filter?.to,
+                platform: 'Crossbell',
+            });
+        }
+
         let res = await this.indexer[options.reversed ? 'getBacklinksOfCharacter' : 'getLinks'](
             character?.characterId + '',
             {
                 linkType: options.type,
                 limit: options.limit,
                 cursor: options.cursor,
+                ...(characterTo?.characterId && { toCharacterId: characterTo.characterId + '' }),
             },
         );
 

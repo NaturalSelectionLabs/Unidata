@@ -11,6 +11,7 @@ export type LinksOptions = {
     reversed?: boolean;
     cursor?: any;
     limit?: number;
+    filter?: any;
 };
 
 export type LinkSetOptions = {
