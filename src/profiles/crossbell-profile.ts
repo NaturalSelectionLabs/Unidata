@@ -73,6 +73,7 @@ class CrossbellProfile extends Base {
                             proof: item.characterId,
 
                             raw: item.metadata?.content || {},
+                            uri: item.uri,
 
                             primary: item.primary,
                             block_number: item.blockNumber,
