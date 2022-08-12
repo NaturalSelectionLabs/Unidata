@@ -117,6 +117,15 @@ export type Note = {
         address?: URI;
         mime_type?: string;
         size_in_bytes?: number;
+        alt?: string;
+        width?: number;
+        height?: number;
+    }[];
+
+    attributes?: {
+        display_type?: 'string' | 'number' | 'boolean' | 'date';
+        trait_type?: string;
+        value: null | string | number | boolean;
     }[];
 
     source: NoteSource;

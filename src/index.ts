@@ -1,8 +1,12 @@
 import Utils from './utils';
-import ProfilesC, { ProfileInput } from './profiles';
-import LinksC, { LinkInput } from './links';
+import ProfilesC from './profiles';
+import LinksC from './links';
 import AssetsC from './assets';
-import NotesC, { NoteInput } from './notes';
+import NotesC from './notes';
+
+import type { ProfileInput } from './profiles';
+import type { LinkInput } from './links';
+import type { NoteInput } from './notes';
 import type { Asset, Assets, Note, Notes, Link, Links, Profile, Profiles } from './specifications';
 
 export { Asset, Assets, Note, Notes, Link, Links, Profile, Profiles, ProfileInput, LinkInput, NoteInput };
