@@ -37,6 +37,12 @@ export type Profile = {
         url?: string;
     }[];
 
+    attributes?: {
+        display_type?: 'string' | 'number' | 'boolean' | 'date';
+        trait_type?: string;
+        value: null | string | number | boolean;
+    }[];
+
     source: ProfileSource;
 
     metadata?: {

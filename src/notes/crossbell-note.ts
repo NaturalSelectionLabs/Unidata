@@ -3,8 +3,8 @@ import Base from './base';
 import { NotesOptions, NoteSetOptions, NoteInput } from './index';
 import { Indexer, Contract, Network } from 'crossbell.js';
 import { Web3Storage } from 'web3.storage';
-import { BigNumber } from 'ethers';
 import type { Note } from '../specifications';
+import { unionBy } from 'lodash-es';
 
 class CrossbellNote extends Base {
     indexer: Indexer;
@@ -275,6 +275,13 @@ class CrossbellNote extends Base {
                         const id = input.id;
                         delete input.id;
                         const result = Object.assign({}, note.metadata?.content, input);
+                        if (input.attributes && note.metadata?.content?.attributes) {
+                            result.attributes = unionBy(
+                                input.attributes,
+                                note.metadata.content.attributes,
+                                'trait_type',
+                            );
+                        }
                         const ipfs = await this.main.utils.uploadToIPFS(result, id);
                         await this.contract.setNoteUri(characterId + '', id.split('-')[1], ipfs);
 

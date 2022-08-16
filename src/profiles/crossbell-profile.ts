@@ -4,6 +4,7 @@ import { Indexer, Contract, Network, ListResponse, CharacterEntity } from 'cross
 import { ProfilesOptions, ProfileSetOptions, ProfileInput } from './index';
 import axios from 'axios';
 import type { Profile } from '../specifications';
+import { unionBy } from 'lodash-es';
 
 class CrossbellProfile extends Base {
     indexer: Indexer;
@@ -99,6 +100,9 @@ class CrossbellProfile extends Base {
                         ...(item.metadata?.content?.connected_accounts && {
                             connected_accounts: item.metadata.content.connected_accounts,
                         }),
+                        ...((<any>item.metadata?.content)?.attributes && {
+                            attributes: (<any>item.metadata?.content).attributes,
+                        }),
                     },
                 );
 
@@ -189,6 +193,14 @@ class CrossbellProfile extends Base {
                     }
 
                     const result = Object.assign({}, character.metadata?.content, input);
+                    if (input.attributes && (<any>character.metadata?.content)?.attributes) {
+                        result.attributes = unionBy(
+                            input.attributes,
+                            (<any>character.metadata?.content).attributes,
+                            'trait_type',
+                        );
+                    }
+
                     const ipfs = await this.main.utils.uploadToIPFS(result, username);
                     await this.contract.setCharacterUri(character.characterId + '', ipfs);
 
