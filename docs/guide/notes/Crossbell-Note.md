@@ -59,6 +59,7 @@ const result: {
         tags?: string[];
         authors: AccountInstanceURI[];
         title?: string;
+        content_warning?: string;
 
         summary?: {
             content?: string;

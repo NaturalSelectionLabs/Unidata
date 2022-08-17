@@ -98,6 +98,7 @@ export type Note = {
 
     related_urls?: string[];
 
+    content_warning?: string;
     applications?: string[];
     tags?: string[];
     authors: AccountInstanceURI[];
