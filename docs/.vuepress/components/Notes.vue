@@ -124,7 +124,7 @@ const platform = ref((<any>props.defaultIdentity[0]).platform);
 
 const loading = ref(true);
 const notes = ref<Notes>({} as Notes);
-const url = ref('https://unidata.app/');
+const url = ref('');
 
 const unidata = getCurrentInstance()?.appContext.config.globalProperties.unidata;
 
@@ -162,7 +162,7 @@ watchEffect(async () => {
     }
 
     .note-title {
-        margin-bottom: 10px;
+        margin: 0;
         border: none;
 
         a {
@@ -187,8 +187,12 @@ watchEffect(async () => {
         margin: 5px 0;
     }
 
+    .note-media {
+        display: inline-block;
+    }
+
     .note-media * {
-        margin: 10px 0;
+        margin: 10px;
     }
 }
 </style>

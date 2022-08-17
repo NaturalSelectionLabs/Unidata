@@ -22,7 +22,7 @@ class EthereumNFTActivity extends Base {
 
         const result: Notes = {
             total: response.total,
-            ...(new URL(response.identifier_next).searchParams.get('last_identifier') && {
+            ...(new URL(response.identifier_next && response.identifier_next).searchParams.get('last_identifier') && {
                 cursor: new URL(response.identifier_next).searchParams.get('last_identifier'),
             }),
 

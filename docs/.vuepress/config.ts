@@ -89,10 +89,10 @@ export default defineUserConfig({
                     link: '/guide/notes/README.md',
                     children: [
                         '/guide/notes/README.md',
-                        '/guide/notes/Mirror-Entry.md',
                         '/guide/notes/Ethereum-NFT-Activity.md',
                         '/guide/notes/Gitcoin-Contribution.md',
                         '/guide/notes/Crossbell-Note.md',
+                        '/guide/notes/Mirror-Entry.md',
                     ],
                 },
                 {

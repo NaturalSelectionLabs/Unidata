@@ -22,9 +22,10 @@ class MirrorEntry extends Base {
 
         const result: Notes = {
             total: response.total,
-            ...(new URL(response.identifier_next).searchParams.get('last_identifier') && {
-                cursor: new URL(response.identifier_next).searchParams.get('last_identifier'),
-            }),
+            ...(response.identifier_next &&
+                new URL(response.identifier_next).searchParams.get('last_identifier') && {
+                    cursor: new URL(response.identifier_next).searchParams.get('last_identifier'),
+                }),
 
             list: response.list.map((item: any) => {
                 delete item.links;
