@@ -16,7 +16,7 @@ specifiers:
     '@vuepress/plugin-docsearch': 2.0.0-beta.45
     '@vuepress/plugin-register-components': 2.0.0-beta.45
     axios: 0.27.2
-    crossbell.js: 0.10.15
+    crossbell.js: 0.10.17
     element-plus: 2.2.6
     ethers: 5.6.9
     graphql: 16.5.0
@@ -39,7 +39,7 @@ dependencies:
     '@types/lodash': 4.14.182
     '@urql/core': 2.5.0_graphql@16.5.0
     axios: 0.27.2
-    crossbell.js: 0.10.15
+    crossbell.js: 0.10.17
     ethers: 5.6.9
     graphql: 16.5.0
     lodash: 4.17.21
@@ -2592,10 +2592,10 @@ packages:
             which: 2.0.2
         dev: true
 
-    /crossbell.js/0.10.15:
+    /crossbell.js/0.10.17:
         resolution:
             {
-                integrity: sha512-sJ6J+tHwvqBGsTWAwqu8/is3B7WfTkyuwJ1Qb56/JoCj/l51Dha5KLUGaACJKlBuknvkmVB3zCPenEvmmbwMtQ==,
+                integrity: sha512-BRgclp6m0QsI9eA48mlBXaIIEBnYYNOW3hJPnegPqqrtaWafSdJhJPLP/qoKY13YdGEQBLszpjivrRYc+GKFhA==,
             }
         dependencies:
             async-retry: 1.3.3
@@ -3765,7 +3765,7 @@ packages:
             }
         engines: { node: '>=16' }
         dependencies:
-            undici: 5.8.2
+            undici: 5.9.1
         dev: false
 
     /files-from-path/0.2.6:
@@ -7159,10 +7159,10 @@ packages:
             which-boxed-primitive: 1.0.2
         dev: false
 
-    /undici/5.8.2:
+    /undici/5.9.1:
         resolution:
             {
-                integrity: sha512-3KLq3pXMS0Y4IELV045fTxqz04Nk9Ms7yfBBHum3yxsTR4XNn+ZCaUbf/mWitgYDAhsplQ0B1G4S5D345lMO3A==,
+                integrity: sha512-6fB3a+SNnWEm4CJbgo0/CWR8RGcOCQP68SF4X0mxtYTq2VNN8T88NYrWVBAeSX+zb7bny2dx2iYhP3XHi00omg==,
             }
         engines: { node: '>=12.18' }
         dev: false
