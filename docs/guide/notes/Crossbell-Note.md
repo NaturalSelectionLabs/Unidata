@@ -24,6 +24,7 @@ const notes: Notes = await unidata.notes.get(options: {
     filter?: {
         url?: string;
         id?: string;
+        tags?: string[];
     }
 });
 ```
