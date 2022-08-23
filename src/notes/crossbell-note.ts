@@ -2,7 +2,6 @@ import Main from '../index';
 import Base from './base';
 import { NotesOptions, NoteSetOptions, NoteInput } from './index';
 import { Indexer, Contract, Network } from 'crossbell.js';
-import { Web3Storage } from 'web3.storage';
 import type { Note } from '../specifications';
 import { unionBy } from 'lodash-es';
 import axios from 'axios';
@@ -233,21 +232,9 @@ class CrossbellNote extends Base {
 
         switch (options.action) {
             case 'add': {
-                const web3Storage = new Web3Storage({
-                    token: this.main.options.web3StorageAPIToken!,
-                });
+                const ipfs = await this.main.utils.uploadToIPFS(input);
 
-                const blob = new Blob([JSON.stringify(input)], {
-                    type: 'application/json',
-                });
-                const file = new File([blob], `${options.identity}.json`);
-                const cid = await web3Storage.put([file], {
-                    name: file.name,
-                    maxRetries: 3,
-                    wrapWithDirectory: false,
-                });
-
-                const data = await this.contract.postNote(characterId + '', `ipfs://${cid}`);
+                const data = await this.contract.postNote(characterId + '', ipfs);
 
                 return {
                     code: 0,
@@ -307,7 +294,7 @@ class CrossbellNote extends Base {
                                 'trait_type',
                             );
                         }
-                        const ipfs = await this.main.utils.uploadToIPFS(result, id);
+                        const ipfs = await this.main.utils.uploadToIPFS(result);
                         await this.contract.setNoteUri(characterId + '', id.split('-')[1], ipfs);
 
                         return {

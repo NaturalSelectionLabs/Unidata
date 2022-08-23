@@ -49,7 +49,6 @@ const unidata = new Unidata({
 | `alchemyEthereumAPIKey` |                             | API Key of Alchemy Ethereum.         |
 | `alchemyPolygonAPIKey`  |                             | API Key of Alchemy Polygon.          |
 | `alchemyFlowAPIKey`     |                             | API Key of Alchemy Flow.             |
-| `web3StorageAPIToken`   | Unidata default token       | API Token of Web3 Storage.           |
 | `ethereumProvider`      | window.ethereum             | Ethereum provider                    |
 | `nftscanAPIKey`         |                             | API Key of NFTScan.                  |
 

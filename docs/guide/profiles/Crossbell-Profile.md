@@ -8,7 +8,7 @@ You can use Crossbell API for free (no rate limit disclosed).
 
 [Crossbell](https://github.com/Crossbell-Box/).
 
-You can initialize with `ipfsGateway` `web3StorageAPIToken` to potentially get a faster response or higher stability.
+You can initialize with `ipfsGateway` to potentially get a faster response or higher stability.
 
 ## API
 

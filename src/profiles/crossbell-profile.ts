@@ -201,7 +201,7 @@ class CrossbellProfile extends Base {
                         );
                     }
 
-                    const ipfs = await this.main.utils.uploadToIPFS(result, username);
+                    const ipfs = await this.main.utils.uploadToIPFS(result);
                     await this.contract.setCharacterUri(character.characterId + '', ipfs);
 
                     return {
@@ -221,7 +221,7 @@ class CrossbellProfile extends Base {
                         const username = input.username || options.identity;
                         delete input.username;
                         const result = input;
-                        const ipfs = await this.main.utils.uploadToIPFS(result, username);
+                        const ipfs = await this.main.utils.uploadToIPFS(result);
                         await this.contract.createCharacter(options.identity, username, ipfs);
 
                         return {
