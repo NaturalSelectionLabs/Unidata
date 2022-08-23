@@ -66,6 +66,7 @@ class CrossbellNote extends Base {
                 ...(characterId && { characterId: characterId + '' }),
                 ...(options.filter?.url && { externalUrls: options.filter?.url }),
                 ...(options.filter?.tags && { tags: options.filter?.tags }),
+                ...(options.filter?.applications && { sources: options.filter?.applications }),
             });
         }
 
@@ -91,6 +92,19 @@ class CrossbellNote extends Base {
                                 if (
                                     !options.filter.tags.every((tag: string) =>
                                         event.metadata.content.tags?.includes(tag),
+                                    )
+                                ) {
+                                    return null;
+                                }
+                            }
+
+                            if (options.filter?.applications) {
+                                if (!Array.isArray(options.filter?.applications)) {
+                                    options.filter.applications = [options.filter.applications];
+                                }
+                                if (
+                                    !options.filter.applications.every((application: string) =>
+                                        event.metadata.content.sources?.includes(application),
                                     )
                                 ) {
                                     return null;
