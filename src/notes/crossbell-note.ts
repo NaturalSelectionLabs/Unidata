@@ -5,6 +5,7 @@ import { Indexer, Contract, Network } from 'crossbell.js';
 import { Web3Storage } from 'web3.storage';
 import type { Note } from '../specifications';
 import { unionBy } from 'lodash-es';
+import axios from 'axios';
 
 class CrossbellNote extends Base {
     indexer: Indexer;
@@ -62,88 +63,121 @@ class CrossbellNote extends Base {
                 cursor: options.cursor,
                 includeDeleted: false,
                 limit: options.limit,
+                includeEmptyMetadata: true,
                 ...(characterId && { characterId: characterId + '' }),
                 ...(options.filter?.url && { externalUrls: options.filter?.url }),
                 ...(options.filter?.tags && { tags: options.filter?.tags }),
             });
         }
 
-        const list = await Promise.all(
-            res?.list.map(async (event: any) => {
-                const item: Note = Object.assign(
-                    {
-                        date_published: event.createdAt,
-                    },
-                    event.metadata?.content,
-                    {
-                        id: `${characterId}-${event.noteId}`,
+        const list = (
+            await Promise.all(
+                res?.list.map(async (event: any) => {
+                    if (event.metadata.uri && !event.metadata.content) {
+                        try {
+                            const res = await axios.get(this.main.utils.replaceIPFS(event.metadata.uri));
+                            event.metadata.content = res.data;
 
-                        date_created: event.createdAt,
-                        date_updated: event.updatedAt,
+                            if (
+                                options.filter?.url &&
+                                !event.metadata.content.external_urls?.includes(options.filter?.url)
+                            ) {
+                                return null;
+                            }
 
-                        related_urls: [
-                            ...(event.toUri ? [event.toUri] : []),
-                            ...(event.uri ? [this.main.utils.replaceIPFS(event.uri)] : []),
-                            `https://scan.crossbell.io/tx/${event.transactionHash}`,
-                            ...(event.updatedTransactionHash && event.updatedTransactionHash !== event.transactionHash
-                                ? [`https://scan.crossbell.io/tx/${event.updatedTransactionHash}`]
-                                : []),
-                        ],
+                            if (options.filter?.tags) {
+                                if (!Array.isArray(options.filter?.tags)) {
+                                    options.filter.tags = [options.filter.tags];
+                                }
+                                if (
+                                    !options.filter.tags.every((tag: string) =>
+                                        event.metadata.content.tags?.includes(tag),
+                                    )
+                                ) {
+                                    return null;
+                                }
+                            }
+                        } catch (error) {
+                            console.warn(error);
+                        }
+                    }
 
-                        authors: [options.identity!],
+                    const item: Note = Object.assign(
+                        {
+                            date_published: event.createdAt,
+                        },
+                        event.metadata?.content,
+                        {
+                            id: `${characterId}-${event.noteId}`,
 
-                        source: 'Crossbell Note',
-                        metadata: {
-                            network: 'Crossbell',
-                            proof: `${characterId}-${event.noteId}`,
+                            date_created: event.createdAt,
+                            date_updated: event.updatedAt,
 
-                            block_number: event.blockNumber,
-                            owner: event.owner,
-                            transactions: [
-                                event.transactionHash,
-                                ...(event.transactionHash !== event.updatedTransactionHash
-                                    ? [event.updatedTransactionHash]
+                            related_urls: [
+                                ...(event.toUri ? [event.toUri] : []),
+                                ...(event.uri ? [this.main.utils.replaceIPFS(event.uri)] : []),
+                                `https://scan.crossbell.io/tx/${event.transactionHash}`,
+                                ...(event.updatedTransactionHash &&
+                                event.updatedTransactionHash !== event.transactionHash
+                                    ? [`https://scan.crossbell.io/tx/${event.updatedTransactionHash}`]
                                     : []),
                             ],
 
-                            raw: event.metadata?.content,
+                            authors: [options.identity!],
+
+                            source: 'Crossbell Note',
+                            metadata: {
+                                network: 'Crossbell',
+                                proof: `${characterId}-${event.noteId}`,
+
+                                block_number: event.blockNumber,
+                                owner: event.owner,
+                                transactions: [
+                                    event.transactionHash,
+                                    ...(event.transactionHash !== event.updatedTransactionHash
+                                        ? [event.updatedTransactionHash]
+                                        : []),
+                                ],
+
+                                raw: event.metadata?.content,
+                            },
                         },
-                    },
-                );
+                    );
 
-                // Crossbell specification compatibility
-                if (item.summary) {
-                    item.summary = {
-                        content: (<any>item).summary,
-                        mime_type: 'text/markdown',
-                    };
-                }
-                if ((<any>item).content) {
-                    item.body = {
-                        content: (<any>item).content,
-                        mime_type: 'text/markdown',
-                    };
-                    delete (<any>item).content;
-                }
+                    // Crossbell specification compatibility
+                    if (item.summary) {
+                        item.summary = {
+                            content: (<any>item).summary,
+                            mime_type: 'text/markdown',
+                        };
+                    }
+                    if ((<any>item).content) {
+                        item.body = {
+                            content: (<any>item).content,
+                            mime_type: 'text/markdown',
+                        };
+                        delete (<any>item).content;
+                    }
 
-                if (item.attachments) {
-                    item.attachments.forEach((attachment) => {
-                        if (attachment.address) {
-                            attachment.address = this.main.utils.replaceIPFS(attachment.address);
-                        }
-                        if (attachment.address && !attachment.mime_type) {
-                            attachment.mime_type = this.main.utils.getMimeType(attachment.address);
-                        }
-                    });
-                }
-                if ((<any>item).sources) {
-                    item.applications = (<any>item).sources;
-                    delete (<any>item).sources;
-                }
+                    if (item.attachments) {
+                        item.attachments.forEach((attachment) => {
+                            if (attachment.address) {
+                                attachment.address = this.main.utils.replaceIPFS(attachment.address);
+                            }
+                            if (attachment.address && !attachment.mime_type) {
+                                attachment.mime_type = this.main.utils.getMimeType(attachment.address);
+                            }
+                        });
+                    }
+                    if ((<any>item).sources) {
+                        item.applications = (<any>item).sources;
+                        delete (<any>item).sources;
+                    }
 
-                return item;
-            }),
-        );
+                    return item;
+                }),
+            )
+        ).filter((item) => item) as Note[];
 
         return {
             total: res.count,
