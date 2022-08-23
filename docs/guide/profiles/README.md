@@ -15,6 +15,7 @@ const profiles: Profiles = await unidata.profiles.get(options: {
     platform?: string;
     limit?: number;
     cursor?: any;
+    filter?: any;
 });
 ```
 

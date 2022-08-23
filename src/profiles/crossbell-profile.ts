@@ -33,6 +33,7 @@ class CrossbellProfile extends Base {
             response = await this.indexer.getCharacters(options.identity, {
                 cursor: options.cursor,
                 limit: options.limit,
+                primary: options.filter?.primary,
             });
         } else {
             const character = await this.indexer.getCharacterByHandle(options.identity);

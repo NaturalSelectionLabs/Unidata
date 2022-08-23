@@ -21,6 +21,9 @@ const profiles: Profiles = await unidata.profiles.get(options: {
     platform?: 'Ethereum' | 'Crossbell';
     limit?: number;
     cursor?: string;
+    filter?: {
+        primary?: boolean;
+    }
 });
 ```
 

@@ -10,6 +10,7 @@ export type ProfilesOptions = {
     platform?: string;
     limit?: number;
     cursor?: any;
+    filter?: any;
 };
 
 export type ProfileSetOptions = {
