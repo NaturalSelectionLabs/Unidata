@@ -300,6 +300,11 @@ class CrossbellNote extends Base {
                     } else {
                         const id = input.id;
                         delete input.id;
+                        if (note.metadata?.uri && !note.metadata?.content) {
+                            note.metadata.content = (
+                                await axios.get(this.main.utils.replaceIPFS(note.metadata.uri))
+                            ).data;
+                        }
                         const result = Object.assign({}, note.metadata?.content, input);
                         if (input.attributes && note.metadata?.content?.attributes) {
                             result.attributes = unionBy(

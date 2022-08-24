@@ -193,6 +193,11 @@ class CrossbellProfile extends Base {
                         });
                     }
 
+                    if (character.metadata?.uri && !character.metadata?.content) {
+                        character.metadata.content = (
+                            await axios.get(this.main.utils.replaceIPFS(character.metadata.uri))
+                        ).data;
+                    }
                     const result = Object.assign({}, character.metadata?.content, input);
                     if (input.attributes && (<any>character.metadata?.content)?.attributes) {
                         result.attributes = unionBy(
