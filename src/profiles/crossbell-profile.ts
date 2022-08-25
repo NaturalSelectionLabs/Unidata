@@ -56,7 +56,14 @@ class CrossbellProfile extends Base {
             response.list?.map(async (item) => {
                 if (item.uri && !(item.metadata && item.metadata.content)) {
                     try {
-                        const res = await axios.get(this.main.utils.replaceIPFS(item.uri));
+                        const res = await axios.get(this.main.utils.replaceIPFS(item.uri), {
+                            ...(typeof window === 'undefined' && {
+                                headers: {
+                                    'User-Agent':
+                                        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+                                },
+                            }),
+                        });
                         (<any>item).metadata = {
                             content: res.data,
                         };
@@ -195,7 +202,14 @@ class CrossbellProfile extends Base {
 
                     if (character.metadata?.uri && !character.metadata?.content) {
                         character.metadata.content = (
-                            await axios.get(this.main.utils.replaceIPFS(character.metadata.uri))
+                            await axios.get(this.main.utils.replaceIPFS(character.metadata.uri), {
+                                ...(typeof window === 'undefined' && {
+                                    headers: {
+                                        'User-Agent':
+                                            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
+                                    },
+                                }),
+                            })
                         ).data;
                     }
                     const result = Object.assign({}, character.metadata?.content, input);
