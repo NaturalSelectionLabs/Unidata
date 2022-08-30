@@ -1,7 +1,7 @@
 import Main from '../index';
 import Base from './base';
 import { NotesOptions, NoteSetOptions, NoteInput } from './index';
-import { Indexer, Contract, Network } from 'crossbell.js';
+import { Indexer, Contract, Network, NoteEntity, ListResponse } from 'crossbell.js';
 import type { Note } from '../specifications';
 import { unionBy } from 'lodash-es';
 import axios from 'axios';
@@ -43,17 +43,19 @@ class CrossbellNote extends Base {
                 };
             }
         }
-        let res;
+        let res: ListResponse<NoteEntity>;
         if (options.filter?.id) {
             const note = await this.indexer.getNote(characterId + '', options.filter.id.split('-')[1]);
             if (note) {
                 res = {
                     count: 1,
+                    cursor: null,
                     list: [note],
                 };
             } else {
                 res = {
                     count: 0,
+                    cursor: null,
                     list: [],
                 };
             }
@@ -75,7 +77,7 @@ class CrossbellNote extends Base {
                 res?.list.map(async (event: any) => {
                     if (event.metadata.uri && !event.metadata.content) {
                         try {
-                            const res = await axios.get(this.main.utils.replaceIPFS(event.metadata.uri), {
+                            const ipfsRes = await axios.get(this.main.utils.replaceIPFS(event.metadata.uri), {
                                 ...(typeof window === 'undefined' && {
                                     headers: {
                                         'User-Agent':
@@ -83,12 +85,13 @@ class CrossbellNote extends Base {
                                     },
                                 }),
                             });
-                            event.metadata.content = res.data;
+                            event.metadata.content = ipfsRes.data;
 
                             if (
                                 options.filter?.url &&
                                 !event.metadata.content.external_urls?.includes(options.filter?.url)
                             ) {
+                                res.count--;
                                 return null;
                             }
 
@@ -101,6 +104,7 @@ class CrossbellNote extends Base {
                                         event.metadata.content.tags?.includes(tag),
                                     )
                                 ) {
+                                    res.count--;
                                     return null;
                                 }
                             }
@@ -114,6 +118,7 @@ class CrossbellNote extends Base {
                                         event.metadata.content.sources?.includes(application),
                                     )
                                 ) {
+                                    res.count--;
                                     return null;
                                 }
                             }
