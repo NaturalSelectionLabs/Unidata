@@ -50,6 +50,10 @@ class Profiles {
                 platform: 'Twitter',
                 url: 'https://twitter.com/$$id',
             },
+            twitter_id: {
+                platform: 'Twitter',
+                url: 'https://twitter.com/i/user/$$id',
+            },
             telegram: {
                 platform: 'Telegram',
                 url: 'https://t.me/$$id',
@@ -81,7 +85,7 @@ class Profiles {
 
             if (profile.connected_accounts) {
                 profile.connected_accounts = profile.connected_accounts.map((account) => {
-                    const rule = this.accountsMap[account.platform.toLowerCase()];
+                    const rule = this.accountsMap[account.platform?.toLowerCase()];
                     if (rule) {
                         account.platform = rule.platform;
                         if (rule.url) {

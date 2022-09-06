@@ -126,6 +126,9 @@ class CrossbellProfile extends Base {
                 // Crossbell specification compatibility
                 if (profile.connected_accounts) {
                     profile.connected_accounts = profile.connected_accounts.map((account: any) => {
+                        if (account.uri) {
+                            account = account.uri;
+                        }
                         if (typeof account === 'string') {
                             const match = account.match(/:\/\/account:(.*)@(.*)/);
                             if (match) {
