@@ -212,7 +212,14 @@ class CrossbellNote extends Base {
         };
     }
 
-    async set(options: NoteSetOptions, input: NoteInput) {
+    async set(
+        options: NoteSetOptions,
+        input: NoteInput,
+        extra?: {
+            targetUri?: string;
+            targetNote?: string;
+        },
+    ) {
         options = Object.assign(
             {
                 platform: 'Ethereum',
@@ -260,7 +267,19 @@ class CrossbellNote extends Base {
             case 'add': {
                 const ipfs = await this.main.utils.uploadToIPFS(input);
 
-                const data = await this.contract.postNote(characterId + '', ipfs);
+                let data;
+                if (extra && extra.targetUri) {
+                    data = await this.contract.postNoteForAnyUri(characterId + '', ipfs, extra.targetUri);
+                } else if (extra && extra.targetNote) {
+                    data = await this.contract.postNoteForNote(
+                        characterId + '',
+                        ipfs,
+                        extra.targetNote.split('-')?.[0],
+                        extra.targetNote.split('-')?.[1],
+                    );
+                } else {
+                    data = await this.contract.postNote(characterId + '', ipfs);
+                }
 
                 return {
                     code: 0,
