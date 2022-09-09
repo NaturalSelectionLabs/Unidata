@@ -59,9 +59,9 @@ class Notes {
         return result;
     }
 
-    async set(options: NoteSetOptions, input: NoteInput) {
+    async set(options: NoteSetOptions, input: NoteInput, extra?: any) {
         if (this.map[options.source].set) {
-            return this.map[options.source].set!(options, input);
+            return this.map[options.source].set!(options, input, extra);
         } else {
             return {
                 code: 1,

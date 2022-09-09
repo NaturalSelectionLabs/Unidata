@@ -21,6 +21,7 @@ abstract class Base {
     abstract set?(
         options: NoteSetOptions,
         input: NoteInput,
+        extra?: any,
     ): Promise<{
         code: number;
         message: string;
