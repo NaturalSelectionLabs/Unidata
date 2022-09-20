@@ -49,7 +49,10 @@ const result: {
         avatars?: URI[];
         bio?: string;
         websites?: URI[];
-        banners?: URI[];
+        banners?: {
+            address: URI;
+            mime_type: string;
+        }[];
         connected_accounts?: {
             identity: string;
             platform: string;

@@ -33,7 +33,10 @@
         <div class="loading-wrap" v-loading="loading">
             <el-card class="profile-card" v-for="profile in profiles.list" :key="profile">
                 <div class="banner">
-                    <img :src="profile.banners?.[0]" />
+                    <img
+                        v-if="profile.banners?.[0]?.mime_type?.split('/')[0] === 'image'"
+                        :src="profile.banners?.[0].address"
+                    />
                 </div>
                 <div class="info">
                     <div class="avatar" v-if="profile.avatars?.length"><img :src="profile.avatars?.[0]" /></div>

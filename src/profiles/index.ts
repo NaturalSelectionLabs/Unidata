@@ -80,7 +80,10 @@ class Profiles {
                 profile.avatars = this.main.utils.replaceIPFSs(profile.avatars);
             }
             if (profile.banners) {
-                profile.banners = this.main.utils.replaceIPFSs(profile.banners);
+                profile.banners.map((banner) => {
+                    banner.address = this.main.utils.replaceIPFS(banner.address);
+                    return banner;
+                });
             }
 
             if (profile.connected_accounts) {

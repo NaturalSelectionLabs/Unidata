@@ -98,9 +98,10 @@ class CrossbellProfile extends Base {
                     {
                         ...(item.metadata?.content?.name && { name: item.metadata.content.name }),
                         ...(item.metadata?.content?.bio && { bio: item.metadata.content.bio }),
-                        ...((<any>item).metadata?.content?.banners && {
-                            banners: (<any>item).metadata.content.banners,
-                        }),
+                        ...(item.metadata?.content?.banners?.[0].address &&
+                            item.metadata?.content?.banners?.[0].mime_type && {
+                                banners: item.metadata?.content?.banners,
+                            }),
                         ...(item.metadata?.content?.avatars && { avatars: item.metadata.content.avatars }),
                         ...(item.metadata?.content?.websites && { websites: item.metadata.content.websites }),
                         ...((<any>item).metadata?.content?.tags && { tags: (<any>item).metadata.content.tags }),

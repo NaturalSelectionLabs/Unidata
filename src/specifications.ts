@@ -28,7 +28,10 @@ export type Profile = {
     avatars?: URI[];
     bio?: string;
     websites?: URI[];
-    banners?: URI[];
+    banners?: {
+        address: URI;
+        mime_type: string;
+    }[];
     tags?: string[];
 
     connected_accounts?: {
