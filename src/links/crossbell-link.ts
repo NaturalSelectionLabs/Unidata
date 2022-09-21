@@ -61,6 +61,9 @@ class CrossbellLink extends Base {
 
                 from_owner: options.reversed ? item.fromCharacter?.owner : options.identity,
                 to_owner: options.reversed ? options.identity : item.toCharacter?.owner,
+
+                from_raw: item.fromCharacter,
+                to_raw: item.toCharacter,
             },
         }));
 
