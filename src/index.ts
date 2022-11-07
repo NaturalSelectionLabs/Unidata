@@ -4,6 +4,9 @@ import LinksC from './links';
 import AssetsC from './assets';
 import NotesC from './notes';
 
+import axiosRetry, { isNetworkOrIdempotentRequestError } from 'axios-retry';
+import axios from 'axios';
+
 import type { ProfileInput } from './profiles';
 import type { LinkInput } from './links';
 import type { NoteInput } from './notes';
@@ -46,6 +49,14 @@ class Unidata {
             },
             options,
         );
+
+        axiosRetry(axios, {
+            retries: 3,
+            retryDelay: axiosRetry.exponentialDelay,
+            retryCondition: (err) => {
+                return err.response?.status === 429 || isNetworkOrIdempotentRequestError(err);
+            },
+        });
 
         this.utils = new Utils(this);
 

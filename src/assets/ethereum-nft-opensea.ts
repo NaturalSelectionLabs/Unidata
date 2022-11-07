@@ -52,7 +52,9 @@ class EthereumNFTOpensea extends Base {
             if (item.image_original_url) {
                 asset.previews = [
                     {
-                        address: item.image_original_url,
+                        address: item.image_original_url
+                            .replace('https://opensea-private.mypinata.cloud/ipfs/', 'ipfs://')
+                            .replace('https://opensea.mypinata.cloud/ipfs/', 'ipfs://'),
                     },
                 ];
             }
@@ -60,7 +62,9 @@ class EthereumNFTOpensea extends Base {
             if (item.animation_original_url) {
                 asset.items = [
                     {
-                        address: item.animation_original_url,
+                        address: item.animation_original_url
+                            .replace('https://opensea-private.mypinata.cloud/ipfs/', 'ipfs://')
+                            .replace('https://opensea.mypinata.cloud/ipfs/', 'ipfs://'),
                     },
                 ];
             }

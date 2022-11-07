@@ -16,6 +16,7 @@ specifiers:
     '@vuepress/plugin-docsearch': 2.0.0-beta.45
     '@vuepress/plugin-register-components': 2.0.0-beta.45
     axios: 0.27.2
+    axios-retry: ^3.3.1
     crossbell.js: 0.10.27
     element-plus: 2.2.6
     ethers: 5.6.9
@@ -38,6 +39,7 @@ dependencies:
     '@types/lodash': 4.14.182
     '@urql/core': 2.5.0_graphql@16.5.0
     axios: 0.27.2
+    axios-retry: 3.3.1
     crossbell.js: 0.10.27
     ethers: 5.6.9
     graphql: 16.5.0
@@ -237,6 +239,16 @@ packages:
         dependencies:
             '@babel/types': 7.18.4
         dev: true
+
+    /@babel/runtime/7.20.1:
+        resolution:
+            {
+                integrity: sha512-mrzLkl6U9YLF8qpqI7TB82PESyEGjm/0Ly91jG575eVxMMlb8fYfOXFZIJ8XfLrJZQbm7dlKry2bJmXBUEkdFg==,
+            }
+        engines: { node: '>=6.9.0' }
+        dependencies:
+            regenerator-runtime: 0.13.10
+        dev: false
 
     /@babel/types/7.18.4:
         resolution:
@@ -2100,6 +2112,16 @@ packages:
             postcss: 8.4.14
             postcss-value-parser: 4.2.0
         dev: true
+
+    /axios-retry/3.3.1:
+        resolution:
+            {
+                integrity: sha512-RohAUQTDxBSWLFEnoIG/6bvmy8l3TfpkclgStjl5MDCMBDgapAWCmr1r/9harQfWC8bzLC8job6UcL1A1Yc+/Q==,
+            }
+        dependencies:
+            '@babel/runtime': 7.20.1
+            is-retry-allowed: 2.2.0
+        dev: false
 
     /axios/0.27.2:
         resolution:
@@ -4036,6 +4058,14 @@ packages:
         engines: { node: '>=0.12.0' }
         dev: true
 
+    /is-retry-allowed/2.2.0:
+        resolution:
+            {
+                integrity: sha512-XVm7LOeLpTW4jV19QSH38vkswxoLud8sQ57YwJVTPWdiaI9I8keEhGFpBlslyVsgdQy4Opg8QOLb8YRgsyZiQg==,
+            }
+        engines: { node: '>=10' }
+        dev: false
+
     /is-stream/2.0.1:
         resolution:
             {
@@ -4993,6 +5023,13 @@ packages:
             }
         dependencies:
             ms: 2.1.3
+        dev: false
+
+    /regenerator-runtime/0.13.10:
+        resolution:
+            {
+                integrity: sha512-KepLsg4dU12hryUO7bp/axHAKvwGOCV0sGloQtpagJ12ai+ojVDqkeGSiRX1zlq+kjIMZ1t7gpze+26QqtdGqw==,
+            }
         dev: false
 
     /resolve-from/5.0.0:
