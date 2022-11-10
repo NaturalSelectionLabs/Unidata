@@ -11,7 +11,7 @@ export default defineConfig((options) => ({
     clean: true,
     sourcemap: true,
     minify: !options.watch,
-    target: 'esnext',
+    target: 'es5',
     dts: true,
     define: {
         SDK_VERSION: JSON.stringify(version),
