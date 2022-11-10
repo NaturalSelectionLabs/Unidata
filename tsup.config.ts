@@ -6,7 +6,7 @@ export default defineConfig((options) => ({
         index: './src/index.ts',
     },
     outDir: 'dist',
-    format: ['cjs', 'esm'],
+    format: ['cjs', 'esm', 'iife'],
     globalName: 'Unidata',
     clean: true,
     sourcemap: true,
