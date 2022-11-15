@@ -21,6 +21,7 @@ const notes: Notes = await unidata.notes.get(options: {
     platform?: string;
     limit?: number;
     cursor?: string;
+    order_by?: "date_created" | "date_updated" | "date_published";
     filter?: {
         url?: string;
         id?: string;

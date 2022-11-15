@@ -17,6 +17,7 @@ const notes: Notes = await unidata.notes.get(options: {
     platform?: string;
     limit?: number;
     cursor?: any;
+    order_by?: "date_created" | "date_updated" | "date_published";
     filter?: any;
 });
 ```

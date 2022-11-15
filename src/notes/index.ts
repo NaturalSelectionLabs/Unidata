@@ -12,6 +12,7 @@ export type NotesOptions = {
     platform?: string;
     limit?: number;
     cursor?: any;
+    order_by?: 'date_created' | 'date_updated' | 'date_published';
     filter?: any;
 };
 

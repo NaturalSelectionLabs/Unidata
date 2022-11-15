@@ -6,6 +6,12 @@ import type { Note } from '../specifications';
 import { unionBy } from 'lodash-es';
 import axios from 'axios';
 
+const orderByMap = {
+    date_created: 'createdAt',
+    date_updated: 'updatedAt',
+    date_published: 'publishedAt',
+};
+
 class CrossbellNote extends Base {
     indexer: Indexer;
     contract: Contract;
@@ -65,6 +71,7 @@ class CrossbellNote extends Base {
                 includeDeleted: false,
                 limit: options.limit,
                 includeEmptyMetadata: true,
+                ...(options.order_by && { orderBy: orderByMap[options.order_by] }),
                 ...(characterId && { characterId: characterId + '' }),
                 ...(options.filter?.url && { externalUrls: options.filter?.url }),
                 ...(options.filter?.tags && { tags: options.filter?.tags }),
