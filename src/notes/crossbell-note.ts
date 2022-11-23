@@ -155,7 +155,7 @@ class CrossbellNote extends Base {
                                     : []),
                             ],
 
-                            authors: [options.identity!],
+                            authors: [event.operator],
 
                             source: 'Crossbell Note',
                             metadata: {
