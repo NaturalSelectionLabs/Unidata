@@ -9,7 +9,6 @@ import SolanaNFTMoralis from './solana-nft-moralis';
 import EthereumNFTAlchemy from './ethereum-nft-alchemy';
 import FlowNFTAlchemy from './flow-nft-alchemy';
 import GitcoinContribution from './gitcoin-contribution';
-import EthereumNFTCrossbell from './ethereum-nft-crossbell';
 import EthereumNFTNFTScan from './ethereum-nft-nftscan';
 import type { Asset } from '../specifications';
 
@@ -38,7 +37,6 @@ class Assets {
                 Moralis: new EthereumNFTMoralis(main),
                 OpenSea: new EthereumNFTOpenSea(main),
                 POAP: new EthereumNFTPOAP(main),
-                Crossbell: new EthereumNFTCrossbell(main),
             },
             'Solana NFT': {
                 Solscan: new SolanaNFTSolscan(main),
