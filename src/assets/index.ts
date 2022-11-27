@@ -126,6 +126,7 @@ class Assets {
                         this.main.utils.removeEmpty(result.list);
                         return result;
                     } catch (error) {
+                        console.warn(error);
                         return {
                             total: 0,
                             list: [],

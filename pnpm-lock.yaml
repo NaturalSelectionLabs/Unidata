@@ -15,7 +15,7 @@ specifiers:
     '@vuepress/client': 2.0.0-beta.45
     '@vuepress/plugin-docsearch': 2.0.0-beta.45
     '@vuepress/plugin-register-components': 2.0.0-beta.45
-    axios: 1.2.0
+    axios: 1.1.3
     axios-retry: ^3.3.1
     crossbell.js: 0.11.5
     element-plus: 2.2.25
@@ -38,7 +38,7 @@ specifiers:
 dependencies:
     '@types/lodash': 4.14.190
     '@urql/core': 3.0.5_graphql@16.6.0
-    axios: 1.2.0
+    axios: 1.1.3
     axios-retry: 3.3.1
     crossbell.js: 0.11.5
     ethers: 5.7.2
@@ -1773,10 +1773,10 @@ packages:
             is-retry-allowed: 2.2.0
         dev: false
 
-    /axios/1.2.0:
+    /axios/1.1.3:
         resolution:
             {
-                integrity: sha512-zT7wZyNYu3N5Bu0wuZ6QccIf93Qk1eV8LOewxgjOZFd2DenOs98cJ7+Y6703d0wkaXGY6/nZd4EweJaHz9uzQw==,
+                integrity: sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==,
             }
         dependencies:
             follow-redirects: 1.15.2
