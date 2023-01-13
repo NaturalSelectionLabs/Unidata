@@ -8,6 +8,8 @@ You can use POAP API for free (no rate limit disclosed).
 
 [POAP](https://poap.xyz/) is a kind of widely used semi-centralised NFTs, generally used as digital mementos, minted in celebration of life's remarkable moments.
 
+You can [request](https://documentation.poap.tech/docs/api-access) an API Key and initialize with `poapAPIKey` to get more stable access, but it is currently optional.
+
 ## API
 
 ```ts

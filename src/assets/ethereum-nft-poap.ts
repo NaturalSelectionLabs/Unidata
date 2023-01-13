@@ -11,7 +11,13 @@ class EthereumNFTPOAP extends Base {
     }
 
     async get(options: AssetsOptions) {
-        const res = await axios.get(`https://api.poap.tech/actions/scan/${options.identity}`);
+        const res = this.main.options.poapAPIKey
+            ? await axios.get(`https://api.poap.tech/actions/scan/${options.identity}`, {
+                  headers: {
+                      'X-API-KEY': this.main.options.poapAPIKey,
+                  },
+              })
+            : await axios.get(`https://frontend.poap.tech/actions/scan/${options.identity}`);
         const assets: Asset[] = res.data?.map((item: any) => {
             const asset: Asset = {
                 tags: ['NFT', 'POAP'],

@@ -30,6 +30,7 @@ type IOptions = {
     alchemyFlowAPIKey?: string;
     ethereumProvider?: any;
     nftscanAPIKey?: string;
+    poapAPIKey?: string;
 };
 
 class Unidata {

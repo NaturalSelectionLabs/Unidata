@@ -37,6 +37,7 @@ const unidata = new Unidata({
     alchemyEthereumAPIKey?: string;
     alchemyPolygonAPIKey?: string;
     alchemyFlowAPIKey?: string;
+    poapAPIKey?: string;
 });
 ```
 
@@ -51,6 +52,7 @@ const unidata = new Unidata({
 | `alchemyFlowAPIKey`     |                             | API Key of Alchemy Flow.             |
 | `ethereumProvider`      | window.ethereum             | Ethereum provider                    |
 | `nftscanAPIKey`         |                             | API Key of NFTScan.                  |
+| `poapAPIKey`            |                             | API Key of POAP.                     |
 
 If you don't want to expose some api keys on the front end, or if you want to cache data for faster response and higher stability, then you can use the SDK for your Node.js project.
 
