@@ -247,7 +247,9 @@ watchEffect(async () => {
             )
             .then((p: Assets) => {
                 assets.total = p.total;
-                assets.list = p.list;
+                assets.list = p.list.filter(
+                    (asset) => asset.metadata.collection_address !== '0x67ca4a709fe4d07f0f889ec8c0ab8795016650d0',
+                );
                 if (p.cursor) {
                     assets.cursor = p.cursor;
                 } else {
