@@ -123,6 +123,7 @@ class Assets {
                                 cursor: options.cursor?.[index],
                             }),
                         );
+                        result.list = result.list.filter((item) => item);
                         this.main.utils.removeEmpty(result.list);
                         return result;
                     } catch (error) {
