@@ -23,6 +23,8 @@ export default defineClientConfig({
                 alchemyPolygonAPIKey: 'm1tznK8U8nVecA0Zime5dzF8Pb2av70q',
                 alchemyFlowAPIKey: 'op8m1oqlivm297iodsezvn3hoya9960u',
                 nftscanAPIKey: 'YdKYhj6I',
+
+                ipfsGateway: 'https://4everland.xyz/ipfs/',
             });
 
             (<any>window).unidata = app.config.globalProperties.unidata;

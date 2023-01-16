@@ -104,9 +104,9 @@ class Profiles {
         return result;
     }
 
-    async set(options: ProfileSetOptions, input: ProfileInput) {
+    async set(options: ProfileSetOptions, input: ProfileInput, extra?: any) {
         if (this.map[options.source].set) {
-            return this.map[options.source].set!(options, input);
+            return this.map[options.source].set!(options, input, extra);
         } else {
             return {
                 code: 1,

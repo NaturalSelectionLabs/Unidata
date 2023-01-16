@@ -15,6 +15,7 @@ abstract class Base {
     abstract set?(
         options: ProfileSetOptions,
         input: ProfileInput,
+        extra?: any,
     ): Promise<{
         code: number;
         message: string;

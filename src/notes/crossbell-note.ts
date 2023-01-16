@@ -225,6 +225,7 @@ class CrossbellNote extends Base {
         extra?: {
             targetUri?: string;
             targetNote?: string;
+            newbieToken?: string;
         },
     ) {
         options = Object.assign(
@@ -235,9 +236,12 @@ class CrossbellNote extends Base {
             options,
         );
 
-        if (!this.contract) {
+        if (!this.contract && !extra?.newbieToken) {
             this.contract = new Contract(this.main.options.ethereumProvider);
             await this.contract.connect();
+        }
+        if (!this.indexer) {
+            this.indexer = new Indexer();
         }
 
         let characterId = (
@@ -272,20 +276,57 @@ class CrossbellNote extends Base {
 
         switch (options.action) {
             case 'add': {
-                const ipfs = await this.main.utils.uploadToIPFS(input);
-
                 let data;
-                if (extra && extra.targetUri) {
-                    data = await this.contract.postNoteForAnyUri(characterId + '', ipfs, extra.targetUri);
-                } else if (extra && extra.targetNote) {
-                    data = await this.contract.postNoteForNote(
-                        characterId + '',
-                        ipfs,
-                        extra.targetNote.split('-')?.[0],
-                        extra.targetNote.split('-')?.[1],
-                    );
+                if (extra?.newbieToken) {
+                    let link = {};
+                    if (extra && extra.targetUri) {
+                        link = {
+                            linkItemType: 'AnyUri',
+                            linkItem: {
+                                uri: extra.targetUri,
+                            },
+                        };
+                    } else if (extra && extra.targetNote) {
+                        link = {
+                            linkItemType: 'Note',
+                            linkItem: {
+                                characterId: extra.targetNote.split('-')?.[0],
+                                noteId: extra.targetNote.split('-')?.[1],
+                            },
+                        };
+                    }
+                    data = (
+                        await axios.put(
+                            `${this.indexer.endpoint}/newbie/contract/notes`,
+                            Object.assign(
+                                {
+                                    metadata: input,
+                                    locked: false,
+                                },
+                                link,
+                            ),
+                            {
+                                headers: {
+                                    authorization: `Bearer ${extra?.newbieToken}`,
+                                },
+                            },
+                        )
+                    ).data;
                 } else {
-                    data = await this.contract.postNote(characterId + '', ipfs);
+                    const ipfs = await this.main.utils.uploadToIPFS(input);
+
+                    if (extra && extra.targetUri) {
+                        data = await this.contract.postNoteForAnyUri(characterId + '', ipfs, extra.targetUri);
+                    } else if (extra && extra.targetNote) {
+                        data = await this.contract.postNoteForNote(
+                            characterId + '',
+                            ipfs,
+                            extra.targetNote.split('-')?.[0],
+                            extra.targetNote.split('-')?.[1],
+                        );
+                    } else {
+                        data = await this.contract.postNote(characterId + '', ipfs);
+                    }
                 }
 
                 return {
@@ -305,14 +346,20 @@ class CrossbellNote extends Base {
                         code: 1,
                         message: 'Wrong id',
                     };
+                } else if (extra?.newbieToken) {
+                    await axios.delete(`${this.indexer.endpoint}/newbie/contract/notes/${input.id.split('-')[1]}`, {
+                        headers: {
+                            authorization: `Bearer ${extra?.newbieToken}`,
+                        },
+                    });
                 } else {
                     await this.contract.deleteNote(characterId + '', input.id.split('-')[1]);
-
-                    return {
-                        code: 0,
-                        message: 'Success',
-                    };
                 }
+
+                return {
+                    code: 0,
+                    message: 'Success',
+                };
             }
             case 'update': {
                 if (!input.id) {
@@ -326,9 +373,6 @@ class CrossbellNote extends Base {
                         message: 'Wrong id',
                     };
                 } else {
-                    if (!this.indexer) {
-                        this.indexer = new Indexer();
-                    }
                     const note = await this.indexer.getNote(characterId + '', input.id.split('-')[1]);
                     if (!note) {
                         return {
@@ -358,8 +402,24 @@ class CrossbellNote extends Base {
                                 'trait_type',
                             );
                         }
-                        const ipfs = await this.main.utils.uploadToIPFS(result);
-                        await this.contract.setNoteUri(characterId + '', id.split('-')[1], ipfs);
+
+                        if (extra?.newbieToken) {
+                            await axios.post(
+                                `${this.indexer.endpoint}/newbie/contract/notes/${id.split('-')[1]}/metadata`,
+                                {
+                                    metadata: result,
+                                    mode: 'replace',
+                                },
+                                {
+                                    headers: {
+                                        authorization: `Bearer ${extra?.newbieToken}`,
+                                    },
+                                },
+                            );
+                        } else {
+                            const ipfs = await this.main.utils.uploadToIPFS(result);
+                            await this.contract.setNoteUri(characterId + '', id.split('-')[1], ipfs);
+                        }
 
                         return {
                             code: 0,

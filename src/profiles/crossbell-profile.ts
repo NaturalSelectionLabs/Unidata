@@ -155,7 +155,13 @@ class CrossbellProfile extends Base {
         return result;
     }
 
-    async set(options: ProfileSetOptions, input: ProfileInput) {
+    async set(
+        options: ProfileSetOptions,
+        input: ProfileInput,
+        extra?: {
+            newbieToken?: string;
+        },
+    ) {
         options = Object.assign(
             {
                 platform: 'Ethereum',
@@ -164,9 +170,12 @@ class CrossbellProfile extends Base {
             options,
         );
 
-        if (!this.contract) {
+        if (!this.contract && !extra?.newbieToken) {
             this.contract = new Contract(this.main.options.ethereumProvider);
             await this.contract.connect();
+        }
+        if (!this.indexer) {
+            this.indexer = new Indexer();
         }
 
         switch (options.action) {
@@ -184,13 +193,12 @@ class CrossbellProfile extends Base {
                 }
 
                 // setHandle
-                if (input.username && input.username !== character.handle) {
+                if (input.username && input.username !== character.handle && !extra?.newbieToken) {
                     await this.contract.setHandle(character.characterId + '', input.username);
                 }
 
                 // setProfileUri
                 if (Object.keys(input).filter((key) => key !== 'username').length) {
-                    const username = input.username || options.identity;
                     delete input.username;
 
                     // Crossbell specification compatibility
@@ -225,8 +233,23 @@ class CrossbellProfile extends Base {
                         );
                     }
 
-                    const ipfs = await this.main.utils.uploadToIPFS(result);
-                    await this.contract.setCharacterUri(character.characterId + '', ipfs);
+                    if (extra?.newbieToken) {
+                        await axios.post(
+                            `${this.indexer.endpoint}/newbie/contract/characters/me/metadata`,
+                            {
+                                metadata: result,
+                                mode: 'replace',
+                            },
+                            {
+                                headers: {
+                                    authorization: `Bearer ${extra?.newbieToken}`,
+                                },
+                            },
+                        );
+                    } else {
+                        const ipfs = await this.main.utils.uploadToIPFS(result);
+                        await this.contract.setCharacterUri(character.characterId + '', ipfs);
+                    }
 
                     return {
                         code: 0,
@@ -240,6 +263,9 @@ class CrossbellProfile extends Base {
                 }
             }
             case 'add': {
+                if (extra?.newbieToken) {
+                    throw new Error(`Unsupported action ${options.action} for newbie`);
+                }
                 switch (options.platform) {
                     case 'Ethereum': {
                         const username = input.username || options.identity;
