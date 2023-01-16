@@ -58,7 +58,10 @@ const result: {
             platform: string;
             url?: string;
         }[];
-    }
+    },
+    extra?: {
+        newbieToken?: string;
+    },
 );
 ```
 
@@ -66,6 +69,7 @@ const result: {
 -   Use Crossbell handle as the `identity` and `'Crossbell'` as the `platform` to set a specific profile.
 -   `action`: can be `update` or `add`, default to `update`.
 -   If the `platform` is Crossbell, then the `action` cannot be `add`.
+-   `newbieToken`: token for Crossbell newbie.
 
 ## Live Demo
 

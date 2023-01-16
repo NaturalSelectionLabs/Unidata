@@ -84,7 +84,12 @@ const result: {
             mime_type?: string;
             size_in_bytes?: number;
         }[];
-    }
+    },
+    extra?: {
+        targetUri?: string;
+        targetNote?: string;
+        newbieToken?: string;
+    },
 );
 ```
 
@@ -92,6 +97,9 @@ const result: {
 -   Use Crossbell handle as the `identity` and `'Crossbell'` as the `platform` to set note from a specific profile.
 -   `action`: can be `add`, `remove` or `update`, default to `add`.
 -   `id`: `id` is not required for `add` action, but must be included for `remove` or `update` action.
+-   `targetUri`: post notes to a specific url.
+-   `targetNote`: post notes to a specific note.
+-   `newbieToken`: token for Crossbell newbie.
 
 ## Live Demo
 
