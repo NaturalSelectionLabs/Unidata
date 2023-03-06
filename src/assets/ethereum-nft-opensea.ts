@@ -2,7 +2,7 @@ import Main from '../index';
 import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
-import { utils } from 'ethers';
+import { getAddress } from 'ethers';
 import type { Asset } from '../specifications';
 
 class EthereumNFTOpensea extends Base {
@@ -25,7 +25,7 @@ class EthereumNFTOpensea extends Base {
         const assets: Asset[] = res.data?.assets.map((item: any) => {
             const asset: Asset = {
                 tags: ['NFT'],
-                owners: [utils.getAddress(options.identity)],
+                owners: [getAddress(options.identity)],
                 name: item.name,
                 description: item.description,
 

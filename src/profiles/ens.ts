@@ -1,12 +1,12 @@
 import Main from '../index';
 import Base from './base';
-import { ethers } from 'ethers';
+import { AbstractProvider, InfuraProvider, EnsResolver } from 'ethers';
 import { ProfilesOptions } from './index';
 import { createClient, Client } from '@urql/core';
 import type { Profile } from '../specifications';
 
 class ENS extends Base {
-    ethersProvider: ethers.providers.BaseProvider;
+    ethersProvider: AbstractProvider;
     urqlClient: Client;
 
     constructor(main: Main) {
@@ -14,7 +14,7 @@ class ENS extends Base {
     }
 
     private async init() {
-        this.ethersProvider = new ethers.providers.InfuraProvider('homestead', this.main.options.infuraProjectID);
+        this.ethersProvider = new InfuraProvider('homestead', this.main.options.infuraProjectID);
         this.urqlClient = createClient({
             url: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
             maskTypename: false,
@@ -68,20 +68,23 @@ class ENS extends Base {
                             proof: domain.name,
                         },
                     };
-                    const resolver = await this.ethersProvider.getResolver(domain.name);
+                    let resolver: EnsResolver | null = null;
+                    try {
+                        resolver = await this.ethersProvider.getResolver(domain.name);
+                    } catch (error) {}
                     if (resolver) {
                         const fields: string[] = domain.resolver?.texts || [];
                         await Promise.all(
                             fields.map(async (field) => {
                                 switch (field) {
                                     case 'avatar':
-                                        profile.avatars = [await resolver.getText(field)];
+                                        profile.avatars = [(await resolver!.getText(field))!];
                                         break;
                                     case 'description':
-                                        profile.bio = await resolver.getText(field);
+                                        profile.bio = (await resolver!.getText(field))!;
                                         break;
                                     case 'url':
-                                        profile.websites = [await resolver.getText(field)];
+                                        profile.websites = [(await resolver!.getText(field))!];
                                         break;
                                     default:
                                         const split = field.split('.');
@@ -90,7 +93,7 @@ class ENS extends Base {
                                                 profile.connected_accounts = [];
                                             }
                                             profile.connected_accounts.push({
-                                                identity: await resolver.getText(field),
+                                                identity: (await resolver!.getText(field))!,
                                                 platform: split[1],
                                             });
                                         }

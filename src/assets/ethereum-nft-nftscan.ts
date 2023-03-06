@@ -2,7 +2,7 @@ import Main from '../index';
 import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
-import { utils } from 'ethers';
+import { getAddress } from 'ethers';
 import type { Asset } from '../specifications';
 
 class EthereumNFTNFTScan extends Base {
@@ -66,7 +66,7 @@ class EthereumNFTNFTScan extends Base {
                         date_created: new Date(item.mint_timestamp).toISOString(),
 
                         tags: ['NFT'],
-                        owners: [utils.getAddress(options.identity)],
+                        owners: [getAddress(options.identity)],
                         name: item.name || metadata?.name,
                         description: metadata?.description,
 

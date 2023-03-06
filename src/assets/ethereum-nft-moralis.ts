@@ -2,7 +2,7 @@ import Main from '../index';
 import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
-import { utils } from 'ethers';
+import { getAddress } from 'ethers';
 import type { Asset } from '../specifications';
 
 class EthereumNFTMoralis extends Base {
@@ -79,7 +79,7 @@ class EthereumNFTMoralis extends Base {
 
                             const asset: Asset = {
                                 tags: ['NFT'],
-                                owners: [utils.getAddress(item.owner_of || options.identity)],
+                                owners: [getAddress(item.owner_of || options.identity)],
                                 name: metadata?.name,
                                 description: metadata?.description,
 
