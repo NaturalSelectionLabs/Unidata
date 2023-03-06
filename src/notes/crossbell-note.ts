@@ -68,7 +68,7 @@ class CrossbellNote extends Base {
         } else {
             res = await this.indexer.getNotes({
                 cursor: options.cursor,
-                includeDeleted: false,
+                includeDeleted: options.include_deleted,
                 limit: options.limit,
                 includeEmptyMetadata: true,
                 ...(options.order_by && { orderBy: orderByMap[options.order_by] }),

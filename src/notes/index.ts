@@ -14,6 +14,7 @@ export type NotesOptions = {
     cursor?: any;
     order_by?: 'date_created' | 'date_updated' | 'date_published';
     filter?: any;
+    include_deleted?: boolean;
 };
 
 export type NoteSetOptions = {
