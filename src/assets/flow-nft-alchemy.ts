@@ -2,6 +2,7 @@ import Main from '../index';
 import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
+import { BigNumber } from 'ethers';
 import type { Asset } from '../specifications';
 
 class FlowNFTAlchemy extends Base {
@@ -27,7 +28,7 @@ class FlowNFTAlchemy extends Base {
             },
         );
         const assets: Asset[] = res.data?.nfts.map((item: any) => {
-            const tokenId = BigInt(item.id.tokenId).toString();
+            const tokenId = BigNumber.from(item.id.tokenId).toString();
             const asset: Asset = {
                 tags: ['NFT'],
                 owners: [options.identity],
