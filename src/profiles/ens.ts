@@ -2,7 +2,7 @@ import Main from '../index';
 import Base from './base';
 import { ethers } from 'ethers';
 import { ProfilesOptions } from './index';
-import { createClient, Client } from '@urql/core';
+import { createClient, Client, cacheExchange, fetchExchange } from '@urql/core';
 import type { Profile } from '../specifications';
 
 class ENS extends Base {
@@ -18,6 +18,7 @@ class ENS extends Base {
         this.urqlClient = createClient({
             url: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
             maskTypename: false,
+            exchanges: [cacheExchange, fetchExchange],
         });
         this.inited = true;
     }
