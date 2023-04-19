@@ -23,6 +23,7 @@ console.log(
 type IOptions = {
     infuraProjectID?: string;
     ipfsGateway?: string;
+    ipfsRelay?: string;
     moralisWeb3APIKey?: string;
     openseaAPIKey?: string;
     alchemyEthereumAPIKey?: string;
@@ -34,7 +35,10 @@ type IOptions = {
 };
 
 class Unidata {
-    options: IOptions;
+    options: IOptions & {
+        ipfsGateway: string;
+        ipfsRelay: string;
+    };
     utils: Utils;
     profiles: ProfilesC;
     links: LinksC;
@@ -46,6 +50,7 @@ class Unidata {
             {},
             {
                 ipfsGateway: 'https://gateway.ipfs.io/ipfs/',
+                ipfsRelay: 'https://ipfs-relay.crossbell.io/json',
                 ...(typeof window !== 'undefined' && { ethereumProvider: window.ethereum }),
             },
             options,

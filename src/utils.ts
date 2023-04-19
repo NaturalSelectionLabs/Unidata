@@ -78,7 +78,7 @@ class Utils {
     }
 
     async uploadToIPFS(obj: any) {
-        const res = await axios.post('https://ipfs-relay.crossbell.io/json', obj);
+        const res = await axios.post(this.main.options.ipfsRelay, obj);
         return res.data.url;
     }
 }
