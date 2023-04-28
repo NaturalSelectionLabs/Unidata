@@ -14,8 +14,8 @@ dependencies:
         specifier: ^3.4.0
         version: 3.4.0
     crossbell.js:
-        specifier: ^0.19.7
-        version: 0.19.7
+        specifier: ^0.19.9
+        version: 0.19.9
     ethers:
         specifier: ^5.7.2
         version: 5.7.2
@@ -65,7 +65,7 @@ devDependencies:
         version: 2.0.0-beta.45
     '@vuepress/plugin-docsearch':
         specifier: 2.0.0-beta.45
-        version: 2.0.0-beta.45(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
+        version: 2.0.0-beta.45(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
     '@vuepress/plugin-register-components':
         specifier: 2.0.0-beta.45
         version: 2.0.0-beta.45
@@ -315,10 +315,10 @@ packages:
             to-fast-properties: 2.0.0
         dev: true
 
-    /@crossbell/ipfs-fetch@0.0.15:
+    /@crossbell/ipfs-fetch@0.0.19:
         resolution:
             {
-                integrity: sha512-AYGDrwiSKqCGNDi0mEPP1k+96loWik+Pd40xH0MzRNM4RtCutPbwm4o+Sj5iWu0tlHoQC2bTs1XcufsLiv+WYw==,
+                integrity: sha512-0Yf9+MMTSD+JJkFbNaK/s+kl3CXhr4oq2yj3K0dvheB+e8uykcpM7yomxHie/sr0ushw3G7Ppf5NXYkfH0eiSw==,
             }
         dev: false
 
@@ -337,13 +337,13 @@ packages:
             }
         dev: true
 
-    /@docsearch/js@3.1.0(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0):
+    /@docsearch/js@3.1.0(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0):
         resolution:
             {
                 integrity: sha512-5XSK+xbP0hcTIp54MECqxkWLs6kf7Ug4nWdxWNtx8cUpLiFNFnKXDxCb35wnyNpjukmrx7Q9DkO5tFFsmNVxng==,
             }
         dependencies:
-            '@docsearch/react': 3.1.0(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
+            '@docsearch/react': 3.1.0(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
             preact: 10.7.2
         transitivePeerDependencies:
             - '@types/react'
@@ -351,7 +351,7 @@ packages:
             - react-dom
         dev: true
 
-    /@docsearch/react@3.1.0(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0):
+    /@docsearch/react@3.1.0(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0):
         resolution:
             {
                 integrity: sha512-bjB6ExnZzf++5B7Tfoi6UXgNwoUnNOfZ1NyvnvPhWgCMy5V/biAtLL4o7owmZSYdAKeFSvZ5Lxm0is4su/dBWg==,
@@ -363,7 +363,7 @@ packages:
         dependencies:
             '@algolia/autocomplete-core': 1.6.3
             '@docsearch/css': 3.1.0
-            '@types/react': 18.0.33
+            '@types/react': 18.2.0
             algoliasearch: 4.13.1
             react: 18.2.0
             react-dom: 18.2.0(react@18.2.0)
@@ -1280,10 +1280,10 @@ packages:
             }
         dev: true
 
-    /@types/react@18.0.33:
+    /@types/react@18.2.0:
         resolution:
             {
-                integrity: sha512-sHxzVxeanvQyQ1lr8NSHaj0kDzcNiGpILEVt69g9S31/7PfMvNCKLKcsHw4lYKjs3cGNJjXSP4mYzX43QlnjNA==,
+                integrity: sha512-0FLj93y5USLHdnhIhABk83rm8XEGA7kH3cr+YUlvxoUGp1xNt/DINUMvqPxLyOQMzLmZe8i4RTHbvb8MC7NmrA==,
             }
         dependencies:
             '@types/prop-types': 15.7.5
@@ -1611,15 +1611,15 @@ packages:
             - supports-color
         dev: true
 
-    /@vuepress/plugin-docsearch@2.0.0-beta.45(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0):
+    /@vuepress/plugin-docsearch@2.0.0-beta.45(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0):
         resolution:
             {
                 integrity: sha512-b1XLel6v0TD2OxYU9CkGYCcJ0At04muVqkppa7QUxog/1vufKD8KhniwrMtc2OG9gnnmgBBKsghUKo/x6lzEBw==,
             }
         dependencies:
             '@docsearch/css': 3.1.0
-            '@docsearch/js': 3.1.0(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
-            '@docsearch/react': 3.1.0(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
+            '@docsearch/js': 3.1.0(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
+            '@docsearch/react': 3.1.0(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
             '@vuepress/client': 2.0.0-beta.45
             '@vuepress/core': 2.0.0-beta.45
             '@vuepress/shared': 2.0.0-beta.45
@@ -2519,14 +2519,17 @@ packages:
             which: 2.0.2
         dev: true
 
-    /crossbell.js@0.19.7:
+    /crossbell.js@0.19.9:
         resolution:
             {
-                integrity: sha512-Wa1uDUSISZJOSQdnhZ+SQYT9HkdimBzKMF1Tfp109/HEoVfjXw8Mg95RCPUsjc8M2x7MKZfASsY3ohYWbH1gMA==,
+                integrity: sha512-/wwgL55ENG2tnxcZq7GFskrxB9JBpdEj3mfV1HiKBK3d9P/+z25v4p2AJidUYglw1kVwuVQaRpnqjOzxxdLy7A==,
             }
         dependencies:
-            '@crossbell/ipfs-fetch': 0.0.15
+            '@crossbell/ipfs-fetch': 0.0.19
+            '@ethersproject/abi': 5.7.0
+            '@ethersproject/providers': 5.7.2
             async-retry: 1.3.3
+            bn.js: 5.2.1
             ethers: 5.7.2
             fetch-undici: 3.0.1
             p-limit: 3.1.0
@@ -3304,7 +3307,7 @@ packages:
             }
         engines: { node: '>=16' }
         dependencies:
-            undici: 5.21.0
+            undici: 5.22.0
         dev: false
 
     /fill-range@7.0.1:
@@ -5324,12 +5327,12 @@ packages:
             }
         dev: true
 
-    /undici@5.21.0:
+    /undici@5.22.0:
         resolution:
             {
-                integrity: sha512-HOjK8l6a57b2ZGXOcUsI5NLfoTrfmbOl90ixJDl0AEFG4wgHNDQxtZy15/ZQp7HhjkpaGlp/eneMgtsu1dIlUA==,
+                integrity: sha512-fR9RXCc+6Dxav4P9VV/sp5w3eFiSdOjJYsbtWfd4s5L5C4ogyuVpdKIVHeW0vV1MloM65/f7W45nR9ZxwVdyiA==,
             }
-        engines: { node: '>=12.18' }
+        engines: { node: '>=14.0' }
         dependencies:
             busboy: 1.6.0
         dev: false
