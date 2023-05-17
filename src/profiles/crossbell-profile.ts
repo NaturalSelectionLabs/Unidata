@@ -1,6 +1,6 @@
 import Main from '../index';
 import Base from './base';
-import { Indexer, Contract, Network, ListResponse, CharacterEntity } from 'crossbell.js';
+import { Indexer, Contract, Network, ListResponse, CharacterEntity } from 'crossbell';
 import { ProfilesOptions, ProfileSetOptions, ProfileInput } from './index';
 import axios from 'axios';
 import type { Profile } from '../specifications';

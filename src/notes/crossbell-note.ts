@@ -1,7 +1,7 @@
 import Main from '../index';
 import Base from './base';
 import { NotesOptions, NoteSetOptions, NoteInput } from './index';
-import { Indexer, Contract, Network, NoteEntity, ListResponse } from 'crossbell.js';
+import { Indexer, Contract, Network, NoteEntity, ListResponse } from 'crossbell';
 import type { Note } from '../specifications';
 import { unionBy } from 'lodash-es';
 import axios from 'axios';

@@ -1,7 +1,7 @@
 import Main from '../index';
 import Base from './base';
 import { LinksOptions, LinkSetOptions, LinkInput } from './index';
-import { Indexer, Contract } from 'crossbell.js';
+import { Indexer, Contract } from 'crossbell';
 
 class CrossbellLink extends Base {
     indexer: Indexer;

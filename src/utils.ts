@@ -1,5 +1,5 @@
 import Main from './index';
-import { Indexer } from 'crossbell.js';
+import { Indexer } from 'crossbell';
 import mime from 'mime';
 import axios from 'axios';
 
