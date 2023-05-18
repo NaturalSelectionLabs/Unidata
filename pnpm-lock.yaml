@@ -89,7 +89,7 @@ devDependencies:
         version: 2.8.7
     tsup:
         specifier: ^6.7.0
-        version: 6.7.0(postcss@8.4.14)(typescript@5.0.4)
+        version: 6.7.0(postcss@8.4.21)(typescript@5.0.4)
     typescript:
         specifier: 5.0.4
         version: 5.0.4
@@ -1105,9 +1105,9 @@ packages:
             '@vuepress/core': 2.0.0-beta.45
             '@vuepress/shared': 2.0.0-beta.45
             '@vuepress/utils': 2.0.0-beta.45
-            autoprefixer: 10.4.7(postcss@8.4.14)
+            autoprefixer: 10.4.7(postcss@8.4.21)
             connect-history-api-fallback: 1.6.0
-            postcss: 8.4.14
+            postcss: 8.4.21
             rollup: 2.74.1
             vite: 2.9.15(less@4.1.3)
             vue: 3.2.47
@@ -1687,7 +1687,7 @@ packages:
             }
         dev: false
 
-    /autoprefixer@10.4.7(postcss@8.4.14):
+    /autoprefixer@10.4.7(postcss@8.4.21):
         resolution:
             {
                 integrity: sha512-ypHju4Y2Oav95SipEcCcI5J7CGPuvz8oat7sUtYj3ClK44bldfvtvcxK6IEK++7rqB7YchDGzweZIBG+SD0ZAA==,
@@ -1702,7 +1702,7 @@ packages:
             fraction.js: 4.2.0
             normalize-range: 0.1.2
             picocolors: 1.0.0
-            postcss: 8.4.14
+            postcss: 8.4.21
             postcss-value-parser: 4.2.0
         dev: true
 
@@ -1979,7 +1979,10 @@ packages:
         dev: true
 
     /concat-map@0.0.1:
-        resolution: { integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s= }
+        resolution:
+            {
+                integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==,
+            }
         dev: true
 
     /connect-history-api-fallback@1.6.0:
@@ -2082,7 +2085,10 @@ packages:
         dev: true
 
     /defaults@1.0.3:
-        resolution: { integrity: sha1-xlYFHpgX2f8I7YgUd/P+QBnz730= }
+        resolution:
+            {
+                integrity: sha512-s82itHOnYrN0Ib8r+z7laQz3sdE+4FP3d9Q7VLO7U+KRT+CR0GsWuyHxzdAY82I7cXv0G/twrqomTJLOssO5HA==,
+            }
         dependencies:
             clone: 1.0.4
         dev: true
@@ -2571,7 +2577,10 @@ packages:
         dev: true
 
     /extend-shallow@2.0.1:
-        resolution: { integrity: sha1-Ua99YUrZqfYQ6huvu5idaxxWiQ8= }
+        resolution:
+            {
+                integrity: sha512-zCnTtlxNoAiDc3gqY2aYAWFx7XWWiasuF2K8Me5WbN8otHKTUKBwjPtNpRs/rbUZm7KxWAaNj7P1a/p52GbVug==,
+            }
         engines: { node: '>=0.10.0' }
         dependencies:
             is-extendable: 0.1.1
@@ -2649,7 +2658,7 @@ packages:
             }
         engines: { node: '>=12' }
         dependencies:
-            graceful-fs: 4.2.10
+            graceful-fs: 4.2.11
             jsonfile: 6.1.0
             universalify: 2.0.0
         dev: true
@@ -2726,13 +2735,6 @@ packages:
             slash: 3.0.0
         dev: true
 
-    /graceful-fs@4.2.10:
-        resolution:
-            {
-                integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==,
-            }
-        dev: true
-
     /graceful-fs@4.2.11:
         resolution:
             {
@@ -2740,7 +2742,6 @@ packages:
             }
         requiresBuild: true
         dev: true
-        optional: true
 
     /graphql@16.6.0:
         resolution:
@@ -2902,12 +2903,18 @@ packages:
         dev: true
 
     /is-extendable@0.1.1:
-        resolution: { integrity: sha1-YrEQ4omkcUGOPsNqYX1HLjAd/Ik= }
+        resolution:
+            {
+                integrity: sha512-5BMULNob1vgFX6EjQw5izWDxrecWK9AM72rugNr0TFldMOi0fj6Jk+zeKIt0xGj4cEfQIJth4w3OKWOJ4f+AFw==,
+            }
         engines: { node: '>=0.10.0' }
         dev: true
 
     /is-extglob@2.1.1:
-        resolution: { integrity: sha1-qIwCU1eR8C7TfHahueqXc8gz+MI= }
+        resolution:
+            {
+                integrity: sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==,
+            }
         engines: { node: '>=0.10.0' }
         dev: true
 
@@ -3065,7 +3072,7 @@ packages:
         dependencies:
             copy-anything: 2.0.6
             parse-node-version: 1.0.1
-            tslib: 2.4.0
+            tslib: 2.5.0
         optionalDependencies:
             errno: 0.1.8
             graceful-fs: 4.2.11
@@ -3290,7 +3297,10 @@ packages:
         dev: true
 
     /mdurl@1.0.1:
-        resolution: { integrity: sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4= }
+        resolution:
+            {
+                integrity: sha512-/sKlQJCBYVY9Ers9hqzKou4H6V5UWc/M59TH2dvkt+84itfnq7uFOMLpOiOS4ujvHP4etln18fmIxA5R5fll0g==,
+            }
         dev: true
 
     /medium-zoom@1.0.6:
@@ -3464,7 +3474,10 @@ packages:
         dev: true
 
     /normalize-range@0.1.2:
-        resolution: { integrity: sha1-LRDAa9/TEuqXd2laTShDlFa3WUI= }
+        resolution:
+            {
+                integrity: sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==,
+            }
         engines: { node: '>=0.10.0' }
         dev: true
 
@@ -3665,7 +3678,7 @@ packages:
         engines: { node: '>= 6' }
         dev: true
 
-    /postcss-load-config@3.1.4(postcss@8.4.14):
+    /postcss-load-config@3.1.4(postcss@8.4.21):
         resolution:
             {
                 integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==,
@@ -3681,7 +3694,7 @@ packages:
                 optional: true
         dependencies:
             lilconfig: 2.1.0
-            postcss: 8.4.14
+            postcss: 8.4.21
             yaml: 1.10.2
         dev: true
 
@@ -3690,18 +3703,6 @@ packages:
             {
                 integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==,
             }
-        dev: true
-
-    /postcss@8.4.14:
-        resolution:
-            {
-                integrity: sha512-E398TUmfAYFPBSdzgeieK2Y1+1cpdxJx8yXbK/m57nRhKSmk1GB2tO4lbLBtlkfPQTDKfe4Xqv1ASWPpayPEig==,
-            }
-        engines: { node: ^10 || ^12 || >=14 }
-        dependencies:
-            nanoid: 3.3.4
-            picocolors: 1.0.0
-            source-map-js: 1.0.2
         dev: true
 
     /postcss@8.4.21:
@@ -4084,7 +4085,10 @@ packages:
         dev: true
 
     /sprintf-js@1.0.3:
-        resolution: { integrity: sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw= }
+        resolution:
+            {
+                integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==,
+            }
         dev: true
 
     /string-argv@0.3.1:
@@ -4149,7 +4153,10 @@ packages:
         dev: true
 
     /strip-bom-string@1.0.0:
-        resolution: { integrity: sha1-5SEekiQ2n7uB1jOi8ABE3IztrZI= }
+        resolution:
+            {
+                integrity: sha512-uCC2VHvQRYu+lMh4My/sFNmF2klFymLX1wHJeXnbEJERpV/ZsVuonzerjfrGpIGF7LBVa1O7i9kjiWvJiFck8g==,
+            }
         engines: { node: '>=0.10.0' }
         dev: true
 
@@ -4285,13 +4292,6 @@ packages:
             }
         dev: true
 
-    /tslib@2.4.0:
-        resolution:
-            {
-                integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==,
-            }
-        dev: true
-
     /tslib@2.5.0:
         resolution:
             {
@@ -4299,7 +4299,7 @@ packages:
             }
         dev: true
 
-    /tsup@6.7.0(postcss@8.4.14)(typescript@5.0.4):
+    /tsup@6.7.0(postcss@8.4.21)(typescript@5.0.4):
         resolution:
             {
                 integrity: sha512-L3o8hGkaHnu5TdJns+mCqFsDBo83bJ44rlK7e6VdanIvpea4ArPcU3swWGsLVbXak1PqQx/V+SSmFPujBK+zEQ==,
@@ -4326,8 +4326,8 @@ packages:
             execa: 5.1.1
             globby: 11.1.0
             joycon: 3.1.1
-            postcss: 8.4.14
-            postcss-load-config: 3.1.4(postcss@8.4.14)
+            postcss: 8.4.21
+            postcss-load-config: 3.1.4(postcss@8.4.21)
             resolve-from: 5.0.0
             rollup: 3.20.2
             source-map: 0.8.0-beta.0
@@ -4379,7 +4379,10 @@ packages:
         dev: true
 
     /util-deprecate@1.0.2:
-        resolution: { integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8= }
+        resolution:
+            {
+                integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==,
+            }
         dev: true
 
     /viem@0.3.29(typescript@5.0.4):
@@ -4425,7 +4428,7 @@ packages:
         dependencies:
             esbuild: 0.14.54
             less: 4.1.3
-            postcss: 8.4.14
+            postcss: 8.4.21
             resolve: 1.22.2
             rollup: 2.74.1
         optionalDependencies:
@@ -4558,7 +4561,10 @@ packages:
         dev: true
 
     /wcwidth@1.0.1:
-        resolution: { integrity: sha1-8LDc+RW8X/FSivrbLA4XtTLaL+g= }
+        resolution:
+            {
+                integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==,
+            }
         dependencies:
             defaults: 1.0.3
         dev: true
