@@ -9,6 +9,8 @@ import { ProfilesOptions } from './index';
 import { createClient, Client, cacheExchange, fetchExchange } from '@urql/core';
 import type { Profile } from '../specifications';
 
+const defaultInfuraProjectID = '84842078b09946638c03157f83405213';
+
 class ENS extends Base {
     publicClient: PublicClient;
     urqlClient: Client;
@@ -20,7 +22,9 @@ class ENS extends Base {
     private async init() {
         this.publicClient = createPublicClient({
             chain: mainnet,
-            transport: http(`https://mainnet.infura.io/v3/${this.main.options.infuraProjectID}`),
+            transport: http(
+                `https://mainnet.infura.io/v3/${this.main.options.infuraProjectID ?? defaultInfuraProjectID}`,
+            ),
         });
         this.urqlClient = createClient({
             url: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
