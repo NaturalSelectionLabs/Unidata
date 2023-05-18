@@ -1,6 +1,16 @@
 import Main from '../index';
 import Base from './base';
-import { Indexer, Contract, Network, ListResponse, CharacterEntity } from 'crossbell.js';
+import {
+    type Indexer,
+    type Contract,
+    type ListResponse,
+    type CharacterEntity,
+    createIndexer,
+    createContract,
+} from 'crossbell';
+import { setIpfsGateway } from 'crossbell/ipfs';
+import type { Address } from 'viem';
+
 import { ProfilesOptions, ProfileSetOptions, ProfileInput } from './index';
 import axios from 'axios';
 import type { Profile } from '../specifications';
@@ -13,12 +23,12 @@ class CrossbellProfile extends Base {
     constructor(main: Main) {
         super(main);
 
-        Network.setIpfsGateway(this.main.options.ipfsGateway!);
+        setIpfsGateway(this.main.options.ipfsGateway!);
     }
 
     async get(options: ProfilesOptions) {
         if (!this.indexer) {
-            this.indexer = new Indexer();
+            this.indexer = createIndexer();
         }
 
         options = Object.assign(
@@ -30,13 +40,13 @@ class CrossbellProfile extends Base {
 
         let response: ListResponse<CharacterEntity>;
         if (options.platform === 'Ethereum') {
-            response = await this.indexer.getCharacters(options.identity, {
+            response = await this.indexer.character.getMany(options.identity as Address, {
                 cursor: options.cursor,
                 limit: options.limit,
                 primary: options.filter?.primary,
             });
         } else {
-            const character = await this.indexer.getCharacterByHandle(options.identity);
+            const character = await this.indexer.character.getByHandle(options.identity);
             if (character) {
                 response = {
                     count: 1,
@@ -171,11 +181,10 @@ class CrossbellProfile extends Base {
         );
 
         if (!this.contract && !extra?.newbieToken) {
-            this.contract = new Contract(this.main.options.ethereumProvider);
-            await this.contract.connect();
+            this.contract = createContract(this.main.options.ethereumProvider);
         }
         if (!this.indexer) {
-            this.indexer = new Indexer();
+            this.indexer = createIndexer();
         }
 
         switch (options.action) {
@@ -194,7 +203,10 @@ class CrossbellProfile extends Base {
 
                 // setHandle
                 if (input.username && input.username !== character.handle && !extra?.newbieToken) {
-                    await this.contract.setHandle(character.characterId + '', input.username);
+                    await this.contract.character.setHandle({
+                        characterId: character.characterId,
+                        handle: input.username,
+                    });
                 }
 
                 // setProfileUri
@@ -248,7 +260,10 @@ class CrossbellProfile extends Base {
                         );
                     } else {
                         const ipfs = await this.main.utils.uploadToIPFS(result);
-                        await this.contract.setCharacterUri(character.characterId + '', ipfs);
+                        await this.contract.character.setUri({
+                            characterId: character.characterId,
+                            metadataOrUri: ipfs,
+                        });
                     }
 
                     return {
@@ -272,7 +287,11 @@ class CrossbellProfile extends Base {
                         delete input.username;
                         const result = input;
                         const ipfs = await this.main.utils.uploadToIPFS(result);
-                        await this.contract.createCharacter(options.identity, username, ipfs);
+                        await this.contract.character.create({
+                            owner: options.identity as Address,
+                            handle: username,
+                            metadataOrUri: ipfs,
+                        });
 
                         return {
                             code: 0,

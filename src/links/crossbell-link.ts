@@ -1,7 +1,7 @@
 import Main from '../index';
 import Base from './base';
 import { LinksOptions, LinkSetOptions, LinkInput } from './index';
-import { Indexer, Contract } from 'crossbell.js';
+import { type Indexer, type Contract, createIndexer, createContract } from 'crossbell';
 
 class CrossbellLink extends Base {
     indexer: Indexer;
@@ -13,7 +13,7 @@ class CrossbellLink extends Base {
 
     async get(options: LinksOptions) {
         if (!this.indexer) {
-            this.indexer = new Indexer();
+            this.indexer = createIndexer();
         }
         options = Object.assign(
             {
@@ -36,7 +36,7 @@ class CrossbellLink extends Base {
             });
         }
 
-        let res = await this.indexer[options.reversed ? 'getBacklinksOfCharacter' : 'getLinks'](
+        let res = await (options.reversed ? this.indexer.link.getBacklinksOfCharacter : this.indexer.link.getMany)(
             character?.characterId + '',
             {
                 linkType: options.type,
@@ -84,8 +84,7 @@ class CrossbellLink extends Base {
         );
 
         if (!this.contract) {
-            this.contract = new Contract(this.main.options.ethereumProvider);
-            await this.contract.connect();
+            this.contract = createContract(this.main.options.ethereumProvider);
         }
 
         let fromCharacterId = (
@@ -116,7 +115,11 @@ class CrossbellLink extends Base {
 
         switch (options.action) {
             case 'add': {
-                await this.contract.linkCharacter(fromCharacterId + '', toCharacterId + '', link.type);
+                await this.contract.link.linkCharacter({
+                    fromCharacterId,
+                    toCharacterId,
+                    linkType: link.type,
+                });
 
                 return {
                     code: 0,
@@ -124,7 +127,11 @@ class CrossbellLink extends Base {
                 };
             }
             case 'remove': {
-                await this.contract.unlinkCharacter(fromCharacterId + '', toCharacterId + '', link.type);
+                await this.contract.link.unlinkCharacter({
+                    fromCharacterId,
+                    toCharacterId,
+                    linkType: link.type,
+                });
 
                 return {
                     code: 0,

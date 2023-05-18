@@ -2,7 +2,7 @@ import Main from '../index';
 import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
-import { utils } from 'ethers';
+import { getAddress } from 'viem';
 import { mergeWith, keyBy, values, uniqWith, isEqual } from 'lodash-es';
 import type { Asset, Assets } from '../specifications';
 
@@ -27,7 +27,7 @@ class GitcoinContribution extends Base {
                     date_created: item.date_created,
                     date_updated: item.date_updated,
                     tags: ['Donation'],
-                    owners: [utils.getAddress(options.identity)],
+                    owners: [getAddress(options.identity)],
                     name: item.title,
                     description: item.attachments.filter((attachment: any) => attachment.type === 'description')[0]
                         .content,
