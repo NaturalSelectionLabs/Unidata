@@ -2,7 +2,8 @@ import Main from '../index';
 import Base from './base';
 import { AssetsOptions } from './index';
 import axios from 'axios';
-import { BigNumber, utils } from 'ethers';
+import { getAddress } from 'viem';
+import { BigNumber } from 'ethers';
 import type { Asset } from '../specifications';
 
 class EthereumNFTAlchemy extends Base {
@@ -48,7 +49,7 @@ class EthereumNFTAlchemy extends Base {
                     const tokenId = BigNumber.from(item.id.tokenId).toString();
                     const asset: Asset = {
                         tags: ['NFT'],
-                        owners: [utils.getAddress(options.identity)],
+                        owners: [getAddress(options.identity)],
                         name: item.title,
                         description: item.description,
 
