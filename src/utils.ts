@@ -1,7 +1,8 @@
 import Main from './index';
-import { Indexer } from 'crossbell.js';
+import { type Indexer, createIndexer } from 'crossbell';
 import mime from 'mime';
 import axios from 'axios';
+import type { Address } from 'viem';
 
 class Utils {
     main: Main;
@@ -26,15 +27,15 @@ class Utils {
         let profile;
 
         if (!this.indexer) {
-            this.indexer = new Indexer();
+            this.indexer = createIndexer();
         }
 
         switch (options.platform) {
             case 'Ethereum':
-                profile = await this.indexer.getPrimaryCharacter(options.identity);
+                profile = await this.indexer.character.getPrimary(options.identity as Address);
                 break;
             case 'Crossbell':
-                profile = await this.indexer.getCharacterByHandle(options.identity);
+                profile = await this.indexer.character.getByHandle(options.identity as Address);
                 break;
             default:
                 throw new Error(`Unsupported platform: ${options.platform}`);

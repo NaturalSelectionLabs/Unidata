@@ -1,7 +1,16 @@
 import Main from '../index';
 import Base from './base';
 import { NotesOptions, NoteSetOptions, NoteInput } from './index';
-import { Indexer, Contract, Network, NoteEntity, ListResponse } from 'crossbell.js';
+import {
+    type Indexer,
+    type Contract,
+    type NoteEntity,
+    type ListResponse,
+    createIndexer,
+    createContract,
+} from 'crossbell';
+import { setIpfsGateway } from 'crossbell/ipfs';
+
 import type { Note } from '../specifications';
 import { unionBy } from 'lodash-es';
 import axios from 'axios';
@@ -19,12 +28,12 @@ class CrossbellNote extends Base {
     constructor(main: Main) {
         super(main);
 
-        Network.setIpfsGateway(this.main.options.ipfsGateway!);
+        setIpfsGateway(this.main.options.ipfsGateway!);
     }
 
     async get(options: NotesOptions) {
         if (!this.indexer) {
-            this.indexer = new Indexer();
+            this.indexer = createIndexer();
         }
 
         options = Object.assign(
@@ -51,7 +60,7 @@ class CrossbellNote extends Base {
         }
         let res: ListResponse<NoteEntity>;
         if (options.filter?.id) {
-            const note = await this.indexer.getNote(characterId + '', options.filter.id.split('-')[1]);
+            const note = await this.indexer.note.get(characterId + '', options.filter.id.split('-')[1]);
             if (note) {
                 res = {
                     count: 1,
@@ -66,7 +75,7 @@ class CrossbellNote extends Base {
                 };
             }
         } else {
-            res = await this.indexer.getNotes({
+            res = await this.indexer.note.getMany({
                 cursor: options.cursor,
                 includeDeleted: options.include_deleted,
                 limit: options.limit,
@@ -237,11 +246,10 @@ class CrossbellNote extends Base {
         );
 
         if (!this.contract && !extra?.newbieToken) {
-            this.contract = new Contract(this.main.options.ethereumProvider);
-            await this.contract.connect();
+            this.contract = createContract(this.main.options.ethereumProvider);
         }
         if (!this.indexer) {
-            this.indexer = new Indexer();
+            this.indexer = createIndexer();
         }
 
         let characterId = (
@@ -316,16 +324,23 @@ class CrossbellNote extends Base {
                     const ipfs = await this.main.utils.uploadToIPFS(input);
 
                     if (extra && extra.targetUri) {
-                        data = await this.contract.postNoteForAnyUri(characterId + '', ipfs, extra.targetUri);
+                        data = await this.contract.note.postForAnyUri({
+                            characterId,
+                            metadataOrUri: ipfs,
+                            targetUri: extra.targetUri,
+                        });
                     } else if (extra && extra.targetNote) {
-                        data = await this.contract.postNoteForNote(
-                            characterId + '',
-                            ipfs,
-                            extra.targetNote.split('-')?.[0],
-                            extra.targetNote.split('-')?.[1],
-                        );
+                        data = await this.contract.note.postForNote({
+                            characterId: characterId + '',
+                            metadataOrUri: ipfs,
+                            targetCharacterId: extra.targetNote.split('-')?.[0],
+                            targetNoteId: extra.targetNote.split('-')?.[1],
+                        });
                     } else {
-                        data = await this.contract.postNote(characterId + '', ipfs);
+                        data = await this.contract.note.post({
+                            characterId,
+                            metadataOrUri: ipfs,
+                        });
                     }
                 }
 
@@ -353,7 +368,10 @@ class CrossbellNote extends Base {
                         },
                     });
                 } else {
-                    await this.contract.deleteNote(characterId + '', input.id.split('-')[1]);
+                    await this.contract.note.delete({
+                        characterId,
+                        noteId: input.id.split('-')[1],
+                    });
                 }
 
                 return {
@@ -373,7 +391,7 @@ class CrossbellNote extends Base {
                         message: 'Wrong id',
                     };
                 } else {
-                    const note = await this.indexer.getNote(characterId + '', input.id.split('-')[1]);
+                    const note = await this.indexer.note.get(characterId + '', input.id.split('-')[1]);
                     if (!note) {
                         return {
                             code: 1,
@@ -418,7 +436,11 @@ class CrossbellNote extends Base {
                             );
                         } else {
                             const ipfs = await this.main.utils.uploadToIPFS(result);
-                            await this.contract.setNoteUri(characterId + '', id.split('-')[1], ipfs);
+                            await this.contract.note.setUri({
+                                characterId,
+                                noteId: id.split('-')[1],
+                                metadataOrUri: ipfs,
+                            });
                         }
 
                         return {
